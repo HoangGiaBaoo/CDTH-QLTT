@@ -27,7 +27,7 @@ public class CanBoDvhd {
     @Column(name = "chuc_vu", length = 100)
     private String chucVu;
 
-    // CBR-05 (Đ7 k2a): cán bộ hướng dẫn phải có từ 3 năm kinh nghiệm.
+    // CBR-05 (Đ7 k1c): cán bộ hướng dẫn phải có từ 3 năm kinh nghiệm.
     @Column(name = "so_nam_kinh_nghiem", nullable = false)
     private Integer soNamKinhNghiem;
 
