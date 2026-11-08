@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public interface NhatKyHeThongRepository extends JpaRepository<NhatKyHeThong, Long> {
 
@@ -23,4 +24,7 @@ public interface NhatKyHeThongRepository extends JpaRepository<NhatKyHeThong, Lo
     Page<NhatKyHeThong> timKiem(@Param("doiTuong") String doiTuong, @Param("doiTuongId") Long doiTuongId,
                                 @Param("nguoiThucHien") Long nguoiThucHien,
                                 @Param("tu") LocalDateTime tu, @Param("den") LocalDateTime den, Pageable pageable);
+
+    /** Lần ghi vết gần nhất của một hành vi trên một đối tượng — dùng suy ra phien_ban_trong_so (docs/01 mục 10.9). */
+    Optional<NhatKyHeThong> findTopByHanhViAndDoiTuongAndDoiTuongIdOrderByIdDesc(String hanhVi, String doiTuong, Long doiTuongId);
 }

@@ -28,10 +28,10 @@ public class ScoringService {
     private static final List<String> CLO_DIEU_KIEN = List.of("CLO1", "CLO2");
     /** Đ15 k3c: điểm học phần tối thiểu Mức 1, không phân biệt chương trình. */
     private static final int MUC_HP_TOI_THIEU = 1;
-    /** Ba nhóm năng lực trên mẫu TTTN-07. */
-    private static final List<String> NHOM_KIEN_THUC = List.of("CLO1", "CLO2");
-    private static final List<String> NHOM_KY_NANG = List.of("CLO3", "CLO5", "CLO6");
-    private static final List<String> NHOM_THAI_DO = List.of("CLO4", "CLO7");
+    /** Ba nhóm năng lực trên mẫu TTTN-07 — công khai để bảng tổng hợp in đúng cột "Các CLO liên quan". */
+    public static final List<String> NHOM_KIEN_THUC = List.of("CLO1", "CLO2");
+    public static final List<String> NHOM_KY_NANG = List.of("CLO3", "CLO5", "CLO6");
+    public static final List<String> NHOM_THAI_DO = List.of("CLO4", "CLO7");
 
     /** Tính toàn bộ kết quả của một hồ sơ. Thiếu phiếu một bên hoặc CLO không được đánh giá ⇒ BusinessException. */
     public KetQuaTinhDiem tinhDiem(DauVaoTinhDiem dauVao) {
