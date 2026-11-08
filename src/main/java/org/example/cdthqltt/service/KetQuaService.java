@@ -13,6 +13,7 @@ import org.example.cdthqltt.security.CurrentUser;
 import org.example.cdthqltt.security.SecurityUtils;
 import org.example.cdthqltt.service.export.XuatBangTongHopWord;
 import org.example.cdthqltt.service.scoring.*;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -73,6 +74,32 @@ public class KetQuaService {
     private final ThongBaoService thongBaoService;
     private final NhatKyHeThongService nhatKyService;
     private final XuatBangTongHopWord xuatWord;
+    private final ApplicationEventPublisher publisher;
+
+    /** Kết quả chính thức đã công bố — hợp đồng cho UC12 (chỉ số tự nhận thức) và UC13 (thống kê CLO). */
+    public record KetQuaChinhThuc(BigDecimal diemHp, Map<String, BigDecimal> diemClo, Map<String, Integer> mucClo) {
+    }
+
+    /**
+     * Hợp đồng cho người B (UC12) và UC13: điểm và mức từng CLO của kết quả <b>đã công bố</b>; chưa công bố thì rỗng.
+     * Mức quy đổi trên điểm đã làm tròn bằng cùng hàm lúc tính (docs/01 mục 10.1).
+     */
+    @Transactional(readOnly = true)
+    public Optional<KetQuaChinhThuc> ketQuaDaCongBo(Long hoSoId) {
+        return ketQuaRepo.findByHoSoId(hoSoId)
+                .filter(kq -> kq.getTrangThai() == TrangThaiKetQua.DA_CONG_BO)
+                .map(kq -> {
+                    CauHinhTinhDiemService.CauHinhDot cauHinh = cauHinhService.napChoDot(kq.getHoSo().getDot().getId());
+                    Map<String, BigDecimal> diem = new LinkedHashMap<>();
+                    Map<String, Integer> muc = new LinkedHashMap<>();
+                    for (CauHinhClo clo : cauHinh.clo()) {
+                        BigDecimal d = layDiemClo(kq, clo.maClo());
+                        diem.put(clo.maClo(), d);
+                        muc.put(clo.maClo(), mucCua(d, clo.bangMuc()));
+                    }
+                    return new KetQuaChinhThuc(kq.getDiemHp(), diem, muc);
+                });
+    }
 
     // ------------------------------------------------------------------
     // Tự động tính khi đủ phiếu (UC10 bước 1, luồng thay thế sau khi mở lại phiếu)
@@ -248,6 +275,7 @@ public class KetQuaService {
             thongBaoService.gui("NT-14", List.of(h.getSinhVien().getNguoiDung().getId()),
                     "Kết quả học phần đợt " + h.getDot().getTen() + " đã được công bố. "
                             + "Gửi phiếu phản hồi TTTN-08b để xem kết quả.", "/results/" + h.getId());
+            publisher.publishEvent(new KetQuaDaCongBoEvent(h.getId()));
             if (dat) {
                 soDat++;
             }
