@@ -1,6 +1,8 @@
 package org.example.cdthqltt.repository;
 
 import org.example.cdthqltt.entity.NguoiDung;
+import org.example.cdthqltt.entity.enums.TrangThaiDot;
+import org.example.cdthqltt.entity.enums.TrangThaiHoSo;
 import org.example.cdthqltt.entity.enums.TrangThaiTaiKhoan;
 import org.example.cdthqltt.entity.enums.VaiTro;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +26,27 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung, Long> {
     boolean existsByEmailAndIdNot(String email, Long id);
 
     List<NguoiDung> findByVaiTroAndTrangThai(VaiTro vaiTro, TrangThaiTaiKhoan trangThai);
+
+    /** Số hồ sơ còn hiệu lực mà người dùng (GV) đang là GVHD trong đợt đang chạy — chặn vô hiệu hóa (#9). */
+    @Query("""
+            select count(p) from PhanCongGvhd p
+            where p.giangVien.nguoiDung.id = :nguoiDungId
+              and p.hoSo.dot.trangThai in :trangThaiDot
+              and p.hoSo.trangThai in :trangThaiHoSo
+            """)
+    long demHoSoDangHuongDanCuaGiangVien(@Param("nguoiDungId") Long nguoiDungId,
+                                         @Param("trangThaiDot") Collection<TrangThaiDot> trangThaiDot,
+                                         @Param("trangThaiHoSo") Collection<TrangThaiHoSo> trangThaiHoSo);
+
+    @Query("""
+            select count(h) from HoSoThucTap h
+            where h.canBoDvhd.nguoiDung.id = :nguoiDungId
+              and h.dot.trangThai in :trangThaiDot
+              and h.trangThai in :trangThaiHoSo
+            """)
+    long demHoSoDangHuongDanCuaCanBo(@Param("nguoiDungId") Long nguoiDungId,
+                                     @Param("trangThaiDot") Collection<TrangThaiDot> trangThaiDot,
+                                     @Param("trangThaiHoSo") Collection<TrangThaiHoSo> trangThaiHoSo);
 
     @Query("""
             select n from NguoiDung n
