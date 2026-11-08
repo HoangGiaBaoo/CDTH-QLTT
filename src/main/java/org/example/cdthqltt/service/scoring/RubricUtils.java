@@ -50,8 +50,12 @@ public final class RubricUtils {
         return k.diemMin().add(k.diemMax()).divide(HAI, MathContext.DECIMAL64);
     }
 
-    /** Hiển thị kiểu Việt Nam trong thông điệp: 7,5. */
+    /** Hiển thị kiểu Việt Nam trong thông điệp, tối thiểu một chữ số thập phân: 7,0 · 7,5 · 8,25. */
     public static String hienThi(BigDecimal x) {
-        return x.stripTrailingZeros().toPlainString().replace('.', ',');
+        BigDecimal y = x.stripTrailingZeros();
+        if (y.scale() < 1) {
+            y = y.setScale(1, RoundingMode.UNNECESSARY);
+        }
+        return y.toPlainString().replace('.', ',');
     }
 }

@@ -59,8 +59,7 @@ public class ScoringService {
                 List<PhieuDiem> phieuChang = phieuHopLe.stream().filter(p -> p.chang() == chang.thuTu()).toList();
                 DiemChang d = hopNhatNhomNguoiCham(clo, chang, phieuChang);
                 theoChang.put(chang.thuTu(), d);
-                if (d.tbDvhd() != null && d.tbGvhd() != null
-                        && d.tbDvhd().subtract(d.tbGvhd()).abs().compareTo(NGUONG_LECH) > 0) {
+                if (lechVuotNguong(d)) {
                     canhBao.add(clo.maClo() + " " + chang.ten() + ": điểm ĐVHD (" + RubricUtils.hienThi(RubricUtils.lamTron(d.tbDvhd()))
                             + ") và GVHD (" + RubricUtils.hienThi(RubricUtils.lamTron(d.tbGvhd())) + ") lệch quá 2 điểm (Điều 20 khoản 3)");
                 }
@@ -105,6 +104,12 @@ public class ScoringService {
             tong = tong.add(clo.tyLeGvhd().multiply(tbGvhd, MathContext.DECIMAL64));
         }
         return new DiemChang(tbDvhd, tbGvhd, tong.divide(TRAM, MathContext.DECIMAL64));
+    }
+
+    /** Đ20 k3: TB nhóm ĐVHD và TB nhóm GVHD lệch quá 2,0 điểm (so trên giá trị chưa làm tròn). */
+    public boolean lechVuotNguong(DiemChang d) {
+        return d.tbDvhd() != null && d.tbGvhd() != null
+                && d.tbDvhd().subtract(d.tbGvhd()).abs().compareTo(NGUONG_LECH) > 0;
     }
 
     /**
