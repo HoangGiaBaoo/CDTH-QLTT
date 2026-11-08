@@ -25,6 +25,9 @@ spring:
     time-zone: Asia/Ho_Chi_Minh
 
 app:
+  auth:
+    so-lan-sai-toi-da: 5
+    thoi-gian-khoa-phut: 15
   jwt:
     secret: ${JWT_SECRET:}        # bắt buộc đặt qua biến môi trường hoặc application-dev.yml
     expiration-hours: 8
