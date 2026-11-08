@@ -1,0 +1,15 @@
+# Profile dev — chỉ dùng trên máy nhóm. Bí mật thật đặt qua biến môi trường JWT_SECRET.
+app:
+  jwt:
+    secret: ${JWT_SECRET:qltt-dev-secret-chi-dung-tren-may-nhom-29-khong-dung-that}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+logging:
+  level:
+    org.example.cdthqltt: DEBUG
