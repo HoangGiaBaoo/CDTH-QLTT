@@ -37,17 +37,19 @@ public class FileStorageService {
     public static final long KICH_THUOC_TOI_DA = 20L * 1024 * 1024;
 
     public static final Set<String> DUOI_BAO_CAO = Set.of("pdf", "docx");
-    public static final Set<String> DUOI_MINH_CHUNG = Set.of("pdf", "docx", "doc", "xlsx", "jpg", "jpeg", "png", "zip");
+    /** #66 (CBR-24): pdf, doc, docx, xls, xlsx, jpg, png, mp4. */
+    public static final Set<String> DUOI_MINH_CHUNG = Set.of("pdf", "doc", "docx", "xls", "xlsx", "jpg", "jpeg", "png", "mp4");
 
     private static final Map<String, Set<String>> CONTENT_TYPE_HOP_LE = Map.of(
             "pdf", Set.of("application/pdf"),
             "docx", Set.of("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
             "doc", Set.of("application/msword"),
+            "xls", Set.of("application/vnd.ms-excel"),
             "xlsx", Set.of("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
             "jpg", Set.of("image/jpeg"),
             "jpeg", Set.of("image/jpeg"),
             "png", Set.of("image/png"),
-            "zip", Set.of("application/zip", "application/x-zip-compressed"));
+            "mp4", Set.of("video/mp4"));
 
     private final Path thuMucGoc;
 
