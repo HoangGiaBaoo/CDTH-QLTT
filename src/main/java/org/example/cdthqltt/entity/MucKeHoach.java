@@ -20,7 +20,7 @@ public class MucKeHoach {
     @JoinColumn(name = "ke_hoach_id", nullable = false)
     private KeHoachHocTap keHoach;
 
-    // Tuần 0 = mục tiêu chung; tuần 1..N = từng tuần thực tập (N+1 dòng).
+    // Tuần 1..N = từng tuần thực tập; tuần N+1 = dòng Tổng kết (TTTN-03, N+1 dòng).
     @Column(name = "tuan", nullable = false)
     private Integer tuan;
 
