@@ -86,4 +86,35 @@ public class KetQuaHocPhan {
 
     @Column(name = "ngay_tinh")
     private LocalDateTime ngayTinh;
+
+    /** Điểm CLO theo mã — ánh xạ mã CLO1…CLO7 sang cột diem_clo1…7 (đúng 7 CLO, CBR-07); mã khác trả null. */
+    public BigDecimal diemCloTheoMa(String maClo) {
+        return switch (maClo) {
+            case "CLO1" -> diemClo1;
+            case "CLO2" -> diemClo2;
+            case "CLO3" -> diemClo3;
+            case "CLO4" -> diemClo4;
+            case "CLO5" -> diemClo5;
+            case "CLO6" -> diemClo6;
+            case "CLO7" -> diemClo7;
+            default -> null;
+        };
+    }
+
+    /** Ghi điểm CLO theo mã; trả false khi mã không thuộc 7 cột của bảng. */
+    public boolean ganDiemClo(String maClo, BigDecimal diem) {
+        switch (maClo) {
+            case "CLO1" -> diemClo1 = diem;
+            case "CLO2" -> diemClo2 = diem;
+            case "CLO3" -> diemClo3 = diem;
+            case "CLO4" -> diemClo4 = diem;
+            case "CLO5" -> diemClo5 = diem;
+            case "CLO6" -> diemClo6 = diem;
+            case "CLO7" -> diemClo7 = diem;
+            default -> {
+                return false;
+            }
+        }
+        return true;
+    }
 }

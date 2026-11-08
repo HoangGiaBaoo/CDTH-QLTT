@@ -93,7 +93,7 @@ public class KetQuaService {
                     Map<String, BigDecimal> diem = new LinkedHashMap<>();
                     Map<String, Integer> muc = new LinkedHashMap<>();
                     for (CauHinhClo clo : cauHinh.clo()) {
-                        BigDecimal d = layDiemClo(kq, clo.maClo());
+                        BigDecimal d = kq.diemCloTheoMa(clo.maClo());
                         diem.put(clo.maClo(), d);
                         muc.put(clo.maClo(), mucCua(d, clo.bangMuc()));
                     }
@@ -603,7 +603,7 @@ public class KetQuaService {
                 quyDoi = hienThi(r.diemCloDayDu().get(clo.maClo()).multiply(clo.alpha(), MathContext.DECIMAL64)
                         .divide(TRAM, MathContext.DECIMAL64));
             }
-            BigDecimal diem = daTinh ? layDiemClo(kq, clo.maClo()) : null;
+            BigDecimal diem = daTinh ? kq.diemCloTheoMa(clo.maClo()) : null;
             dong.add(new BangTongHopResponse.DongClo(clo.maClo(), tenClo.get(clo.maClo()), clo.alpha(), theoChang,
                     diem, mucCua(diem, clo.bangMuc()), quyDoi));
         }
@@ -677,7 +677,7 @@ public class KetQuaService {
         boolean daTinh = kq != null && kq.getTrangThai() != TrangThaiKetQua.CHUA_TINH;
         Map<String, BigDecimal> diemClo = new LinkedHashMap<>();
         if (daTinh) {
-            maClo.forEach(ma -> diemClo.put(ma, layDiemClo(kq, ma)));
+            maClo.forEach(ma -> diemClo.put(ma, kq.diemCloTheoMa(ma)));
         }
         SinhVien sv = h.getSinhVien();
         return new KetQuaTomTatResponse(h.getId(), sv.getMaSv(), sv.getNguoiDung().getHoTen(), sv.getLop(),
@@ -705,7 +705,7 @@ public class KetQuaService {
         Map<String, Object> m = new LinkedHashMap<>();
         Map<String, BigDecimal> clo = new LinkedHashMap<>();
         for (int i = 1; i <= 7; i++) {
-            clo.put("CLO" + i, layDiemClo(kq, "CLO" + i));
+            clo.put("CLO" + i, kq.diemCloTheoMa("CLO" + i));
         }
         m.put("diemClo", clo);
         m.put("diemThuong", kq.getDiemThuong());
@@ -716,32 +716,12 @@ public class KetQuaService {
         return m;
     }
 
-    /** Ánh xạ mã CLO sang cột diem_clo1..7 của bảng ket_qua_hoc_phan (đúng 7 CLO — CBR-07). */
+    /** Ghi điểm CLO vào cột diem_clo1..7 (đúng 7 CLO — CBR-07). */
     private static void ganDiemClo(KetQuaHocPhan kq, String maClo, BigDecimal diem) {
-        switch (maClo) {
-            case "CLO1" -> kq.setDiemClo1(diem);
-            case "CLO2" -> kq.setDiemClo2(diem);
-            case "CLO3" -> kq.setDiemClo3(diem);
-            case "CLO4" -> kq.setDiemClo4(diem);
-            case "CLO5" -> kq.setDiemClo5(diem);
-            case "CLO6" -> kq.setDiemClo6(diem);
-            case "CLO7" -> kq.setDiemClo7(diem);
-            default -> throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
+        if (!kq.ganDiemClo(maClo, diem)) {
+            throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
                     "Mã " + maClo + " không thuộc 7 chuẩn đầu ra của học phần (Điều 9 khoản 2)");
         }
-    }
-
-    private static BigDecimal layDiemClo(KetQuaHocPhan kq, String maClo) {
-        return switch (maClo) {
-            case "CLO1" -> kq.getDiemClo1();
-            case "CLO2" -> kq.getDiemClo2();
-            case "CLO3" -> kq.getDiemClo3();
-            case "CLO4" -> kq.getDiemClo4();
-            case "CLO5" -> kq.getDiemClo5();
-            case "CLO6" -> kq.getDiemClo6();
-            case "CLO7" -> kq.getDiemClo7();
-            default -> null;
-        };
     }
 
     /** Mức của điểm đã làm tròn — cùng hàm với lúc tính (docs/01 mục 10.1). */
