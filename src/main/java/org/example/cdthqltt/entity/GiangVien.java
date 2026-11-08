@@ -32,7 +32,7 @@ public class GiangVien {
     @Column(name = "hoc_ham_hoc_vi", length = 50)
     private String hocHamHocVi;
 
-    // CBR-04: hạn mức 5–10 SV/đợt do Khoa đặt cho từng GV; giá trị luôn đọc từ cột này.
+    // CBR-04 (Đ6 k2b): hạn mức 5–10 SV/đợt do Khoa đặt cho từng GV; giá trị luôn đọc từ cột này.
     @Column(name = "so_sv_toi_da", nullable = false)
     private Integer soSvToiDa = 8;
 }

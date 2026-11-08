@@ -16,6 +16,9 @@ public interface GiangVienRepository extends JpaRepository<GiangVien, Long> {
     boolean existsByMaGv(String maGv);
 
     @EntityGraph(attributePaths = "nguoiDung")
+    List<GiangVien> findAllByOrderByMaGv();
+
+    @EntityGraph(attributePaths = "nguoiDung")
     @Query("""
             select g from GiangVien g
             where (:tuKhoa is null or lower(g.maGv) like lower(concat('%', :tuKhoa, '%'))
