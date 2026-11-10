@@ -1,0 +1,128 @@
+/* Giao diện QLTT — CSS thuần, biến màu ở :root để các màn dùng chung. */
+:root {
+  --mau-chinh: #1f4e8c;
+  --mau-chinh-dam: #163a69;
+  --nen: #f4f6f9;
+  --the: #ffffff;
+  --chu: #1f2933;
+  --chu-phu: #5f6b7a;
+  --vien: #d9dee5;
+  --xam-nen: #eceff3; --xam-chu: #4a5563;
+  --vang-nen: #fff4d6; --vang-chu: #8a5a00; --vang-vien: #f1d27a;
+  --xanh-duong-nen: #e2edfb; --xanh-duong-chu: #1f4e8c;
+  --xanh-la-nen: #e3f4e8; --xanh-la-chu: #1d6b3a;
+  --do-nen: #fde6e6; --do-chu: #a32020; --do-vien: #efb0b0;
+  --bo-goc: 8px;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15px;
+  color: var(--chu);
+  background: var(--nen);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--nen); }
+a { color: var(--mau-chinh); }
+
+/* ---------- Bố cục sau đăng nhập ---------- */
+.app-layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 240px; flex-shrink: 0; background: var(--mau-chinh-dam); color: #fff;
+  display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.sidebar-brand { font-weight: 700; font-size: 20px; padding: 18px 20px; letter-spacing: 1px; }
+.nav-item {
+  display: block; padding: 10px 20px; color: #d6e2f3; text-decoration: none; border-left: 3px solid transparent;
+}
+.nav-item:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.nav-active { background: rgba(255, 255, 255, 0.14); color: #fff; border-left-color: #ffd166; font-weight: 600; }
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.topbar {
+  display: flex; align-items: center; gap: 16px; padding: 10px 24px; background: var(--the);
+  border-bottom: 1px solid var(--vien); position: sticky; top: 0; z-index: 5;
+}
+.topbar-spacer { flex: 1; }
+.topbar-user { text-align: right; line-height: 1.2; }
+.topbar-name { font-weight: 600; }
+.topbar-role { font-size: 13px; color: var(--chu-phu); }
+.menu-toggle { display: none; background: none; border: none; font-size: 22px; cursor: pointer; }
+.content { padding: 24px; max-width: 1280px; width: 100%; }
+.sidebar-backdrop { display: none; }
+
+@media (max-width: 900px) {
+  .sidebar { position: fixed; left: -260px; z-index: 20; transition: left 0.2s; }
+  .sidebar-mo { left: 0; }
+  .sidebar-backdrop { display: block; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.3); z-index: 15; }
+  .menu-toggle { display: block; }
+  .content { padding: 16px; }
+}
+
+/* ---------- Trang đăng nhập ---------- */
+.auth-layout { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.auth-card {
+  width: 100%; max-width: 420px; background: var(--the); border-radius: 12px; padding: 32px;
+  box-shadow: 0 8px 30px rgba(15, 35, 70, 0.12);
+}
+.auth-brand { display: flex; gap: 14px; align-items: center; margin-bottom: 24px; }
+.auth-logo {
+  background: var(--mau-chinh); color: #fff; font-weight: 700; border-radius: 10px; padding: 12px 10px; font-size: 16px;
+}
+.auth-title { font-weight: 700; font-size: 17px; }
+.auth-subtitle { font-size: 13px; color: var(--chu-phu); }
+.demo-accounts { margin-top: 20px; border-top: 1px dashed var(--vien); padding-top: 14px; }
+.demo-title { font-size: 13px; color: var(--chu-phu); margin-bottom: 8px; }
+.demo-list { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ---------- Thành phần chung ---------- */
+.page-title { font-size: 22px; margin: 0 0 16px; }
+.section-title { font-size: 17px; margin: 24px 0 12px; }
+.card { background: var(--the); border: 1px solid var(--vien); border-radius: var(--bo-goc); padding: 20px; }
+.muted { color: var(--chu-phu); }
+.loading { padding: 40px; text-align: center; color: var(--chu-phu); }
+.empty { text-align: center; padding: 40px 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.empty-title { font-size: 17px; font-weight: 600; }
+
+.info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.info-grid > div { display: flex; flex-direction: column; gap: 2px; }
+.info-grid .muted { font-size: 13px; }
+
+.tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.tile {
+  background: var(--the); border: 1px solid var(--vien); border-radius: var(--bo-goc); padding: 16px;
+  text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s;
+}
+.tile:hover { border-color: var(--mau-chinh); box-shadow: 0 2px 10px rgba(31, 78, 140, 0.1); }
+.tile-title { font-weight: 600; color: var(--mau-chinh); margin-bottom: 4px; }
+.tile-desc { font-size: 13px; color: var(--chu-phu); }
+
+.form { display: flex; flex-direction: column; gap: 14px; }
+.form-title { font-size: 20px; margin: 0; }
+.field { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.field > span { font-weight: 600; }
+.field input, .field select, .field textarea {
+  font: inherit; padding: 9px 11px; border: 1px solid var(--vien); border-radius: 6px; background: #fff;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid #b9cff0; border-color: var(--mau-chinh); }
+.field-error { color: var(--do-chu); }
+
+.btn {
+  font: inherit; border-radius: 6px; padding: 8px 16px; cursor: pointer; border: 1px solid transparent;
+  text-decoration: none; display: inline-block;
+}
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-chinh { background: var(--mau-chinh); color: #fff; }
+.btn-chinh:hover:not(:disabled) { background: var(--mau-chinh-dam); }
+.btn-phu { background: #fff; color: var(--chu); border-color: var(--vien); }
+.btn-phu:hover:not(:disabled) { border-color: var(--mau-chinh); color: var(--mau-chinh); }
+.btn-full { width: 100%; padding: 10px; }
+.btn-nho { padding: 4px 10px; font-size: 13px; }
+
+.alert { padding: 10px 14px; border-radius: 6px; border: 1px solid; font-size: 14px; }
+.alert-vang { background: var(--vang-nen); color: var(--vang-chu); border-color: var(--vang-vien); }
+.alert-do { background: var(--do-nen); color: var(--do-chu); border-color: var(--do-vien); }
+
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.badge-xam { background: var(--xam-nen); color: var(--xam-chu); }
+.badge-vang { background: var(--vang-nen); color: var(--vang-chu); }
+.badge-xanh-duong { background: var(--xanh-duong-nen); color: var(--xanh-duong-chu); }
+.badge-xanh-la { background: var(--xanh-la-nen); color: var(--xanh-la-chu); }
+.badge-do { background: var(--do-nen); color: var(--do-chu); }
