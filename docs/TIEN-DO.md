@@ -4,7 +4,8 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 10/11/2026**: Backend xong cả 13 UC (#1–#102). **Seed V4 xong + kiểm chứng**, đã push; CSDL dev đã reset
-và đang ở V1–V4. `mvnw test` xanh 21/21. **Chưa có**: frontend, cập nhật docs, Postman.
+và đang ở V1–V4. `mvnw test` xanh 21/21. **Khung frontend xong** (`frontend/`, `npm run build` sạch).
+**Chưa có**: các màn SCR, cập nhật docs, Postman.
 
 ## Bảng 6 tuần
 
@@ -14,15 +15,17 @@ và đang ở V1–V4. `mvnw test` xanh 21/21. **Chưa có**: frontend, cập nh
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · ⬜ FE | ✅ seed V4 · ⬜ Postman · ⬜ FE |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · ⬜ FE | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **B — khung frontend** `frontend/` (React 18 + TS + Vite, chưa có thư mục) theo skill `giao-dien-react`; sau đó
-   màn hình của từng người (A: SCR-10, SCR-21 TTTN-07, SCR-24, SCR-25; B: đăng ký, phân công, kế hoạch, nhật ký…).
+1. **Màn hình FE** — thay `PlaceholderPage` bằng trang thật (khai báo trong `TRANG` ở `frontend/src/App.tsx`, quyền lấy
+   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — SCR-09/10, SCR-18/20, SCR-19, SCR-21, SCR-24, SCR-25,
+   SCR-03, SCR-06, chuông thông báo; B — SCR-11, SCR-12 (+ trang chi tiết hồ sơ cho GV/cán bộ), SCR-13, SCR-14…17,
+   SCR-07/08, SCR-22, SCR-23.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
@@ -124,6 +127,23 @@ SV K67 `sv.mai`, `sv.nga`, `sv.phat`, `sv.quan`, `sv.thu`.
 **Đã kiểm chứng** trên CSDL thử riêng `qltt_seedtest` (đã xóa sau khi thử): Flyway nạp V1–V4 sạch; RP-01…RP-06 chạy
 được; 10 bảng TTTN-07 chỉ có cảnh báo chuẩn hóa CLO7 (đúng); SV K66 xem được kết quả, 08a/08b, chỉ số tự nhận thức;
 đưa 10 kết quả về `DA_TINH` rồi gọi #84 ⇒ **Java tính lại khớp seed ở mọi cột**; bước 4, 5, 6, 8, 10 chạy đúng như bảng.
+
+## Khung frontend (10/11/2026)
+
+React 18.3 + TS 5.6 + Vite 6 + React Router 6 + axios, CSS thuần (`src/styles.css`, biến màu ở `:root`).
+`npm --prefix frontend install` rồi `npm --prefix frontend run dev` (cổng 5173 — khớp CORS backend); backend khác cổng
+8080 thì tạo `frontend/.env.local` từ `.env.example`.
+
+- `api/client.ts`: axios duy nhất, gắn Bearer, chuẩn hóa lỗi thành `ApiError(code, message, errors)`; 401 (trừ lúc
+  đăng nhập) ⇒ xóa token, về `/login?hetPhien=1`. `layData()` bóc `data` của `ApiResponse`.
+- `auth/AuthContext.tsx` (token `qltt_token` trong localStorage, đọc lại phiên bằng #2), `auth/RequireRole.tsx`.
+- `menu.ts`: một danh mục màn hình theo 4 vai trò (SCR, người phụ trách, mô tả) — App sinh route + menu từ đây.
+- `components/`: `StatusBadge` (màu cố định theo enum), `ErrorAlert` (lỗi nghiệp vụ vàng, lỗi khác đỏ, nguyên văn
+  `message`), `Loading`. `utils/format.ts` (điểm 7,7 · dd/MM/yyyy), `utils/constants.ts` (nhãn mọi enum).
+- Trang: đăng nhập (nút điền nhanh tài khoản demo chỉ hiện ở `npm run dev`), tổng quan theo vai trò, 403, 404,
+  giữ chỗ cho 19 màn SCR.
+- Đã thử với backend: preflight CORS từ 5173, đăng nhập sai/đúng, `/auth/me`, 401 không token đều đúng cấu trúc.
+  Chưa thử bằng trình duyệt thật.
 
 ## Môi trường thử hiện tại
 
