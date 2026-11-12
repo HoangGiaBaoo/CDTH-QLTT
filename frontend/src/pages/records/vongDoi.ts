@@ -44,3 +44,33 @@ export function viecTiepTheo(h: HoSo): string | null {
       return null;
   }
 }
+
+/** Hồ sơ giáo vụ chuyển Gián đoạn được (khớp bảng chuyển trạng thái của `HoSoThucTapService`, Đ15 k4). */
+export const GIAN_DOAN_DUOC: TrangThaiHoSo[] = ['CHO_GVHD', 'DANG_THUC_TAP', 'CHO_DANH_GIA'];
+
+/** Câu mô tả tình trạng hồ sơ cho cán bộ / giảng viên / giáo vụ (SCR-12) khi họ không có việc phải làm ngay. */
+export function tinhTrangChoCanBo(h: HoSo): string | null {
+  switch (h.trangThai) {
+    case 'NHAP':
+      return h.lyDoTuChoi
+        ? `Hồ sơ đã bị trả về Bản nháp (lý do: ${h.lyDoTuChoi}). Chờ sinh viên sửa và gửi lại.`
+        : 'Sinh viên đang soạn phiếu đăng ký, chưa gửi.';
+    case 'CHO_DVHD':
+      return `Chờ cán bộ ${h.canBoDvhd?.hoTen ?? 'hướng dẫn'} xác nhận tiếp nhận.`;
+    case 'CHO_GVHD':
+      return h.gvhd
+        ? `ĐVHD đã xác nhận tiếp nhận. Chờ GVHD ${h.gvhd.hoTen} phê duyệt.`
+        : 'ĐVHD đã xác nhận tiếp nhận. Chờ giáo vụ phân công giảng viên hướng dẫn.';
+    case 'DANG_THUC_TAP':
+      return 'Sinh viên đang thực tập: theo dõi kế hoạch, nhật ký, tiến độ, minh chứng và báo cáo ở các mục bên dưới.';
+    case 'CHO_DANH_GIA':
+      return 'Báo cáo đã đủ xác nhận của ĐVHD và GVHD; hồ sơ chờ đánh giá cuối kỳ.';
+    case 'HOAN_THANH':
+    case 'KHONG_HOAN_THANH':
+      return 'Kết quả học phần đã được công bố.';
+    case 'GIAN_DOAN':
+      return 'Hồ sơ đang tạm dừng do gián đoạn bất khả kháng (Điều 15 khoản 4); giáo vụ khôi phục khi sinh viên tiếp tục.';
+    default:
+      return null;
+  }
+}

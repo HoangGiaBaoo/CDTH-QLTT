@@ -10,6 +10,7 @@ import NotFoundPage from './pages/common/NotFoundPage';
 import PlaceholderPage from './pages/common/PlaceholderPage';
 import MyRecordPage from './pages/records/MyRecordPage';
 import RecordEntryPage from './pages/records/RecordEntryPage';
+import RecordListPage from './pages/records/RecordListPage';
 import AssessmentDetailPage from './pages/assessments/AssessmentDetailPage';
 import AssessmentListPage from './pages/assessments/AssessmentListPage';
 import GradingPage from './pages/assessments/GradingPage';
@@ -33,11 +34,21 @@ const TRANG: Record<string, ReactElement> = {
   '/terms': <TermListPage />,
   '/assessments': <AssessmentListPage />,
   '/panels': <PanelListPage />,
+  '/records': <RecordListPage />,
   '/results': <ResultListPage />,
   '/my-record': <MyRecordPage />,
   '/my-result': <MyResultPage />,
   '/statistics': <StatisticsPage />,
 };
+
+/**
+ * Màn theo dõi của một hồ sơ mở từ SCR-12 (cán bộ, giảng viên, giáo vụ) — cùng màn với mục menu của sinh viên;
+ * chưa làm thì giữ chỗ theo mục menu đó.
+ */
+const MAN_THEO_DOI_HO_SO: [string, string][] = [
+  ['plan', '/my-record/plan'], ['logbook', '/my-record/logbook'], ['progress', '/my-record/progress'],
+  ['evidence', '/my-record/evidence'], ['report', '/my-record/report'], ['feedback', '/my-record/feedback'],
+];
 
 /** Trang con không hiện trên menu (chi tiết một bản ghi…) — tự khai báo quyền, thường trùng mục menu cha. */
 const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
@@ -51,6 +62,11 @@ const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
   // Đích NT-01/02/05/06: sinh viên ⇒ phiếu đăng ký của mình (SCR-11), cán bộ ⇒ chi tiết hồ sơ (SCR-12).
   { path: '/records/:recordId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <RecordEntryPage /> },
   { path: '/results/:recordId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <ResultEntryPage /> },
+  ...MAN_THEO_DOI_HO_SO.map(([con, menuSv]) => ({
+    path: `/records/:recordId/${con}`,
+    roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'] as VaiTro[],
+    element: <PlaceholderPage muc={MENU.find((m) => m.path === menuSv)!} />,
+  })),
 ];
 
 export default function App() {

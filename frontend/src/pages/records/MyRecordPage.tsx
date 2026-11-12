@@ -9,9 +9,9 @@ import StatusBadge from '../../components/StatusBadge';
 import { NHAN_TRANG_THAI_HO_SO } from '../../utils/constants';
 import type { HoSo } from '../../types/record';
 import type { Dot } from '../../types/term';
+import RecordStepper from './RecordStepper';
 import RecordSummary from './RecordSummary';
 import RegistrationForm from './RegistrationForm';
-import { VONG_DOI_HO_SO, viTriVongDoi } from './vongDoi';
 
 interface DuLieu {
   hoSo: HoSo | null;
@@ -77,7 +77,6 @@ export default function MyRecordPage({ recordId }: { recordId?: number }) {
 
   const { hoSo, dot, dsDotMo, hoSoCu } = du;
   const suaDuoc = !hoSo || hoSo.trangThai === 'NHAP';
-  const viTri = hoSo ? viTriVongDoi(hoSo.trangThai) : 0;
 
   const capNhatHoSo = (h: HoSo) => setDu((x) => (x ? { ...x, hoSo: h } : x));
 
@@ -100,18 +99,7 @@ export default function MyRecordPage({ recordId }: { recordId?: number }) {
               <Link to={`/records/${hoSoCu.id}`}>tại đây</Link>.
             </p>
           )}
-          {hoSo && viTri >= 0 && (
-            <div className="card mb">
-              <ol className="stepper">
-                {VONG_DOI_HO_SO.map((b, i) => (
-                  <li key={b.nhan} className={i < viTri ? 'step-xong' : i === viTri ? 'step-hien-tai' : ''}>
-                    <span className="step-so">{i + 1}</span>
-                    {b.ma.includes(hoSo.trangThai) ? NHAN_TRANG_THAI_HO_SO[hoSo.trangThai] : b.nhan}
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
+          {hoSo && <RecordStepper trangThai={hoSo.trangThai} />}
           {hoSo?.trangThai === 'NHAP' && hoSo.lyDoTuChoi && (
             <div className="alert alert-vang mb" role="alert">
               Hồ sơ bị trả về: {hoSo.lyDoTuChoi}. Sửa thông tin cần thiết rồi gửi lại.

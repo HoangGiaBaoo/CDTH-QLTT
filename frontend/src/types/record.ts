@@ -49,3 +49,15 @@ export interface HoSoRequest {
   mucTieu?: string;
   sanPhamDuKien?: string;
 }
+
+/** Body #45 (cán bộ ĐVHD) và #46 (GVHD) — từ chối thì `lyDo` bắt buộc, hồ sơ về Bản nháp. */
+export interface QuyetDinhRequest {
+  dongY: boolean;
+  lyDo?: string;
+}
+
+/** Body #47 — `gianDoan = true`: chuyển Gián đoạn (Đ15 k4); false: khôi phục. Lý do luôn bắt buộc. */
+export interface DoiTrangThaiHoSoRequest {
+  gianDoan: boolean;
+  lyDo: string;
+}

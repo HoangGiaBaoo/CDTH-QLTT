@@ -14,13 +14,15 @@ interface Props {
   hinhThucDangChon?: string;
   /** Sau khi GVHD duyệt: hiện đã có / chưa có (xám — nhiều mục chưa tới hạn) và đường sang SCR-17. */
   hienTrangThai?: boolean;
+  /** Cán bộ / giáo vụ xem hồ sơ của SV (SCR-12): lời nhắc ở ngôi thứ ba và đường sang minh chứng của hồ sơ đó. */
+  xemHoSoSinhVien?: boolean;
 }
 
 /**
  * UC04 bước 3 — danh mục minh chứng bắt buộc của hình thức thực tập (Điều 4). Danh mục lấy từ backend
  * (#65, bảng `loai_minh_chung_bat_buoc`), không viết sẵn ở giao diện.
  */
-export default function RequiredEvidence({ recordId, hinhThucDaLuu, hinhThucDangChon, hienTrangThai }: Props) {
+export default function RequiredEvidence({ recordId, hinhThucDaLuu, hinhThucDangChon, hienTrangThai, xemHoSoSinhVien }: Props) {
   const [bang, setBang] = useState<DoiChieuMinhChung | null>(null);
   const [loi, setLoi] = useState<unknown>(null);
 
@@ -57,7 +59,8 @@ export default function RequiredEvidence({ recordId, hinhThucDaLuu, hinhThucDang
                     {d.tenHienThi}
                   </span>
                   <span className="muted small">
-                    {d.nguon === 'HE_THONG' ? 'Hệ thống tự ghi nhận' : 'Bạn tải lên ở mục Minh chứng'}
+                    {d.nguon === 'HE_THONG' ? 'Hệ thống tự ghi nhận'
+                      : xemHoSoSinhVien ? 'Sinh viên tải lên' : 'Bạn tải lên ở mục Minh chứng'}
                     {hienTrangThai && (d.daCo ? ' · Đã có' : ' · Chưa có')}
                   </span>
                 </li>
@@ -66,7 +69,7 @@ export default function RequiredEvidence({ recordId, hinhThucDaLuu, hinhThucDang
           )}
           {bang && hienTrangThai && (
             <p className="mt0 small">
-              <Link to="/my-record/evidence">Mở mục Minh chứng →</Link>
+              <Link to={xemHoSoSinhVien ? `/records/${recordId}/evidence` : '/my-record/evidence'}>Mở mục Minh chứng →</Link>
             </p>
           )}
         </>

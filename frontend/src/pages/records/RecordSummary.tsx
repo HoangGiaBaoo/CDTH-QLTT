@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { NHAN_HINH_THUC_LAM_VIEC, NHAN_HINH_THUC_THUC_TAP } from '../../utils/constants';
-import { ngay, ngayGio } from '../../utils/format';
 import type { HoSo } from '../../types/record';
 import type { Dot } from '../../types/term';
+import RecordInfo from './RecordInfo';
 import RequiredEvidence from './RequiredEvidence';
 import { daDuocDuyet, viecTiepTheo } from './vongDoi';
 
@@ -34,33 +33,7 @@ export default function RecordSummary({ hoSo, dot }: { hoSo: HoSo; dot: Dot }) {
         <div className={`alert ${hoSo.trangThai === 'GIAN_DOAN' ? 'alert-vang' : 'alert-xanh'} mb`} role="status">{viec}</div>
       )}
 
-      <div className="card mb">
-        <h2 className="section-title mt0">Phiếu đăng ký TTTN-01</h2>
-        <div className="info-grid">
-          <div><span className="muted">Đợt</span>{dot.maDot} · {ngay(dot.ngayBatDau)} – {ngay(dot.ngayKetThuc)}</div>
-          <div><span className="muted">Hình thức thực tập</span>{NHAN_HINH_THUC_THUC_TAP[hoSo.hinhThucThucTap] ?? hoSo.hinhThucThucTap}</div>
-          <div><span className="muted">Đơn vị hướng dẫn</span>{hoSo.donVi ? `${hoSo.donVi.ten} (${hoSo.donVi.maDvhd})` : '—'}</div>
-          <div>
-            <span className="muted">Cán bộ hướng dẫn</span>{hoSo.canBoDvhd?.hoTen ?? '—'}
-            {hoSo.canBoDvhd?.email && <span className="muted small">{hoSo.canBoDvhd.email}</span>}
-          </div>
-          <div>
-            <span className="muted">Giảng viên hướng dẫn</span>{hoSo.gvhd?.hoTen ?? 'Chưa phân công'}
-            {hoSo.gvhd?.email && <span className="muted small">{hoSo.gvhd.email}</span>}
-          </div>
-          <div><span className="muted">Bộ phận làm việc</span>{hoSo.boPhan ?? '—'}</div>
-          <div><span className="muted">Hình thức làm việc</span>{hoSo.hinhThucLamViec ? NHAN_HINH_THUC_LAM_VIEC[hoSo.hinhThucLamViec] : '—'}</div>
-          <div><span className="muted">Số tuần tham gia</span>{hoSo.soTuanThamGia ?? '—'}</div>
-          <div><span className="muted">Ngày gửi</span>{ngayGio(hoSo.ngayGui)}</div>
-        </div>
-        <div className="info-grid mt ngan-tren">
-          <div className="o-rong"><span className="muted">Đề tài / nhiệm vụ</span>{hoSo.deTai ?? '—'}</div>
-          {hoSo.mucTieu && <div><span className="muted">Mục tiêu</span><span className="pre-line">{hoSo.mucTieu}</span></div>}
-          {hoSo.sanPhamDuKien && (
-            <div><span className="muted">Sản phẩm dự kiến</span><span className="pre-line">{hoSo.sanPhamDuKien}</span></div>
-          )}
-        </div>
-      </div>
+      <RecordInfo hoSo={hoSo} dot={dot} />
 
       <div className="card mb">
         <RequiredEvidence recordId={hoSo.id} hinhThucDaLuu={hoSo.hinhThucThucTap} hienTrangThai={duyet} />

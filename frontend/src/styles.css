@@ -405,3 +405,19 @@ a { color: var(--mau-chinh); }
 .o-rong { grid-column: 1 / -1; }
 .ngan-tren { padding-top: 12px; border-top: 1px solid var(--vien); }
 .minh-chung-bb .tieu-de-nho { margin-top: 0; }
+
+/* ---------- Hồ sơ thực tập SCR-12 ---------- */
+.mt-nho { margin-top: 4px; }
+.alert-xanh-duong { background: var(--xanh-duong-nen); color: var(--xanh-duong-chu); border-color: #b9cff0; }
+.alert-hang { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.alert-hang .btn { flex-shrink: 0; }
+.viec-can-lam { border-left: 4px solid var(--mau-chinh); }
+.viec-can-lam .card-head { margin-bottom: 0; flex-wrap: wrap; }
+.tab-dem { display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 4px; border-radius: 999px;
+  background: var(--nen); color: var(--chu-phu); font-size: 12px; font-weight: 600; text-align: center; }
+.tab-active .tab-dem { background: var(--xanh-duong-nen); color: var(--mau-chinh); }
+.theo-doi .tile { display: flex; flex-direction: column; gap: 6px; }
+.theo-doi .tile-title { margin-bottom: 0; }
+.theo-doi-dong { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.theo-doi-so { font-size: 14px; }
+.theo-doi-so b { font-size: 18px; }
