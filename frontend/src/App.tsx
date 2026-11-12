@@ -17,6 +17,7 @@ import PanelListPage from './pages/panels/PanelListPage';
 import MyResultPage from './pages/results/MyResultPage';
 import ResultEntryPage from './pages/results/ResultEntryPage';
 import ResultListPage from './pages/results/ResultListPage';
+import StatisticsPage from './pages/statistics/StatisticsPage';
 import TermDetailPage from './pages/terms/TermDetailPage';
 import TermListPage from './pages/terms/TermListPage';
 import type { VaiTro } from './types/auth';
@@ -32,6 +33,7 @@ const TRANG: Record<string, ReactElement> = {
   '/panels': <PanelListPage />,
   '/results': <ResultListPage />,
   '/my-result': <MyResultPage />,
+  '/statistics': <StatisticsPage />,
 };
 
 /** Trang con không hiện trên menu (chi tiết một bản ghi…) — tự khai báo quyền, thường trùng mục menu cha. */

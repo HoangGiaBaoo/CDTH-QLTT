@@ -4,7 +4,7 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 12/11/2026**: Backend xong cả 13 UC (#1–#102). Seed V4 xong + kiểm chứng; CSDL dev ở V1–V4.
-`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20, SCR-19, SCR-21, SCR-24 xong** (A). **Chưa có**: các màn SCR còn lại,
+`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20, SCR-19, SCR-21, SCR-24, SCR-25 xong** (A). **Chưa có**: các màn SCR còn lại,
 cập nhật docs, Postman.
 
 ## Bảng 6 tuần
@@ -15,7 +15,7 @@ cập nhật docs, Postman.
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
@@ -23,7 +23,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 ## Việc tiếp theo (theo thứ tự)
 
 1. **Màn hình FE** — thay `PlaceholderPage` bằng trang thật (khai báo trong `TRANG` ở `frontend/src/App.tsx`, quyền lấy
-   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, ~~SCR-19~~ ✅, ~~SCR-21~~ ✅, ~~SCR-24~~ ✅, SCR-25,
+   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, ~~SCR-19~~ ✅, ~~SCR-21~~ ✅, ~~SCR-24~~ ✅, ~~SCR-25~~ ✅,
    SCR-03, SCR-06, chuông thông báo; B — SCR-11, SCR-12 (+ trang chi tiết hồ sơ cho GV/cán bộ), SCR-13, SCR-14…17,
    SCR-07/08, SCR-22, SCR-23.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
@@ -211,6 +211,21 @@ hai điều kiện và nút sang SCR-23 (`/my-record/feedback`, kèm `state.tuKe
 HP 7,7 Đạt, tooltip radar; mở `/results/{id}` của mình ⇒ SCR-24, của SV khác ⇒ ACCESS_DENIED; sv.toan Không đạt
 (b)+(c); sv.an chưa công bố ⇒ giải thích + nút SCR-23; sv.tai đã công bố nhưng xóa 08b ⇒ "Bạn cần gửi phiếu
 phản hồi TTTN-08b…"; giáo vụ mở `/results/{id}` vẫn là TTTN-07.
+
+### SCR-25 Thống kê (A, 12/11/2026)
+
+`pages/statistics/StatisticsPage` (`/statistics`, chỉ ADMIN): chọn đợt + 6 tab RP-01…RP-06 (tab giữ trong URL
+`?rp=`), ô chỉ số lấy từ `tongHop`, bảng chung đọc `cot`/`dong` của #98, ghi chú, nút "Xuất Excel" (#99, tên tệp từ
+`Content-Disposition`). Biểu đồ (`ReportCharts`, CSS thuần): RP-02 thanh ngang tỷ lệ đạt từng CLO + vạch mục tiêu
+(Đ24 k2) + ✓/✗, cột chồng 100% phân bố Mức 0–4 (thang một màu xanh nhạt → đậm, đã chạy `validate_palette --ordinal`);
+RP-03 thanh tiến độ "đã nộp / cần có" theo chặng × nhóm. Mọi con số do backend tính, giao diện chỉ hiển thị; mã enum
+đổi sang nhãn tiếng Việt; ý kiến RP-06 tách thành danh sách riêng, không tên SV.
+**Sửa lỗi backend** `ThongKeService`: RP-05 và RP-06 trả 500 (NPE) với đợt chưa công bố kết quả / chưa có phiếu 08b —
+dòng dùng `List.of` mà ô trung bình là `null` ⇒ đổi sang `Arrays.asList` (Excel đã xử lý ô `null`). Đây đúng là đợt
+mặc định khi demo (HK1 đang chấm).
+Đã thử 18/18 ca trên CSDL tạm + 12 tổ hợp báo cáo × đợt đều 200: RP-01 HK2 10 dòng, 60%; RP-02 nhãn CLO2 70% khớp API,
+7 vạch mục tiêu, tooltip đoạn "n SV · x%", xuất `RP-02_TTTN-2025-HK2.xlsx`; RP-03 HK1 thanh theo chặng × nhóm; RP-04
+có sv.vinh; RP-05 7 CLO; RP-06 không lộ tên SV; mở thẳng `?rp=RP-05`; giảng viên vào `/statistics` ⇒ 403.
 
 ## Môi trường thử hiện tại
 
