@@ -8,6 +8,9 @@ import LoginPage from './pages/auth/LoginPage';
 import HomePage from './pages/common/HomePage';
 import NotFoundPage from './pages/common/NotFoundPage';
 import PlaceholderPage from './pages/common/PlaceholderPage';
+import TermDetailPage from './pages/terms/TermDetailPage';
+import TermListPage from './pages/terms/TermListPage';
+import type { VaiTro } from './types/auth';
 
 /**
  * Trang thật của từng màn: khai báo đường dẫn → component ở đây; màn chưa có thì tự dùng PlaceholderPage.
@@ -15,11 +18,17 @@ import PlaceholderPage from './pages/common/PlaceholderPage';
  */
 const TRANG: Record<string, ReactElement> = {
   '/': <HomePage />,
+  '/terms': <TermListPage />,
 };
+
+/** Trang con không hiện trên menu (chi tiết một bản ghi…) — tự khai báo quyền, thường trùng mục menu cha. */
+const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
+  { path: '/terms/:termId', roles: ['ADMIN'], element: <TermDetailPage /> },
+];
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
@@ -27,6 +36,9 @@ export default function App() {
             {MENU.map((m) => (
               <Route key={m.path} path={m.path}
                      element={<RequireRole roles={m.roles}>{TRANG[m.path] ?? <PlaceholderPage muc={m} />}</RequireRole>} />
+            ))}
+            {TRANG_CON.map((t) => (
+              <Route key={t.path} path={t.path} element={<RequireRole roles={t.roles}>{t.element}</RequireRole>} />
             ))}
             <Route path="*" element={<NotFoundPage />} />
           </Route>

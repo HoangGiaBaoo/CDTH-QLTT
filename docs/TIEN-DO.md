@@ -3,9 +3,9 @@
 > File này được hook đầu phiên đọc (4000 ký tự đầu) — **phần đầu giữ ngắn**. Chi tiết bàn giao ở cuối file.
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
-**Cập nhật 10/11/2026**: Backend xong cả 13 UC (#1–#102). **Seed V4 xong + kiểm chứng**, đã push; CSDL dev đã reset
-và đang ở V1–V4. `mvnw test` xanh 21/21. **Khung frontend xong** (`frontend/`, `npm run build` sạch).
-**Chưa có**: các màn SCR, cập nhật docs, Postman.
+**Cập nhật 12/11/2026**: Backend xong cả 13 UC (#1–#102). Seed V4 xong + kiểm chứng; CSDL dev ở V1–V4.
+`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10 xong** (A). **Chưa có**: các màn SCR còn lại,
+cập nhật docs, Postman.
 
 ## Bảng 6 tuần
 
@@ -15,7 +15,7 @@ và đang ở V1–V4. `mvnw test` xanh 21/21. **Khung frontend xong** (`fronten
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · ⬜ FE | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
@@ -23,7 +23,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 ## Việc tiếp theo (theo thứ tự)
 
 1. **Màn hình FE** — thay `PlaceholderPage` bằng trang thật (khai báo trong `TRANG` ở `frontend/src/App.tsx`, quyền lấy
-   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — SCR-09/10, SCR-18/20, SCR-19, SCR-21, SCR-24, SCR-25,
+   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, SCR-18/20, SCR-19, SCR-21, SCR-24, SCR-25,
    SCR-03, SCR-06, chuông thông báo; B — SCR-11, SCR-12 (+ trang chi tiết hồ sơ cho GV/cán bộ), SCR-13, SCR-14…17,
    SCR-07/08, SCR-22, SCR-23.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
@@ -143,7 +143,18 @@ React 18.3 + TS 5.6 + Vite 6 + React Router 6 + axios, CSS thuần (`src/styles.
 - Trang: đăng nhập (nút điền nhanh tài khoản demo chỉ hiện ở `npm run dev`), tổng quan theo vai trò, 403, 404,
   giữ chỗ cho 19 màn SCR.
 - Đã thử với backend: preflight CORS từ 5173, đăng nhập sai/đúng, `/auth/me`, 401 không token đều đúng cấu trúc.
-  Chưa thử bằng trình duyệt thật.
+- Trang con không có trên menu (chi tiết một bản ghi) khai báo ở `TRANG_CON` trong `App.tsx`, tự ghi quyền.
+- `components/ConfirmDialog` dùng chung cho thao tác khó hoàn tác (nộp phiếu, chuyển trạng thái…).
+
+### SCR-09/10 Đợt thực tập (A, 12/11/2026)
+
+`pages/terms/`: `TermListPage` (SCR-09: danh sách, lọc, tạo đợt — xem trước số tuần và mốc 2 chặng theo đúng cách
+backend tính), `TermDetailPage` (SCR-10: các bước trạng thái đợt có hỏi lại, sửa thông tin/gia hạn, mở/đóng chặng),
+`CloConfigSection` (sửa α + tỷ lệ ĐVHD, GVHD = 100 − ĐVHD, Σα hiện trực tiếp; lưu bằng #34 kèm `dieuChinhAlphaKhac`),
+`RubricLevels` (5 mức, sửa mô tả hành vi), `QuestionSection` (ma trận CLO × chặng — CLO7 chỉ chặng 2 ⇒ chuẩn hóa).
+Đã thử bằng Edge headless trên CSDL tạm (không đụng CSDL dev): 28/28 ca — tạo đợt, trùng mã, Σα = 105 bị chặn
+(Điều 9 k2), lưu 4 CLO, rubric, gia hạn tính lại mốc chặng 2, chuyển trạng thái + cảnh báo CBR-23, đóng/mở chặng,
+đợt có phiếu đã nộp khóa sửa α, đợt đã kết thúc chỉ xem, GV gõ thẳng URL ⇒ 403.
 
 ## Môi trường thử hiện tại
 

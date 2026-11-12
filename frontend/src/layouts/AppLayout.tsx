@@ -1,8 +1,16 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
-import { menuCua, nhanMenu } from '../menu';
+import { MENU, menuCua, nhanMenu } from '../menu';
 import { NHAN_VAI_TRO } from '../utils/constants';
+
+/**
+ * Mục menu sáng cả khi đang ở trang con (/terms/5) — trừ '/' và mục có mục menu khác nằm dưới
+ * (/my-record vs /my-record/plan) thì phải khớp chính xác.
+ */
+function khopChinhXac(path: string): boolean {
+  return path === '/' || MENU.some((x) => x.path.startsWith(`${path}/`));
+}
 
 /** Khung chung sau đăng nhập: menu trái theo vai trò, thanh trên có tên người dùng và đăng xuất. */
 export default function AppLayout() {
@@ -22,7 +30,7 @@ export default function AppLayout() {
         <div className="sidebar-brand">QLTT</div>
         <nav onClick={() => setMoMenu(false)}>
           {menuCua(nguoiDung.vaiTro).map((m) => (
-            <NavLink key={m.path} to={m.path} end className={({ isActive }) => `nav-item ${isActive ? 'nav-active' : ''}`}>
+            <NavLink key={m.path} to={m.path} end={khopChinhXac(m.path)} className={({ isActive }) => `nav-item ${isActive ? 'nav-active' : ''}`}>
               {nhanMenu(m, nguoiDung.vaiTro)}
             </NavLink>
           ))}

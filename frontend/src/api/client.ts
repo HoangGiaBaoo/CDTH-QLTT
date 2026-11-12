@@ -61,3 +61,8 @@ api.interceptors.response.use(
 export function layData<T>(res: { data: ApiResponse<T> }): T {
   return res.data.data as T;
 }
+
+/** Như layData nhưng giữ cả `message` thành công (ví dụ "Đã tạo đợt và nạp cấu hình…") để hiện cho người dùng. */
+export function layPhanHoi<T>(res: { data: ApiResponse<T> }): { data: T; message?: string } {
+  return { data: res.data.data as T, message: res.data.message };
+}
