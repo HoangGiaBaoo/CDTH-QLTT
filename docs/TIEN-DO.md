@@ -4,7 +4,7 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 12/11/2026**: Backend xong cả 13 UC (#1–#102). Seed V4 xong + kiểm chứng; CSDL dev ở V1–V4.
-`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20, SCR-19 xong** (A). **Chưa có**: các màn SCR còn lại,
+`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20, SCR-19, SCR-21 xong** (A). **Chưa có**: các màn SCR còn lại,
 cập nhật docs, Postman.
 
 ## Bảng 6 tuần
@@ -15,7 +15,7 @@ cập nhật docs, Postman.
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
@@ -23,7 +23,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 ## Việc tiếp theo (theo thứ tự)
 
 1. **Màn hình FE** — thay `PlaceholderPage` bằng trang thật (khai báo trong `TRANG` ở `frontend/src/App.tsx`, quyền lấy
-   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, ~~SCR-19~~ ✅, SCR-21, SCR-24, SCR-25,
+   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, ~~SCR-19~~ ✅, ~~SCR-21~~ ✅, SCR-24, SCR-25,
    SCR-03, SCR-06, chuông thông báo; B — SCR-11, SCR-12 (+ trang chi tiết hồ sơ cho GV/cán bộ), SCR-13, SCR-14…17,
    SCR-07/08, SCR-22, SCR-23.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
@@ -180,6 +180,24 @@ vắng mặt / có mặt lại có lý do + người thay thế #81; vắng làm
 mặt có nút "Chấm chặng 2"). `api/users.ts` mới có #5 (SCR-03 mở rộng).
 Đã thử 20/20 ca trên CSDL tạm: 2 người ⇒ chặn Đ10 k3a; trực tuyến thiếu phê duyệt ⇒ chặn Đ10 k3b; lập tổ sv.binh
 (gv.lan, cb.quang, gv.tung); cán bộ vắng ⇒ cảnh báo; gv.tung vắng + gv.hoa thay ⇒ vẫn đạt; SV ngoài tổ ⇒ ACCESS_DENIED.
+
+### SCR-21 Kết quả học phần — TTTN-07 (A, 12/11/2026)
+
+`pages/results/`: `ResultListPage` (#82 — bảng kết quả toàn đợt, cột CLO lấy từ dữ liệu, ô đếm theo trạng thái, lọc
+kết quả/kết luận/tìm; giáo vụ chọn kết quả đã xác nhận để công bố hoặc công bố cả đợt #87), `ResultDetailPage`
+(`/results/:id`, #83 — đủ 6 mục mẫu TTTN-07; giáo vụ Tính điểm/Tính lại #84, Xác nhận kèm duyệt điểm thưởng #86,
+Công bố #87; GVHD của SV nhập nhận xét + đề xuất thưởng #85; giáo vụ và GV xuất Word #88; cán bộ chỉ xem),
+`CloScoreTable` (mục II, cột (1)…(9) như bản Word, hai chặng chọn giống `XuatBangTongHopWord.haiChang`),
+`RecognitionConditions` (4 điều kiện Đ15 k3 ✓/✗, ghép lý do theo tiền tố "(a)"…"(d)" của `ScoringService`),
+`ReviewForm`. Giao diện không tự tính điểm; trần thưởng 0,5 để backend chặn (trích Đ18 k4).
+Dùng chung: `utils/taiTep.ts` (tải tệp có JWT — B dùng cho #67, #91), `api/client.ts` đọc được lỗi JSON khi tải
+tệp (`responseType: 'blob'`), `format.so2` cho cột trung gian. Route `/results/:id` hiện chưa nhận SV — đích NT-14
+sẽ xử lý khi làm SCR-24.
+Đã thử 39/39 ca trên CSDL tạm: HK2 khớp seed (sv.nam cột (7) 8,2 … 7,5, HP 7,7; sv.toan (b)+(c); sv.vinh (d); sv.oanh
+thưởng 0,3); xuất `TTTN-07_2151220101.docx`; sv.an thiếu phiếu cb.son ⇒ THIEU_PHIEU; cb.son nộp ⇒ tự tính HP 7,7 Không
+đạt (d); xác nhận khi chưa có nhận xét ⇒ chặn; GVHD thưởng 0,6 ⇒ chặn Đ18 k4, 0,2 ⇒ HP 7,9; SV gửi 08b ⇒ cảnh báo dữ
+liệu đổi, xác nhận bị chặn tới khi Tính lại ⇒ Đạt; duyệt thưởng 0,1 ⇒ HP 7,8 Đã xác nhận; công bố đã chọn ⇒ Hoàn thành;
+gv.lan (tổ) không có form nhận xét; cb.son không có nút; SV vào `/results` ⇒ 403.
 
 ## Môi trường thử hiện tại
 

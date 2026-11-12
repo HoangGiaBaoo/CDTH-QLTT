@@ -265,3 +265,40 @@ a { color: var(--mau-chinh); }
 .ck-dat { color: var(--xanh-la-chu); }
 .ck-chua { color: var(--do-chu); }
 .row-mo td { color: var(--chu-phu); background: #fafbfc; }
+
+/* ---------- Kết quả học phần SCR-21 ---------- */
+.stat-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.stat { background: var(--the); border: 1px solid var(--vien); border-radius: var(--bo-goc); padding: 10px 14px; display: flex; flex-direction: column; gap: 2px; }
+.stat b { font-size: 20px; }
+.stat span { font-size: 13px; color: var(--chu-phu); }
+.stat-vang b { color: var(--vang-chu); }
+.stat-xanh-duong b { color: var(--mau-chinh); }
+.stat-xanh-la b { color: var(--xanh-la-chu); }
+
+/* Bảng TTTN-07: kẻ ô như biểu mẫu giấy, số căn giữa. */
+.bang-tttn07 th, .bang-tttn07 td { border: 1px solid var(--vien); text-align: center; vertical-align: middle; }
+.bang-tttn07 th { white-space: normal; line-height: 1.3; }
+.bang-tttn07 .cot-mota { text-align: left; min-width: 220px; }
+.bang-tttn07 .so { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bang-tttn07 .so-tb { background: #f7f9fb; }
+.bang-tttn07 .so-clo { background: var(--xanh-duong-nen); }
+.bang-tttn07 tfoot td { border: 1px solid var(--vien); }
+.hp-o { font-size: 17px; color: var(--mau-chinh); }
+.ghi-chu { margin: 10px 0 0; padding-left: 18px; font-size: 13px; color: var(--chu-phu); }
+
+.hp-tong { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: start; }
+.hp-khoi { display: flex; flex-direction: column; gap: 6px; }
+.hp-so { font-size: 40px; font-weight: 700; line-height: 1; color: var(--mau-chinh); }
+.xep-loai { list-style: none; margin: 0; padding: 0; font-size: 14px; display: flex; flex-direction: column; gap: 2px; }
+.xep-loai .xl-chon { font-weight: 700; color: var(--mau-chinh); }
+.ket-luan { display: inline-block; font-size: 22px; font-weight: 700; padding: 4px 16px; border-radius: 6px; align-self: flex-start; }
+.kl-dat { background: var(--xanh-la-nen); color: var(--xanh-la-chu); }
+.kl-khong-dat { background: var(--do-nen); color: var(--do-chu); }
+.tieu-de-nho { font-size: 15px; margin: 20px 0 8px; }
+.dieu-kien { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+.dieu-kien li { display: flex; gap: 10px; align-items: flex-start; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--vien); }
+.dk-dau { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.dk-dat .dk-dau { background: var(--xanh-la-nen); color: var(--xanh-la-chu); }
+.dk-truot { border-color: var(--do-vien); background: #fffafa; }
+.dk-truot .dk-dau { background: var(--do-nen); color: var(--do-chu); }
+.dk-chua .dk-dau { background: var(--xam-nen); color: var(--xam-chu); }

@@ -9,6 +9,15 @@ export function diem(x: number | string | null | undefined): string {
   return Number.isFinite(n) ? SO_1.format(n) : '—';
 }
 
+const SO_2 = new Intl.NumberFormat('vi-VN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+/** Giá trị trung gian của TTTN-07 (cột 1–6, 9): backend đã làm tròn 2 chữ số chỉ để hiển thị — 8,15. */
+export function so2(x: number | string | null | undefined): string {
+  if (x === null || x === undefined || x === '') return '—';
+  const n = typeof x === 'string' ? Number(x) : x;
+  return Number.isFinite(n) ? SO_2.format(n) : '—';
+}
+
 /** Trọng số / tỷ lệ phần trăm: 20%. */
 export function phanTram(x: number | string | null | undefined): string {
   if (x === null || x === undefined || x === '') return '—';

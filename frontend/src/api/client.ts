@@ -37,9 +37,17 @@ api.interceptors.request.use((cfg) => {
 
 api.interceptors.response.use(
   (res) => res,
-  (err: AxiosError<ApiResponse<unknown>>) => {
+  async (err: AxiosError<ApiResponse<unknown> | Blob>) => {
     const status = err.response?.status;
-    const body = err.response?.data;
+    let body = err.response?.data;
+    // Tải tệp (responseType 'blob'): lỗi vẫn là JSON ApiResponse nhưng bị gói trong Blob.
+    if (body instanceof Blob) {
+      try {
+        body = JSON.parse(await body.text()) as ApiResponse<unknown>;
+      } catch {
+        body = undefined;
+      }
+    }
     // Sai mật khẩu cũng trả 401 — chỉ đẩy về trang đăng nhập khi phiên hết hạn, không phải lúc đang đăng nhập.
     const laDangNhap = err.config?.url?.endsWith('/auth/login');
     if (status === 401 && !laDangNhap) {
