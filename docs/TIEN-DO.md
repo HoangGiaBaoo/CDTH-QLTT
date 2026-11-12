@@ -4,8 +4,8 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 12/11/2026 (cuối phiên)**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11, 12. **Việc kế tiếp: SCR-13**
-(mục 1 dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
+CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11, 12, 13. **Việc kế tiếp:
+SCR-14** (mục 1 dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
 
 ## Bảng 6 tuần
 
@@ -15,20 +15,22 @@ CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24,
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅) |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **SCR-13 Phân công GVHD (B) — làm ngay.** `/assignments` (menu ADMIN, đích NT-03 và nút "Phân công GVHD" của
-   SCR-12): chọn đợt; #49 trả SV chưa có GVHD + giảng viên kèm "đã nhận / hạn mức"; chọn nhiều SV → một giảng viên → #50
-   (vượt hạn mức ⇒ QUOTA_EXCEEDED, **hủy cả lô** — UC05 4a); danh sách đã phân công #48; đổi GVHD kèm lý do #51 (chặn khi
-   GV cũ đã có phiếu nộp). Thử theo bước demo 5: sv.giang + sv.mai cho gv.hoa (4/5) ⇒ hủy cả lô; cho gv.minh ⇒ được.
-   Sau đó, theo kịch bản demo — B: SCR-14…17 (bản cho cán bộ thay chỗ giữ `/records/:id/plan|logbook|progress|evidence`),
-   SCR-07/08, SCR-22, SCR-23 (`/records/:id/report|feedback`); A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4),
-   chuông thông báo (#101, #102). Phần B vẫn commit bằng SAKER205.
+1. **SCR-14 Kế hoạch học tập TTTN-02 (B) — làm ngay.** Một trang dùng cho hai đường dẫn: SV `/my-record/plan` (hồ sơ
+   qua #40) và cán bộ / GV / giáo vụ `/records/:id/plan` (thay chỗ giữ trong `MAN_THEO_DOI_HO_SO` ở `App.tsx`). #52 khung
+   N tuần + dòng Tổng kết, hạn nộp (5 ngày làm việc từ ngày bắt đầu đợt, Đ6 k3a); SV sửa từng dòng #53 (mục tiêu, kết quả
+   mong đợi, hình thức minh chứng) khi Bản nháp, gửi #54 (đủ 3 nội dung mỗi dòng; quá hạn ⇒ nhãn Nộp muộn, BR-06.3); cán
+   bộ và GVHD xác nhận #55 (đủ hai ⇒ Đã khóa); GVHD mở lại #56 (BR-06.4). `api/studyPlans.ts`, `types/studyPlan.ts` đã
+   có #52. Thử trên sv.ha sau bước 6 (9 dòng trống) và sv.cuong (đã khóa).
+   Sau đó, theo kịch bản demo — B: SCR-15…17 (`/records/:id/logbook|progress|evidence`), SCR-07/08, SCR-22, SCR-23
+   (`/records/:id/report|feedback`); A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4), chuông thông báo (#101, #102).
+   Phần B vẫn commit bằng SAKER205.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
@@ -283,6 +285,23 @@ lọc + tìm + quay lại giữ bộ lọc; Tất cả đợt 21 dòng; sv.cuong
 ACCESS_DENIED; **bước 6** gv.lan duyệt sv.ha ⇒ 9 dòng kế hoạch + 8 dòng tiến độ; gv.lan từ chối sv.giang ⇒ Bản nháp, mất
 quyền xem; **bước 3** cb.yen (hạn mức 1) xác nhận sv.khanh rồi sv.linh ⇒ QUOTA_EXCEEDED Đ7 k2c, từ chối kèm lý do; SV vào
 `/records` hoặc `/records/{id}/plan` ⇒ 403, `/records/{id}` của mình vẫn là SCR-11.
+
+### SCR-13 Phân công GVHD (B, 12/11/2026)
+
+`pages/assignments/AssignmentPage` (`/assignments`, ADMIN): chọn đợt (giữ trong URL `?dot=` — nút "Phân công GVHD" của
+SCR-12 mang theo đợt của hồ sơ; mặc định đợt Đang thực hiện rồi Đang nhận đăng ký). Ô số liệu: chờ phân công, đã có GVHD,
+giảng viên còn nhận, chỗ còn trống. Hai cột như UC05 bước 2: SV chờ phân công (#49, chọn nhiều, tìm) và giảng viên
+(`LecturerPicker`: thanh "đã nhận / hạn mức", còn nhận x). Thanh dưới (dính đáy màn) tóm tắt lựa chọn; chọn nhiều hơn số
+còn nhận ⇒ **báo trước** "vượt hạn mức" nhưng **không khóa nút** — backend chặn và hủy cả lô (UC05 4a), giao diện giữ lựa
+chọn để chọn GV khác. Hỏi lại liệt kê SV trong lô. Danh sách đã phân công (#48) lọc theo GV + tìm, tên SV dẫn sang SCR-12;
+`ChangeLecturerDialog` đổi GVHD (#51, GV mới + lý do bắt buộc, lỗi hiện **trong** hộp thoại, không mất lý do đã nhập).
+NT-04 gửi GV và SV với đường dẫn `/assignments` ⇒ `menu.ts` thêm `vaoThem` (vai trò mở được đường dẫn nhưng không thấy
+trên menu); trang chuyển GV sang `/records`, SV sang `/my-record`. Thêm `api/assignments.ts`, `types/assignment.ts`.
+Đã thử 33/33 ca trên CSDL tạm: **bước 5** sv.giang + sv.mai cho gv.hoa (4/5) ⇒ cảnh báo trước, QUOTA_EXCEEDED "chỉ còn
+nhận được 1", backend vẫn 2 SV chờ + gv.hoa 4/5; đổi sang gv.minh ⇒ phân công 2 SV, gv.minh 1 → 3/6, nhận NT-04; lọc theo
+GV; đổi GVHD sv.an (gv.tung đã nộp phiếu) ⇒ RESOURCE_LOCKED trong hộp thoại, giữ lý do; đổi sv.ha gv.lan → gv.minh ⇒ dòng
+hiện lý do, nhật ký `DOI_GVHD`; SCR-12 hiện GVHD mới; đợt 2027 (sv.khanh được cb.yen xác nhận) mở từ nút SCR-12 đúng đợt;
+GV mở `/assignments` ⇒ `/records`, SV ⇒ `/my-record`; GV gọi #49 ⇒ 403; cán bộ mở `/assignments` ⇒ 403.
 
 ## Cách làm một màn FE (cho phiên sau)
 
