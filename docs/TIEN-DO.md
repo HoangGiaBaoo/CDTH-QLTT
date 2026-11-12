@@ -3,9 +3,9 @@
 > File này được hook đầu phiên đọc (4000 ký tự đầu) — **phần đầu giữ ngắn**. Chi tiết bàn giao ở cuối file.
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
-**Cập nhật 12/11/2026**: Backend xong cả 13 UC (#1–#102). Seed V4 xong + kiểm chứng; CSDL dev ở V1–V4.
-`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20, SCR-19, SCR-21, SCR-24, SCR-25 xong** (A). **Chưa có**: các màn SCR còn lại,
-cập nhật docs, Postman.
+**Cập nhật 12/11/2026 (cuối phiên)**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
+CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11. **Việc kế tiếp: SCR-12** (mục 1
+dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
 
 ## Bảng 6 tuần
 
@@ -15,17 +15,23 @@ cập nhật docs, Postman.
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **Màn hình FE** — thay `PlaceholderPage` bằng trang thật (khai báo trong `TRANG` ở `frontend/src/App.tsx`, quyền lấy
-   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, ~~SCR-19~~ ✅, ~~SCR-21~~ ✅, ~~SCR-24~~ ✅, ~~SCR-25~~ ✅,
-   SCR-03, SCR-06, chuông thông báo; B — SCR-11, SCR-12 (+ trang chi tiết hồ sơ cho GV/cán bộ), SCR-13, SCR-14…17,
-   SCR-07/08, SCR-22, SCR-23.
+1. **SCR-12 Hồ sơ thực tập (B) — làm ngay.** `/records` (menu ADMIN/GV/cán bộ): danh sách #39 lọc `termId`, `status`,
+   `internshipType` (GV, cán bộ chỉ nhận hồ sơ trong phạm vi mình). `/records/:id` cho cán bộ: thay `PlaceholderPage`
+   trong `pages/records/RecordEntryPage.tsx` (SV ở nhánh đó đã là SCR-11). Thao tác: cán bộ ĐVHD #45 `{dongY, lyDo}`
+   (từ chối bắt buộc lý do ⇒ hồ sơ về Bản nháp; xác nhận có thể QUOTA_EXCEEDED); GVHD đã được phân công #46 `{dongY, lyDo}`
+   (duyệt ⇒ Đang thực tập + khung kế hoạch/tiến độ); giáo vụ #47 `{gianDoan, lyDo}` (Đ15 k4). Lối sang kế hoạch, nhật ký,
+   tiến độ, minh chứng, báo cáo, 08a của hồ sơ. Dùng lại `RecordSummary`/`RequiredEvidence`/`vongDoi.ts` (tách phần
+   thông tin chung nếu cần). Thử theo bước demo 4 (cb.duc xác nhận sv.dung) và 6 (gv.lan duyệt sv.ha ⇒ 9 dòng kế hoạch
+   + 8 dòng tiến độ).
+   Sau đó, theo kịch bản demo — B: SCR-13 (#48–#51, bước 5), SCR-14…17, SCR-07/08, SCR-22, SCR-23; A: SCR-03 (mở rộng
+   `api/users.ts`), SCR-06 (#3, #4), chuông thông báo (#101, #102). Phần B vẫn commit bằng SAKER205.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
@@ -38,6 +44,9 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 - Commit **luân phiên đúng tài khoản chủ phần việc** (A = HoangGiaBaoo, B = SAKER205); **không** thêm Co-Authored-By,
   không có chữ "claude" trong commit. Một số subject đã > 72 ký tự — từ nay giữ ≤ 72.
 - Tài khoản ADMIN demo là `giaovu` / `Qltt@2026` (không phải `admin`). Mọi tài khoản seed dùng `Qltt@2026`.
+- **Không thử API trên CSDL dev** (làm bẩn kịch bản demo) — thử màn FE trên CSDL tạm riêng, cổng 3307 (*Bàn giao*).
+- Mỗi màn xong: build + thử trình duyệt ⇒ báo người dùng ⇒ **hỏi trước khi commit/push**; người dùng thường trả lời
+  "commit push rồi làm tiếp SCR-xx".
 
 ## Điểm cần xác nhận với GVHD
 
@@ -45,7 +54,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ---
 
-# Bàn giao chi tiết (phiên 08/11/2026)
+# Bàn giao chi tiết (bắt đầu 08/11/2026, cập nhật 12/11/2026)
 
 ## Trạng thái code theo UC
 
@@ -165,7 +174,7 @@ mình tham gia (#77), ghép phiếu của mình (#69); giáo vụ: `AssessmentOv
 nhóm ĐVHD thấy dòng CLO7 tắt kèm CBR-09, không hiện gì của người chấm kia. `AssessmentDetailPage`
 (`/assessments/:id`, đích của NT-13) — người chấm mở phiếu mình ⇒ sang trang chấm; giáo vụ xem + Mở lại có lý do (#75).
 Menu `/assessments` thêm ADMIN ("Giám sát phiếu chấm"). `components/TermSelect` (chọn đợt) dùng lại cho SCR-19/21/25.
-`api/records.ts`, `types/record.ts` mới có #39, #41 — **B mở rộng khi làm SCR-11/12**.
+`api/records.ts`, `types/record.ts` lúc đó mới có #39, #41 (SCR-11 đã mở rộng tới #44).
 Đã thử trên CSDL tạm, seed V4: 25/25 ca — gv.lan tiếp tục nháp sv.binh rồi nộp; cán bộ chưa nộp không xem được phiếu
 GV (BR-08.7); cb.son chấm chặng 2 sv.an (CLO7 tắt); giáo vụ mở lại phiếu gv.tung, gv.tung sửa từ link NT-13 và nộp lại;
 cán bộ mở SV không phải của mình ⇒ chặn; SV vào `/assessments` ⇒ 403.
@@ -227,6 +236,54 @@ mặc định khi demo (HK1 đang chấm).
 7 vạch mục tiêu, tooltip đoạn "n SV · x%", xuất `RP-02_TTTN-2025-HK2.xlsx`; RP-03 HK1 thanh theo chặng × nhóm; RP-04
 có sv.vinh; RP-05 7 CLO; RP-06 không lộ tên SV; mở thẳng `?rp=RP-05`; giảng viên vào `/statistics` ⇒ 403.
 
+### SCR-11 Đăng ký thực tập (B, 12/11/2026)
+
+`pages/records/MyRecordPage` (`/my-record`; `/records/:id` — đích NT-01/02/05/06 — qua `RecordEntryPage`: SV ⇒ SCR-11,
+cán bộ ⇒ chỗ giữ SCR-12). Chọn hồ sơ: #40 trả hồ sơ đợt đang chạy thì mở hồ sơ đó; hồ sơ thuộc đợt đã kết thúc mà có
+đợt đang nhận đăng ký ⇒ phiếu mới cho đợt đó, kèm đường xem hồ sơ cũ; không có đợt mở ⇒ trạng thái trống.
+`RegistrationForm` (Bản nháp / bị trả về): 6 hình thức (Đ4), danh mục minh chứng bắt buộc lấy từ #65 sau khi lưu nháp
+(`RequiredEvidence`, không viết sẵn ở giao diện), ĐVHD đã duyệt (#17) → cán bộ còn hạn mức kèm "đang nhận x/y" (#23),
+nội dung, ô cam kết ⇒ mới bấm được Gửi; Gửi = lưu (#42/#43) rồi #44, có hỏi lại. Đơn vị / cán bộ đã lưu nay hết chỗ vẫn
+hiện (khóa) kèm nhắc chọn lại; QUOTA_EXCEEDED ⇒ tải lại danh sách cán bộ (7b); DUPLICATE_RESOURCE ⇒ báo CBR-01 và mở
+hồ sơ hiện có (7a). Hồ sơ bị trả về ⇒ hiện lý do. "Đề xuất đơn vị mới" (#19, luồng thay thế) ⇒ đơn vị Chờ duyệt.
+`RecordSummary` (đã gửi): thanh bước vòng đời, việc tiếp theo theo trạng thái, phiếu TTTN-01, minh chứng Đã có / Chưa
+có (xám — nhiều mục chưa tới hạn; đối chiếu Đủ/Thiếu đầy đủ để SCR-17), lối tắt sang SCR-14…24.
+Thêm: `api/hostOrgs.ts` (#17–#19, #23), `api/evidences.ts` (#65), `types/hostOrg.ts`, `types/evidence.ts`; `api/records.ts`
+có `tao`/`capNhat`/`gui`; `ConfirmDialog` thêm `rong` (hộp thoại chứa form).
+Đã thử 34/34 ca trên CSDL tạm (giáo vụ tạo + mở đăng ký đợt TTTN-2027-HK1 như bước demo 3): chưa có đợt ⇒ trống; chỉ 3
+ĐVHD đã duyệt (không có Bình Minh); lưu khi chưa chọn hình thức ⇒ lỗi dưới ô; doanh nghiệp 6 minh chứng, nghiên cứu 4;
+thiếu đề tài ⇒ "Hồ sơ còn thiếu…"; quốc tế 4 tuần ⇒ Đ4 k6; sv.khanh gửi cb.yen ⇒ Chờ ĐVHD; sv.linh nháp cb.yen (vẫn 0/1
+vì CHO_DVHD chưa chiếm chỗ) → cb.yen xác nhận sv.khanh → sv.linh gửi ⇒ QUOTA_EXCEEDED Đ7 k2c; đổi cb.trang ⇒ gửi được;
+cb.trang từ chối ⇒ mở `/records/{id}` thấy lý do + form; đề xuất Ánh Dương ⇒ Chờ duyệt; sv.nam (HK2 xong) ⇒ phiếu mới
++ link hồ sơ cũ; tạo trùng ⇒ CBR-01 (Điều 5); sv.cuong Đang thực tập ⇒ GVHD, lối tắt; SV mở hồ sơ người khác ⇒ 403.
+
+## Cách làm một màn FE (cho phiên sau)
+
+1. Đọc `frontend/src/menu.ts` (đường dẫn, vai trò, endpoint của màn), mục UC trong `docs/02-api.md`, đặc tả UC trong
+   `docs/tai-lieu-goc/BAO-CAO-PHAN-TICH-HE-THONG-QLTT-v1.0.docx` (luồng chính + nhánh 3a, 7b…) và **DTO/service backend**
+   thật (tên trường, thông điệp lỗi) — giao diện không tự kiểm quy tắc, chỉ hiện nguyên văn `message`.
+2. Code: `types/<module>.ts` khớp DTO, `api/<module>.ts` (một hàm một endpoint, ghi số #), `pages/<module>/*.tsx`;
+   khai báo trang trong `TRANG` (mục menu) hoặc `TRANG_CON` (trang con, đích thông báo `/xxx/:id`) ở `App.tsx`;
+   CSS thêm cuối `styles.css` thành một khối có tiêu đề màn. Mẫu sẵn: form + lỗi dưới ô (`RegistrationForm`,
+   `TermForm`), bảng + lọc (`ResultListPage`), hộp thoại có lý do (`ConfirmDialog`, `PanelDetailPage`), tải tệp
+   (`utils/taiTep.ts`), chọn đợt (`TermSelect`), thanh bước (`.stepper`). Đích thông báo mà SV và cán bộ cùng mở ⇒ trang
+   "Entry" rẽ theo vai trò (`ResultEntryPage`, `RecordEntryPage`).
+3. `npx tsc --noEmit -p frontend` + `npm --prefix frontend run build`.
+4. Thử trên **CSDL tạm** (MySQL container `qltt-mysql-uitest` cổng 3307, DB `qltt_uitest`, Flyway tự nạp V1–V4) + backend
+   cổng 8081 trỏ CSDL đó + Vite 5173 với `VITE_API_URL=http://localhost:8081/api`; trình duyệt Edge headless qua CDP.
+   Bộ thử (driver `cdp.mjs`, `test-<màn>.mjs`, `moi-truong.sh`) để ngoài git, trên máy này — vị trí ghi trong memory của
+   Claude. Mỗi lần chạy kịch bản cần CSDL vừa tạo lại (kịch bản tự sinh dữ liệu). Xong thì tắt hết, xóa container tạm.
+5. Xem ảnh chụp (bảng tràn, chữ xuống dòng, trạng thái), sửa, chạy lại; ghi mục `### SCR-xx` ở trên (làm gì, đã thử gì).
+
+## File dùng chung đã sửa — cần báo Văn
+
+`api/records.ts` (#39–#44: `danhSach`, `cuaToi`, `chiTiet`, `tao`, `capNhat`, `gui`), `types/record.ts`
+(`HinhThucThucTap`, `HinhThucLamViec`, `HoSoRequest`), `api/client.ts` (đọc lỗi JSON khi tải blob), `utils/taiTep.ts`,
+`format.so2`, `components/ConfirmDialog` (`rong`), `TermSelect`, `RubricLevelPicker`, `App.tsx`, `menu.ts`
+(`/assessments` thêm ADMIN), `styles.css`. Liên kết từ SCR-24 sang SCR-23 truyền `state.tuKetQua` (thông điệp BR-12.5).
+Backend UC02: đặc tả ghi đề xuất ĐVHD mới "thông báo giáo vụ" nhưng #19 chưa gửi (15 mã NT chưa có mã cho việc này).
+
 ## Môi trường thử hiện tại
 
 CSDL dev đã `down -v` ngày 10/11/2026 và nạp lại sạch V1–V4 (chỉ thêm dữ liệu của `mvnw test`, không thao tác API).
+Không có tiến trình thử nào đang chạy; container tạm `qltt-mysql-uitest` đã xóa.
