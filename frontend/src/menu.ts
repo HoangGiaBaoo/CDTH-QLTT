@@ -33,8 +33,11 @@ export const MENU: MucMenu[] = [
   },
   { path: '/assignments', nhan: 'Phân công GVHD', roles: ['ADMIN'], scr: 'SCR-13', phuTrach: 'B',
     moTa: 'Phân công hàng loạt, kiểm hạn mức giảng viên (UC05, #48–#51)' },
-  { path: '/assessments', nhan: 'Phiếu đánh giá', roles: ['GIANG_VIEN', 'CAN_BO_DVHD'], scr: 'SCR-18/20', phuTrach: 'A',
-    moTa: 'Chấm chặng 1 và chặng 2 theo rubric (UC08, UC09, #69–#76)' },
+  {
+    path: '/assessments', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], scr: 'SCR-18/20', phuTrach: 'A',
+    nhan: { ADMIN: 'Giám sát phiếu chấm', GIANG_VIEN: 'Phiếu đánh giá', CAN_BO_DVHD: 'Phiếu đánh giá' },
+    moTa: 'Chấm chặng 1 và chặng 2 theo rubric; giáo vụ giám sát, mở lại phiếu, xem lệch điểm (UC08, UC09, #69–#76)',
+  },
   { path: '/panels', nhan: 'Tổ đánh giá', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], scr: 'SCR-19', phuTrach: 'A',
     moTa: 'Thành lập Tổ đánh giá cuối kỳ, đánh dấu vắng mặt (UC09, #77–#81)' },
   { path: '/results', nhan: 'Kết quả học phần', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], scr: 'SCR-21', phuTrach: 'A',

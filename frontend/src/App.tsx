@@ -8,6 +8,9 @@ import LoginPage from './pages/auth/LoginPage';
 import HomePage from './pages/common/HomePage';
 import NotFoundPage from './pages/common/NotFoundPage';
 import PlaceholderPage from './pages/common/PlaceholderPage';
+import AssessmentDetailPage from './pages/assessments/AssessmentDetailPage';
+import AssessmentListPage from './pages/assessments/AssessmentListPage';
+import GradingPage from './pages/assessments/GradingPage';
 import TermDetailPage from './pages/terms/TermDetailPage';
 import TermListPage from './pages/terms/TermListPage';
 import type { VaiTro } from './types/auth';
@@ -19,11 +22,14 @@ import type { VaiTro } from './types/auth';
 const TRANG: Record<string, ReactElement> = {
   '/': <HomePage />,
   '/terms': <TermListPage />,
+  '/assessments': <AssessmentListPage />,
 };
 
 /** Trang con không hiện trên menu (chi tiết một bản ghi…) — tự khai báo quyền, thường trùng mục menu cha. */
 const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
   { path: '/terms/:termId', roles: ['ADMIN'], element: <TermDetailPage /> },
+  { path: '/assessments/form', roles: ['GIANG_VIEN', 'CAN_BO_DVHD'], element: <GradingPage /> },
+  { path: '/assessments/:assessmentId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], element: <AssessmentDetailPage /> },
 ];
 
 export default function App() {

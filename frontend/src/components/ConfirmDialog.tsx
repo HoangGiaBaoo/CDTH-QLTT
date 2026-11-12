@@ -8,13 +8,17 @@ interface Props {
   /** Thao tác không đảo ngược được (nộp phiếu, chuyển trạng thái đợt…) — nút xác nhận màu đỏ. */
   nguyHiem?: boolean;
   dangXuLy?: boolean;
+  /** Chưa đủ dữ liệu để xác nhận (ví dụ chưa nhập lý do bắt buộc). */
+  khoaXacNhan?: boolean;
+  /** false khi nội dung hộp thoại có ô nhập cần được focus trước. */
+  tuFocusNut?: boolean;
   onXacNhan: () => void;
   onHuy: () => void;
 }
 
 /** Hộp thoại hỏi lại trước thao tác khó hoàn tác. Esc hoặc bấm nền để hủy. */
 export default function ConfirmDialog({
-  mo, tieuDe, children, nhanXacNhan = 'Xác nhận', nguyHiem, dangXuLy, onXacNhan, onHuy,
+  mo, tieuDe, children, nhanXacNhan = 'Xác nhận', nguyHiem, dangXuLy, khoaXacNhan, tuFocusNut = true, onXacNhan, onHuy,
 }: Props) {
   useEffect(() => {
     if (!mo) return;
@@ -32,7 +36,7 @@ export default function ConfirmDialog({
         <div className="modal-actions">
           <button type="button" className="btn btn-phu" onClick={onHuy} disabled={dangXuLy}>Hủy</button>
           <button type="button" className={`btn ${nguyHiem ? 'btn-do' : 'btn-chinh'}`} onClick={onXacNhan}
-                  disabled={dangXuLy} autoFocus>
+                  disabled={dangXuLy || khoaXacNhan} autoFocus={tuFocusNut}>
             {dangXuLy ? 'Đang xử lý…' : nhanXacNhan}
           </button>
         </div>

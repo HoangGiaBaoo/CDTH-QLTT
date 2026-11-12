@@ -4,7 +4,7 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 12/11/2026**: Backend xong cả 13 UC (#1–#102). Seed V4 xong + kiểm chứng; CSDL dev ở V1–V4.
-`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10 xong** (A). **Chưa có**: các màn SCR còn lại,
+`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20 xong** (A). **Chưa có**: các màn SCR còn lại,
 cập nhật docs, Postman.
 
 ## Bảng 6 tuần
@@ -15,7 +15,7 @@ cập nhật docs, Postman.
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
@@ -23,7 +23,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 ## Việc tiếp theo (theo thứ tự)
 
 1. **Màn hình FE** — thay `PlaceholderPage` bằng trang thật (khai báo trong `TRANG` ở `frontend/src/App.tsx`, quyền lấy
-   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, SCR-18/20, SCR-19, SCR-21, SCR-24, SCR-25,
+   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, SCR-19, SCR-21, SCR-24, SCR-25,
    SCR-03, SCR-06, chuông thông báo; B — SCR-11, SCR-12 (+ trang chi tiết hồ sơ cho GV/cán bộ), SCR-13, SCR-14…17,
    SCR-07/08, SCR-22, SCR-23.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
@@ -155,6 +155,20 @@ backend tính), `TermDetailPage` (SCR-10: các bước trạng thái đợt có 
 Đã thử bằng Edge headless trên CSDL tạm (không đụng CSDL dev): 28/28 ca — tạo đợt, trùng mã, Σα = 105 bị chặn
 (Điều 9 k2), lưu 4 CLO, rubric, gia hạn tính lại mốc chặng 2, chuyển trạng thái + cảnh báo CBR-23, đóng/mở chặng,
 đợt có phiếu đã nộp khóa sửa α, đợt đã kết thúc chỉ xem, GV gõ thẳng URL ⇒ 403.
+
+### SCR-18/20 Phiếu đánh giá (A, 12/11/2026)
+
+`pages/assessments/`: `AssessmentListPage` — GV/cán bộ: tab 2 chặng, chặng 1 lấy SV từ #39, chặng 2 lấy SV của tổ
+mình tham gia (#77), ghép phiếu của mình (#69); giáo vụ: `AssessmentOversight` (mọi phiếu + cảnh báo lệch > 2,0 #76).
+`GradingPage` (`/assessments/form?recordId=&stage=`) — `components/RubricLevelPicker` chọn mức ⇒ hiện mô tả hành vi +
+điền điểm giữa khoảng, viền đỏ khi thiếu / sai khoảng (cùng quy tắc nửa mở như `RubricUtils`), Lưu nháp / Nộp (hỏi lại),
+nhóm ĐVHD thấy dòng CLO7 tắt kèm CBR-09, không hiện gì của người chấm kia. `AssessmentDetailPage`
+(`/assessments/:id`, đích của NT-13) — người chấm mở phiếu mình ⇒ sang trang chấm; giáo vụ xem + Mở lại có lý do (#75).
+Menu `/assessments` thêm ADMIN ("Giám sát phiếu chấm"). `components/TermSelect` (chọn đợt) dùng lại cho SCR-19/21/25.
+`api/records.ts`, `types/record.ts` mới có #39, #41 — **B mở rộng khi làm SCR-11/12**.
+Đã thử trên CSDL tạm, seed V4: 25/25 ca — gv.lan tiếp tục nháp sv.binh rồi nộp; cán bộ chưa nộp không xem được phiếu
+GV (BR-08.7); cb.son chấm chặng 2 sv.an (CLO7 tắt); giáo vụ mở lại phiếu gv.tung, gv.tung sửa từ link NT-13 và nộp lại;
+cán bộ mở SV không phải của mình ⇒ chặn; SV vào `/assessments` ⇒ 403.
 
 ## Môi trường thử hiện tại
 

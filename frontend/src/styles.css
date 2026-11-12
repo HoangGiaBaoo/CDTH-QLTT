@@ -223,3 +223,39 @@ a { color: var(--mau-chinh); }
 .modal-body { font-size: 14px; color: var(--chu); }
 .modal-body p { margin: 0 0 8px; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+/* ---------- Chấm phiếu SCR-18/20 ---------- */
+.clo-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+.clo-row { padding: 16px 18px; }
+.clo-row-loi { border-color: var(--do-chu); box-shadow: 0 0 0 1px var(--do-chu) inset; }
+.clo-row-tat { background: #f7f9fb; color: var(--chu-phu); }
+.clo-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.clo-ma { font-weight: 600; color: var(--mau-chinh); }
+.clo-cauhoi { margin-top: 2px; margin-bottom: 6px; }
+.clo-nhap { display: grid; grid-template-columns: 160px 1fr; gap: 12px; margin-top: 10px; }
+@media (max-width: 640px) { .clo-nhap { grid-template-columns: 1fr; } }
+.field-diem input { text-align: right; font-weight: 600; }
+.field input:disabled, .field textarea:disabled, .field select:disabled { background: #f3f5f8; color: var(--chu-phu); }
+
+.rubric-levels { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+@media (max-width: 640px) { .rubric-levels { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.rubric-level {
+  font: inherit; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px;
+  border: 1px solid var(--vien); border-radius: 6px; background: #fff; cursor: pointer; color: var(--chu);
+}
+.rubric-level:hover:not(:disabled) { border-color: var(--mau-chinh); }
+.rubric-level:disabled { cursor: default; opacity: 0.75; }
+.rubric-level-chon, .rubric-level-chon:disabled { background: var(--mau-chinh); border-color: var(--mau-chinh); color: #fff; opacity: 1; }
+.rubric-level-so { font-weight: 600; font-size: 14px; }
+.rubric-level-khoang { font-size: 12px; opacity: 0.85; }
+.rubric-mota {
+  margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--mau-chinh); background: var(--xanh-duong-nen);
+  border-radius: 0 6px 6px 0; font-size: 14px;
+}
+
+.action-bar {
+  position: sticky; bottom: 0; z-index: 4; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap; background: var(--the); border: 1px solid var(--vien); border-radius: var(--bo-goc);
+  padding: 10px 16px; box-shadow: 0 -4px 16px rgba(15, 35, 70, 0.08);
+}
+.action-bar-buttons { display: flex; gap: 8px; }
