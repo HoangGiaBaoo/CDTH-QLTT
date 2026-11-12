@@ -11,6 +11,7 @@ import PlaceholderPage from './pages/common/PlaceholderPage';
 import MyRecordPage from './pages/records/MyRecordPage';
 import RecordEntryPage from './pages/records/RecordEntryPage';
 import RecordListPage from './pages/records/RecordListPage';
+import StudyPlanPage, { StudyPlanRoute } from './pages/studyPlans/StudyPlanPage';
 import AssignmentPage from './pages/assignments/AssignmentPage';
 import AssessmentDetailPage from './pages/assessments/AssessmentDetailPage';
 import AssessmentListPage from './pages/assessments/AssessmentListPage';
@@ -39,17 +40,20 @@ const TRANG: Record<string, ReactElement> = {
   '/assignments': <AssignmentPage />,
   '/results': <ResultListPage />,
   '/my-record': <MyRecordPage />,
+  '/my-record/plan': <StudyPlanPage />,
   '/my-result': <MyResultPage />,
   '/statistics': <StatisticsPage />,
 };
 
 /**
- * Màn theo dõi của một hồ sơ mở từ SCR-12 (cán bộ, giảng viên, giáo vụ) — cùng màn với mục menu của sinh viên;
- * chưa làm thì giữ chỗ theo mục menu đó.
+ * Màn theo dõi của một hồ sơ: cán bộ, giảng viên, giáo vụ mở từ SCR-12; cả bốn vai trò tới từ link thông báo
+ * (đường con trùng link backend gửi: `/records/{id}/study_plan`, `/logbooks`, `/weekly_progress`, `/reports`).
+ * Cùng màn với mục menu của sinh viên; backend kiểm hồ sơ có thuộc người đang xem không. Chưa làm thì giữ chỗ.
  */
-const MAN_THEO_DOI_HO_SO: [string, string][] = [
-  ['plan', '/my-record/plan'], ['logbook', '/my-record/logbook'], ['progress', '/my-record/progress'],
-  ['evidence', '/my-record/evidence'], ['report', '/my-record/report'], ['feedback', '/my-record/feedback'],
+const MAN_THEO_DOI_HO_SO: [string, string, ReactElement?][] = [
+  ['study_plan', '/my-record/plan', <StudyPlanRoute />], ['logbooks', '/my-record/logbook'],
+  ['weekly_progress', '/my-record/progress'], ['evidences', '/my-record/evidence'], ['reports', '/my-record/report'],
+  ['feedbacks', '/my-record/feedback'],
 ];
 
 /** Trang con không hiện trên menu (chi tiết một bản ghi…) — tự khai báo quyền, thường trùng mục menu cha. */
@@ -64,10 +68,10 @@ const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
   // Đích NT-01/02/05/06: sinh viên ⇒ phiếu đăng ký của mình (SCR-11), cán bộ ⇒ chi tiết hồ sơ (SCR-12).
   { path: '/records/:recordId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <RecordEntryPage /> },
   { path: '/results/:recordId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <ResultEntryPage /> },
-  ...MAN_THEO_DOI_HO_SO.map(([con, menuSv]) => ({
+  ...MAN_THEO_DOI_HO_SO.map(([con, menuSv, trang]) => ({
     path: `/records/:recordId/${con}`,
-    roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'] as VaiTro[],
-    element: <PlaceholderPage muc={MENU.find((m) => m.path === menuSv)!} />,
+    roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'] as VaiTro[],
+    element: trang ?? <PlaceholderPage muc={MENU.find((m) => m.path === menuSv)!} />,
   })),
 ];
 

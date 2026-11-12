@@ -72,7 +72,7 @@ export default function RecordTracking({ hoSo, vaiTro }: { hoSo: HoSo; vaiTro: V
       <h2 className="section-title">Theo dõi thực tập</h2>
       {!du ? <div className="loading">Đang tải…</div> : (
         <div className="tile-grid theo-doi">
-          <Link to={`/records/${id}/plan`} className="tile">
+          <Link to={`/records/${id}/study_plan`} className="tile">
             <div className="tile-title">Kế hoạch học tập TTTN-02</div>
             <O kq={du.keHoach}>{(k) => (
               <>
@@ -89,7 +89,7 @@ export default function RecordTracking({ hoSo, vaiTro }: { hoSo: HoSo; vaiTro: V
             )}</O>
           </Link>
 
-          <Link to={`/records/${id}/logbook`} className="tile">
+          <Link to={`/records/${id}/logbooks`} className="tile">
             <div className="tile-title">Nhật ký thực tập</div>
             <O kq={du.nhatKy}>{(ds) => {
               const ganNhat = ds.reduce<string | undefined>((m, n) => (!m || n.ngay > m ? n.ngay : m), undefined);
@@ -102,7 +102,7 @@ export default function RecordTracking({ hoSo, vaiTro }: { hoSo: HoSo; vaiTro: V
             }}</O>
           </Link>
 
-          <Link to={`/records/${id}/progress`} className="tile">
+          <Link to={`/records/${id}/weekly_progress`} className="tile">
             <div className="tile-title">Tiến độ tuần TTTN-03</div>
             <O kq={du.tienDo}>{(ds) => {
               const daXacNhan = ds.filter((t) => t.daXacNhan).length;
@@ -120,7 +120,7 @@ export default function RecordTracking({ hoSo, vaiTro }: { hoSo: HoSo; vaiTro: V
             }}</O>
           </Link>
 
-          <Link to={`/records/${id}/evidence`} className="tile">
+          <Link to={`/records/${id}/evidences`} className="tile">
             <div className="tile-title">Minh chứng</div>
             <O kq={du.minhChung}>{(mc) => {
               const thieu = mc.danhMuc.filter((d) => !d.daCo);
@@ -140,7 +140,7 @@ export default function RecordTracking({ hoSo, vaiTro }: { hoSo: HoSo; vaiTro: V
             }}</O>
           </Link>
 
-          <Link to={`/records/${id}/report`} className="tile">
+          <Link to={`/records/${id}/reports`} className="tile">
             <div className="tile-title">Báo cáo TTTN-06</div>
             <O kq={du.baoCao}>{(ds) => {
               const moi = ds.find((b) => b.laMoiNhat) ?? ds[0];
@@ -157,7 +157,7 @@ export default function RecordTracking({ hoSo, vaiTro }: { hoSo: HoSo; vaiTro: V
             }}</O>
           </Link>
 
-          <Link to={`/records/${id}/feedback`} className="tile">
+          <Link to={`/records/${id}/feedbacks`} className="tile">
             <div className="tile-title">Phản hồi TTTN-08a / 08b</div>
             <O kq={du.phanHoi}>{(ds) => {
               const p08a = ds.find((p) => p.loai === 'TTTN_08A');

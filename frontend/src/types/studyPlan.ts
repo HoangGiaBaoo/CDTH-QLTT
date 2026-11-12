@@ -5,8 +5,8 @@ export interface KeHoach {
   id: number;
   hoSoId: number;
   trangThai: TrangThaiKeHoach;
-  /** 5 ngày làm việc kể từ khi GVHD duyệt hồ sơ (BR-06.3). */
-  hanNop?: string;
+  /** Ngày làm việc thứ 5 kể từ ngày bắt đầu đợt (Đ6 k3a); gửi sau ngày này ⇒ `nopMuon` (BR-06.3). */
+  hanNop: string;
   ngayNop?: string;
   nopMuon?: boolean;
   xacNhanDvhd?: string;
@@ -20,4 +20,9 @@ export interface KeHoach {
     ketQuaMongDoi?: string;
     hinhThucMinhChung?: string;
   }[];
+}
+
+/** Body #53 — lưu nháp; dòng nào gửi lên thì ghi đè dòng đó (`tuan` của dòng Tổng kết = số tuần + 1). */
+export interface CapNhatKeHoachRequest {
+  cacMuc: { tuan: number; mucTieu?: string; ketQuaMongDoi?: string; hinhThucMinhChung?: string }[];
 }

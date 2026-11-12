@@ -447,3 +447,12 @@ a { color: var(--mau-chinh); }
 .gv-dong { display: flex; justify-content: space-between; gap: 8px; }
 .gv-o .meter-ray, .gv-o .meter-dat { display: block; }
 .meter-day { background: var(--vang-chu); }
+
+/* ---------- Kế hoạch học tập SCR-14 ---------- */
+.ke-hoach { table-layout: fixed; min-width: 760px; }
+.ke-hoach .kh-tuan { width: 110px; }
+.ke-hoach .kh-mc { width: 22%; }
+.ke-hoach td { font-size: 14px; }
+.ke-hoach .textarea { min-height: 64px; font-size: 14px; }
+.kh-tong-ket td { background: #f7f9fb; }
+.info-grid .ck-dat { font-weight: 600; }

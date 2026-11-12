@@ -69,7 +69,7 @@ export default function RequiredEvidence({ recordId, hinhThucDaLuu, hinhThucDang
           )}
           {bang && hienTrangThai && (
             <p className="mt0 small">
-              <Link to={xemHoSoSinhVien ? `/records/${recordId}/evidence` : '/my-record/evidence'}>Mở mục Minh chứng →</Link>
+              <Link to={xemHoSoSinhVien ? `/records/${recordId}/evidences` : '/my-record/evidence'}>Mở mục Minh chứng →</Link>
             </p>
           )}
         </>
