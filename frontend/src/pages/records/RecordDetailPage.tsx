@@ -239,7 +239,7 @@ export default function RecordDetailPage({ recordId }: { recordId: number }) {
           <div className={`alert ${hoSo.trangThai === 'GIAN_DOAN' ? 'alert-vang' : 'alert-xanh-duong'} mb`} role="status">
             <div className="alert-hang">
               <span>{tinhTrang}</span>
-              {choPhanCong && <Link to="/assignments" className="btn btn-chinh btn-nho">Phân công GVHD</Link>}
+              {choPhanCong && <Link to={`/assignments?dot=${hoSo.dot.id}`} className="btn btn-chinh btn-nho">Phân công GVHD</Link>}
               {vaiTro === 'ADMIN' && thaoTac.length > 0 && nutThaoTac}
             </div>
           </div>

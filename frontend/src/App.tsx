@@ -11,6 +11,7 @@ import PlaceholderPage from './pages/common/PlaceholderPage';
 import MyRecordPage from './pages/records/MyRecordPage';
 import RecordEntryPage from './pages/records/RecordEntryPage';
 import RecordListPage from './pages/records/RecordListPage';
+import AssignmentPage from './pages/assignments/AssignmentPage';
 import AssessmentDetailPage from './pages/assessments/AssessmentDetailPage';
 import AssessmentListPage from './pages/assessments/AssessmentListPage';
 import GradingPage from './pages/assessments/GradingPage';
@@ -35,6 +36,7 @@ const TRANG: Record<string, ReactElement> = {
   '/assessments': <AssessmentListPage />,
   '/panels': <PanelListPage />,
   '/records': <RecordListPage />,
+  '/assignments': <AssignmentPage />,
   '/results': <ResultListPage />,
   '/my-record': <MyRecordPage />,
   '/my-result': <MyResultPage />,
@@ -78,7 +80,7 @@ export default function App() {
           <Route element={<RequireRole><AppLayout /></RequireRole>}>
             {MENU.map((m) => (
               <Route key={m.path} path={m.path}
-                     element={<RequireRole roles={m.roles}>{TRANG[m.path] ?? <PlaceholderPage muc={m} />}</RequireRole>} />
+                     element={<RequireRole roles={[...m.roles, ...(m.vaoThem ?? [])]}>{TRANG[m.path] ?? <PlaceholderPage muc={m} />}</RequireRole>} />
             ))}
             {TRANG_CON.map((t) => (
               <Route key={t.path} path={t.path} element={<RequireRole roles={t.roles}>{t.element}</RequireRole>} />

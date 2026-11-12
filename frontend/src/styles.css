@@ -421,3 +421,29 @@ a { color: var(--mau-chinh); }
 .theo-doi-dong { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .theo-doi-so { font-size: 14px; }
 .theo-doi-so b { font-size: 18px; }
+
+/* ---------- Phân công GVHD SCR-13 ---------- */
+.pc-luoi { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .pc-luoi { grid-template-columns: 1fr; } }
+.pc-luoi .card-head { flex-wrap: wrap; }
+.pc-luoi .table tbody tr { cursor: pointer; }
+.row-chon td { background: var(--xanh-duong-nen); }
+.pc-thanh {
+  position: sticky; bottom: 12px; margin-top: 16px; padding: 12px 20px; display: flex; align-items: center;
+  justify-content: space-between; gap: 16px; flex-wrap: wrap; box-shadow: 0 4px 16px rgba(31, 78, 140, 0.12); z-index: 2;
+}
+.pc-thanh-vang { border-color: var(--vang-vien); background: var(--vang-nen); }
+.gv-ds { display: flex; flex-direction: column; gap: 8px; }
+.gv-ds-cuon { max-height: 300px; overflow-y: auto; padding-right: 4px; }
+.gv-o {
+  display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--vien); border-radius: 8px;
+  cursor: pointer; background: var(--the); transition: border-color 0.15s, background 0.15s;
+}
+.gv-o:hover { border-color: var(--mau-chinh); }
+.gv-o:focus-within { outline: 2px solid var(--mau-chinh); outline-offset: 1px; }
+.gv-o input { margin-top: 3px; accent-color: var(--mau-chinh); }
+.gv-o-chon { border-color: var(--mau-chinh); background: var(--xanh-duong-nen); }
+.gv-noi-dung { flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 14px; min-width: 0; }
+.gv-dong { display: flex; justify-content: space-between; gap: 8px; }
+.gv-o .meter-ray, .gv-o .meter-dat { display: block; }
+.meter-day { background: var(--vang-chu); }

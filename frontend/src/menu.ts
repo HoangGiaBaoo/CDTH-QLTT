@@ -12,6 +12,8 @@ export interface MucMenu {
   scr?: string;
   phuTrach?: 'A' | 'B';
   moTa?: string;
+  /** Vai trò mở được đường dẫn (đích thông báo) nhưng không thấy trên menu — trang tự đưa họ sang màn phù hợp. */
+  vaoThem?: VaiTro[];
 }
 
 const TAT_CA: VaiTro[] = ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'];
@@ -31,8 +33,9 @@ export const MENU: MucMenu[] = [
     nhan: { ADMIN: 'Hồ sơ thực tập', GIANG_VIEN: 'Sinh viên hướng dẫn', CAN_BO_DVHD: 'Sinh viên hướng dẫn' },
     moTa: 'Xác nhận / duyệt hồ sơ; từ hồ sơ mở kế hoạch, nhật ký, tiến độ, minh chứng, báo cáo, 08a (UC04–UC07, UC11, UC12)',
   },
+  // NT-04 (kết quả phân công) gửi cả giảng viên và sinh viên với đường dẫn này.
   { path: '/assignments', nhan: 'Phân công GVHD', roles: ['ADMIN'], scr: 'SCR-13', phuTrach: 'B',
-    moTa: 'Phân công hàng loạt, kiểm hạn mức giảng viên (UC05, #48–#51)' },
+    moTa: 'Phân công hàng loạt, kiểm hạn mức giảng viên (UC05, #48–#51)', vaoThem: ['GIANG_VIEN', 'SINH_VIEN'] },
   {
     path: '/assessments', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], scr: 'SCR-18/20', phuTrach: 'A',
     nhan: { ADMIN: 'Giám sát phiếu chấm', GIANG_VIEN: 'Phiếu đánh giá', CAN_BO_DVHD: 'Phiếu đánh giá' },

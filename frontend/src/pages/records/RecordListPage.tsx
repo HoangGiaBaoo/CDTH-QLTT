@@ -145,7 +145,9 @@ export default function RecordListPage() {
         <div className="alert alert-vang mb" role="status">
           <div className="alert-hang">
             <span>Có {soChoPhanCong} hồ sơ đã được ĐVHD xác nhận, chờ phân công giảng viên hướng dẫn.</span>
-            <Link to="/assignments" className="btn btn-phu btn-nho">Phân công GVHD</Link>
+            <Link to={dotChon && dotChon !== TAT_CA ? `/assignments?dot=${dotChon}` : '/assignments'} className="btn btn-phu btn-nho">
+              Phân công GVHD
+            </Link>
           </div>
         </div>
       )}
