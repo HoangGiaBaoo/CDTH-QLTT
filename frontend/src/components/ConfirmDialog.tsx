@@ -12,13 +12,15 @@ interface Props {
   khoaXacNhan?: boolean;
   /** false khi nội dung hộp thoại có ô nhập cần được focus trước. */
   tuFocusNut?: boolean;
+  /** Hộp thoại chứa form nhiều ô (đề xuất ĐVHD…) — rộng hơn hộp hỏi lại thường. */
+  rong?: boolean;
   onXacNhan: () => void;
   onHuy: () => void;
 }
 
 /** Hộp thoại hỏi lại trước thao tác khó hoàn tác. Esc hoặc bấm nền để hủy. */
 export default function ConfirmDialog({
-  mo, tieuDe, children, nhanXacNhan = 'Xác nhận', nguyHiem, dangXuLy, khoaXacNhan, tuFocusNut = true, onXacNhan, onHuy,
+  mo, tieuDe, children, nhanXacNhan = 'Xác nhận', nguyHiem, dangXuLy, khoaXacNhan, tuFocusNut = true, rong, onXacNhan, onHuy,
 }: Props) {
   useEffect(() => {
     if (!mo) return;
@@ -30,7 +32,7 @@ export default function ConfirmDialog({
   if (!mo) return null;
   return (
     <div className="modal-backdrop" onClick={() => !dangXuLy && onHuy()}>
-      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title" onClick={(e) => e.stopPropagation()}>
+      <div className={`modal${rong ? ' modal-rong' : ''}`} role="dialog" aria-modal="true" aria-labelledby="confirm-title" onClick={(e) => e.stopPropagation()}>
         <h2 id="confirm-title" className="modal-title">{tieuDe}</h2>
         {children && <div className="modal-body">{children}</div>}
         <div className="modal-actions">

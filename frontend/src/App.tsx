@@ -8,6 +8,8 @@ import LoginPage from './pages/auth/LoginPage';
 import HomePage from './pages/common/HomePage';
 import NotFoundPage from './pages/common/NotFoundPage';
 import PlaceholderPage from './pages/common/PlaceholderPage';
+import MyRecordPage from './pages/records/MyRecordPage';
+import RecordEntryPage from './pages/records/RecordEntryPage';
 import AssessmentDetailPage from './pages/assessments/AssessmentDetailPage';
 import AssessmentListPage from './pages/assessments/AssessmentListPage';
 import GradingPage from './pages/assessments/GradingPage';
@@ -32,6 +34,7 @@ const TRANG: Record<string, ReactElement> = {
   '/assessments': <AssessmentListPage />,
   '/panels': <PanelListPage />,
   '/results': <ResultListPage />,
+  '/my-record': <MyRecordPage />,
   '/my-result': <MyResultPage />,
   '/statistics': <StatisticsPage />,
 };
@@ -45,6 +48,8 @@ const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
   { path: '/panels/:panelId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <PanelDetailPage /> },
   { path: '/assessments/:assessmentId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], element: <AssessmentDetailPage /> },
   // Cán bộ: bảng TTTN-07 (SCR-21). Sinh viên tới từ NT-14: kết quả của mình (SCR-24).
+  // Đích NT-01/02/05/06: sinh viên ⇒ phiếu đăng ký của mình (SCR-11), cán bộ ⇒ chi tiết hồ sơ (SCR-12).
+  { path: '/records/:recordId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <RecordEntryPage /> },
   { path: '/results/:recordId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <ResultEntryPage /> },
 ];
 

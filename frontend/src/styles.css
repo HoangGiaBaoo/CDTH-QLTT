@@ -381,3 +381,27 @@ a { color: var(--mau-chinh); }
 .bang-thong-ke th { white-space: normal; vertical-align: bottom; min-width: 56px; }
 .bang-thong-ke .o-dai { min-width: 200px; }
 .bang-thong-ke .badge { white-space: nowrap; }
+
+/* ---------- Đăng ký thực tập SCR-11 ---------- */
+.modal-rong { max-width: 640px; }
+.chon-hinh-thuc { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+.chon-o {
+  display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--vien);
+  border-radius: 8px; cursor: pointer; background: var(--the); transition: border-color 0.15s, background 0.15s;
+}
+.chon-o:hover { border-color: var(--mau-chinh); }
+.chon-o input { margin-top: 3px; accent-color: var(--mau-chinh); }
+.chon-o > span { display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+.chon-o-chon { border-color: var(--mau-chinh); background: var(--xanh-duong-nen); }
+.chon-o:focus-within { outline: 2px solid var(--mau-chinh); outline-offset: 1px; }
+.minh-chung-bb { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--vien); }
+.minh-chung-bb .checklist { margin-top: 6px; }
+.cam-ket { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.5; cursor: pointer; }
+.cam-ket input { margin-top: 4px; accent-color: var(--mau-chinh); }
+.alert + .cam-ket { margin-top: 12px; }
+.card > .minh-chung-bb:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.ds-minh-chung li { display: flex; flex-direction: column; gap: 1px; padding: 4px 0; }
+.luoi-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.o-rong { grid-column: 1 / -1; }
+.ngan-tren { padding-top: 12px; border-top: 1px solid var(--vien); }
+.minh-chung-bb .tieu-de-nho { margin-top: 0; }
