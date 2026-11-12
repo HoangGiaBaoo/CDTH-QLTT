@@ -11,6 +11,9 @@ import PlaceholderPage from './pages/common/PlaceholderPage';
 import AssessmentDetailPage from './pages/assessments/AssessmentDetailPage';
 import AssessmentListPage from './pages/assessments/AssessmentListPage';
 import GradingPage from './pages/assessments/GradingPage';
+import PanelCreatePage from './pages/panels/PanelCreatePage';
+import PanelDetailPage from './pages/panels/PanelDetailPage';
+import PanelListPage from './pages/panels/PanelListPage';
 import TermDetailPage from './pages/terms/TermDetailPage';
 import TermListPage from './pages/terms/TermListPage';
 import type { VaiTro } from './types/auth';
@@ -23,12 +26,16 @@ const TRANG: Record<string, ReactElement> = {
   '/': <HomePage />,
   '/terms': <TermListPage />,
   '/assessments': <AssessmentListPage />,
+  '/panels': <PanelListPage />,
 };
 
 /** Trang con không hiện trên menu (chi tiết một bản ghi…) — tự khai báo quyền, thường trùng mục menu cha. */
 const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
   { path: '/terms/:termId', roles: ['ADMIN'], element: <TermDetailPage /> },
   { path: '/assessments/form', roles: ['GIANG_VIEN', 'CAN_BO_DVHD'], element: <GradingPage /> },
+  { path: '/panels/new', roles: ['ADMIN'], element: <PanelCreatePage /> },
+  // Đích của NT-11 — sinh viên cũng nhận thông báo nên được xem tổ của mình (#78).
+  { path: '/panels/:panelId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <PanelDetailPage /> },
   { path: '/assessments/:assessmentId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], element: <AssessmentDetailPage /> },
 ];
 

@@ -28,3 +28,32 @@ export interface ToDanhGia {
   hoSos: { hoSoId: number; maSv: string; hoTen: string; lop?: string; trangThai: TrangThaiHoSo }[];
   canhBao?: string[];
 }
+
+/** Body #79 — nhóm người chấm phải khớp vai trò: giảng viên ⇒ GVHD, cán bộ ĐVHD ⇒ DVHD. */
+export interface TaoToRequest {
+  dotId: number;
+  hoSoIds: number[];
+  thanhViens: { nguoiDungId: number; nhom: NhomNguoiCham; laChuTich: boolean }[];
+  /** LocalDateTime "2026-11-20T08:00". */
+  thoiGianBaoCao?: string;
+  diaDiem?: string;
+  hinhThuc?: string;
+  ghiChuPheDuyet?: string;
+}
+
+/** Body #80 — trường để trống thì giữ nguyên. */
+export interface CapNhatToRequest {
+  thoiGianBaoCao?: string;
+  diaDiem?: string;
+  hinhThuc?: string;
+  ghiChuPheDuyet?: string;
+  duongDanGhiHinh?: string;
+}
+
+/** Body #81. */
+export interface VangMatRequest {
+  vangMat: boolean;
+  lyDo: string;
+  thayTheNguoiDungId?: number;
+  thayTheNhom?: NhomNguoiCham;
+}

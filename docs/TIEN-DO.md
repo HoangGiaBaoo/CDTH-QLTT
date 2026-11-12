@@ -4,7 +4,7 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 12/11/2026**: Backend xong cả 13 UC (#1–#102). Seed V4 xong + kiểm chứng; CSDL dev ở V1–V4.
-`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20 xong** (A). **Chưa có**: các màn SCR còn lại,
+`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20, SCR-19 xong** (A). **Chưa có**: các màn SCR còn lại,
 cập nhật docs, Postman.
 
 ## Bảng 6 tuần
@@ -15,7 +15,7 @@ cập nhật docs, Postman.
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
@@ -23,7 +23,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 ## Việc tiếp theo (theo thứ tự)
 
 1. **Màn hình FE** — thay `PlaceholderPage` bằng trang thật (khai báo trong `TRANG` ở `frontend/src/App.tsx`, quyền lấy
-   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, SCR-19, SCR-21, SCR-24, SCR-25,
+   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, ~~SCR-19~~ ✅, SCR-21, SCR-24, SCR-25,
    SCR-03, SCR-06, chuông thông báo; B — SCR-11, SCR-12 (+ trang chi tiết hồ sơ cho GV/cán bộ), SCR-13, SCR-14…17,
    SCR-07/08, SCR-22, SCR-23.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
@@ -169,6 +169,17 @@ Menu `/assessments` thêm ADMIN ("Giám sát phiếu chấm"). `components/TermS
 Đã thử trên CSDL tạm, seed V4: 25/25 ca — gv.lan tiếp tục nháp sv.binh rồi nộp; cán bộ chưa nộp không xem được phiếu
 GV (BR-08.7); cb.son chấm chặng 2 sv.an (CLO7 tắt); giáo vụ mở lại phiếu gv.tung, gv.tung sửa từ link NT-13 và nộp lại;
 cán bộ mở SV không phải của mình ⇒ chặn; SV vào `/assessments` ⇒ 403.
+
+### SCR-19 Tổ đánh giá (A, 12/11/2026)
+
+`pages/panels/`: `PanelListPage` (#77 — giáo vụ thấy mọi tổ + số SV chưa xếp tổ; thành viên thấy tổ mình),
+`PanelCreatePage` (`/panels/new`, #79 — chọn SV chưa xếp tổ, nút thêm nhanh GVHD + cán bộ của SV đã chọn, chọn chủ
+tịch, bảng kiểm CBR-14 ✓/✗ theo `thanhPhan.ts` cùng điều kiện với `ToDanhGiaService.kiemThanhPhan`; trực tuyến bắt
+ghi chú phê duyệt), `PanelDetailPage` (`/panels/:id`, đích NT-11, cả SV xem được tổ mình — #78; giáo vụ sửa buổi #80,
+vắng mặt / có mặt lại có lý do + người thay thế #81; vắng làm nhóm ĐVHD trống ⇒ cảnh báo THIEU_PHIEU_DVHD; thành viên có
+mặt có nút "Chấm chặng 2"). `api/users.ts` mới có #5 (SCR-03 mở rộng).
+Đã thử 20/20 ca trên CSDL tạm: 2 người ⇒ chặn Đ10 k3a; trực tuyến thiếu phê duyệt ⇒ chặn Đ10 k3b; lập tổ sv.binh
+(gv.lan, cb.quang, gv.tung); cán bộ vắng ⇒ cảnh báo; gv.tung vắng + gv.hoa thay ⇒ vẫn đạt; SV ngoài tổ ⇒ ACCESS_DENIED.
 
 ## Môi trường thử hiện tại
 
