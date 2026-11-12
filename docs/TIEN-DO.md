@@ -4,8 +4,8 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 12/11/2026 (cuối phiên)**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11. **Việc kế tiếp: SCR-12** (mục 1
-dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
+CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11, 12. **Việc kế tiếp: SCR-13**
+(mục 1 dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
 
 ## Bảng 6 tuần
 
@@ -15,23 +15,20 @@ dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + các
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅) |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **SCR-12 Hồ sơ thực tập (B) — làm ngay.** `/records` (menu ADMIN/GV/cán bộ): danh sách #39 lọc `termId`, `status`,
-   `internshipType` (GV, cán bộ chỉ nhận hồ sơ trong phạm vi mình). `/records/:id` cho cán bộ: thay `PlaceholderPage`
-   trong `pages/records/RecordEntryPage.tsx` (SV ở nhánh đó đã là SCR-11). Thao tác: cán bộ ĐVHD #45 `{dongY, lyDo}`
-   (từ chối bắt buộc lý do ⇒ hồ sơ về Bản nháp; xác nhận có thể QUOTA_EXCEEDED); GVHD đã được phân công #46 `{dongY, lyDo}`
-   (duyệt ⇒ Đang thực tập + khung kế hoạch/tiến độ); giáo vụ #47 `{gianDoan, lyDo}` (Đ15 k4). Lối sang kế hoạch, nhật ký,
-   tiến độ, minh chứng, báo cáo, 08a của hồ sơ. Dùng lại `RecordSummary`/`RequiredEvidence`/`vongDoi.ts` (tách phần
-   thông tin chung nếu cần). Thử theo bước demo 4 (cb.duc xác nhận sv.dung) và 6 (gv.lan duyệt sv.ha ⇒ 9 dòng kế hoạch
-   + 8 dòng tiến độ).
-   Sau đó, theo kịch bản demo — B: SCR-13 (#48–#51, bước 5), SCR-14…17, SCR-07/08, SCR-22, SCR-23; A: SCR-03 (mở rộng
-   `api/users.ts`), SCR-06 (#3, #4), chuông thông báo (#101, #102). Phần B vẫn commit bằng SAKER205.
+1. **SCR-13 Phân công GVHD (B) — làm ngay.** `/assignments` (menu ADMIN, đích NT-03 và nút "Phân công GVHD" của
+   SCR-12): chọn đợt; #49 trả SV chưa có GVHD + giảng viên kèm "đã nhận / hạn mức"; chọn nhiều SV → một giảng viên → #50
+   (vượt hạn mức ⇒ QUOTA_EXCEEDED, **hủy cả lô** — UC05 4a); danh sách đã phân công #48; đổi GVHD kèm lý do #51 (chặn khi
+   GV cũ đã có phiếu nộp). Thử theo bước demo 5: sv.giang + sv.mai cho gv.hoa (4/5) ⇒ hủy cả lô; cho gv.minh ⇒ được.
+   Sau đó, theo kịch bản demo — B: SCR-14…17 (bản cho cán bộ thay chỗ giữ `/records/:id/plan|logbook|progress|evidence`),
+   SCR-07/08, SCR-22, SCR-23 (`/records/:id/report|feedback`); A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4),
+   chuông thông báo (#101, #102). Phần B vẫn commit bằng SAKER205.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
@@ -256,6 +253,36 @@ thiếu đề tài ⇒ "Hồ sơ còn thiếu…"; quốc tế 4 tuần ⇒ Đ4 
 vì CHO_DVHD chưa chiếm chỗ) → cb.yen xác nhận sv.khanh → sv.linh gửi ⇒ QUOTA_EXCEEDED Đ7 k2c; đổi cb.trang ⇒ gửi được;
 cb.trang từ chối ⇒ mở `/records/{id}` thấy lý do + form; đề xuất Ánh Dương ⇒ Chờ duyệt; sv.nam (HK2 xong) ⇒ phiếu mới
 + link hồ sơ cũ; tạo trùng ⇒ CBR-01 (Điều 5); sv.cuong Đang thực tập ⇒ GVHD, lối tắt; SV mở hồ sơ người khác ⇒ 403.
+
+### SCR-12 Hồ sơ thực tập (B, 12/11/2026)
+
+`pages/records/RecordListPage` (`/records`, menu ADMIN "Hồ sơ thực tập", GV/cán bộ "Sinh viên hướng dẫn"): #39 theo đợt
+(giáo vụ mặc định đợt Đang thực hiện; GV/cán bộ mặc định "Tất cả đợt" vì phạm vi nhỏ), tab trạng thái có số đếm + lọc
+hình thức + tìm (mã SV, họ tên, đơn vị) — lọc trạng thái/hình thức làm ở giao diện trên danh sách của đợt để tab có số đếm
+(#39 vẫn nhận `status`, `internshipType` cho Postman); bộ lọc giữ trong URL. Nhắc "x sinh viên chờ bạn xác nhận / phê
+duyệt" (dòng tô vàng), giáo vụ được nhắc hồ sơ chờ phân công + nút sang SCR-13.
+`RecordDetailPage` (`/records/:id` qua `RecordEntryPage` cho ADMIN/GV/cán bộ): thanh bước, thẻ "việc cần làm" chỉ cho
+đúng người — cán bộ của hồ sơ khi Chờ ĐVHD (#45 xác nhận/từ chối), GVHD đã phân công khi Chờ GVHD (#46 phê duyệt/từ
+chối) — từ chối bắt lý do; giáo vụ #47 Gián đoạn (khi Chờ GVHD / Đang thực tập / Chờ đánh giá, khớp `CHUYEN_HOP_LE`) và
+Khôi phục, lý do bắt buộc. GVHD từ chối ⇒ mất phân công nên quay về danh sách kèm thông báo. QUOTA_EXCEEDED khi cán bộ
+xác nhận ⇒ cảnh báo vàng + gợi ý từ chối. Khối Sinh viên + phiếu TTTN-01 (`RecordInfo`, tách từ `RecordSummary`, SCR-11
+dùng chung; thanh bước tách thành `RecordStepper`). Trước khi duyệt: danh mục minh chứng bắt buộc (`RequiredEvidence`
+thêm `xemHoSoSinhVien`). Sau khi duyệt: `RecordTracking` — 6 ô tóm tắt + lối sang: kế hoạch #52, nhật ký #57, tiến độ
+#61, minh chứng #65 (đang thực tập ⇒ "Chưa có" xám; từ Chờ đánh giá ⇒ "Thiếu" vàng), báo cáo #89, phản hồi 08a/08b #94
+(cán bộ không có dòng 08b vì #94 không trả); thêm ô TTTN-07 khi đã tới đánh giá. Ô lỗi riêng ô đó báo.
+Các ô dẫn tới `/records/:id/plan|logbook|progress|evidence|report|feedback` — **chỗ giữ** (`MAN_THEO_DOI_HO_SO` ở
+`App.tsx`) cho bản cán bộ của SCR-14…17, 22, 23. Thêm `api/studyPlans.ts`, `api/progress.ts`, `api/reports.ts`,
+`api/feedbacks.ts` + `types/` tương ứng (mới có các GET; màn sau mở rộng). `api/records.ts` thêm `xacNhanTiepNhan`,
+`pheDuyet`, `doiTrangThai`; `vongDoi.ts` thêm `GIAN_DOAN_DUOC`, `tinhTrangChoCanBo`.
+Hạn nộp kế hoạch = 5 ngày làm việc từ **ngày bắt đầu đợt** (Đ6 k3a, UC06 4a) nên hồ sơ duyệt muộn như sv.ha hiện hạn đã
+qua — đúng quy định, không phải lỗi.
+Đã thử 59/59 ca trên CSDL tạm + chạy lại 34/34 ca SCR-11: giáo vụ HK1 11 hồ sơ, tab đếm đúng, nhắc 2 hồ sơ chờ phân công;
+lọc + tìm + quay lại giữ bộ lọc; Tất cả đợt 21 dòng; sv.cuong: 24 ngày nhật ký, 7/8 tuần, kế hoạch Đã khóa, Gián đoạn
+(lý do bắt buộc) → Khôi phục về Đang thực tập, nhật ký hệ thống 2 dòng; sv.an: 08a có, 08b chưa, ô TTTN-07 mở
+`/results/{id}`; cb.son không thấy dòng 08b; **bước 4** cb.duc xác nhận sv.dung ⇒ Chờ GVHD; cb.duc mở hồ sơ khác ⇒
+ACCESS_DENIED; **bước 6** gv.lan duyệt sv.ha ⇒ 9 dòng kế hoạch + 8 dòng tiến độ; gv.lan từ chối sv.giang ⇒ Bản nháp, mất
+quyền xem; **bước 3** cb.yen (hạn mức 1) xác nhận sv.khanh rồi sv.linh ⇒ QUOTA_EXCEEDED Đ7 k2c, từ chối kèm lý do; SV vào
+`/records` hoặc `/records/{id}/plan` ⇒ 403, `/records/{id}` của mình vẫn là SCR-11.
 
 ## Cách làm một màn FE (cho phiên sau)
 
