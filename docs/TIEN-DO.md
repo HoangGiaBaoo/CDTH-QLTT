@@ -4,8 +4,8 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 12/11/2026 (cuối phiên)**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11, 12, 13, 14. **Việc kế tiếp:
-SCR-15** (mục 1 dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
+CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…15. **Việc kế tiếp:
+SCR-16** (mục 1 dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
 
 ## Bảng 6 tuần
 
@@ -15,19 +15,20 @@ SCR-15** (mục 1 dưới). Còn lại: các màn khác, docs mục 10, Postman.
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅) |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **SCR-15 Nhật ký thực tập (B) — làm ngay.** Làm theo mẫu SCR-14: một trang cho SV `/my-record/logbook` (hồ sơ qua
-   #40) và `/records/:id/logbooks` (đích NT của backend; đổi chỗ giữ trong `MAN_THEO_DOI_HO_SO` ở `App.tsx` sang trang
-   thật, giống `study_plan`). #57 lọc theo khoảng ngày; SV thêm #58 (mỗi ngày một bản ghi, BR-07.1), sửa #59 (chỉ 7 ngày
-   gần nhất, BR-07.2); GVHD nhắc #60 (SV quá 5 ngày chưa ghi). `api/progress.ts` đã có `nhatKy` (#57). Thử trên sv.cuong
-   (24 ngày nhật ký) và sv.ha sau khi được duyệt (trống).
-   Sau đó, theo kịch bản demo — B: SCR-16, 17 (`/records/:id/weekly_progress|evidences`), SCR-07/08, SCR-22, SCR-23
+1. **SCR-16 Tiến độ tuần TTTN-03 (B) — làm ngay.** Theo mẫu SCR-14/15: SV `/my-record/progress` và
+   `/records/:id/weekly_progress` (đích NT của backend; thay chỗ giữ trong `MAN_THEO_DOI_HO_SO`). #61 mỗi tuần một dòng; SV
+   sửa #62 (công việc được giao, kết quả, % hoàn thành 0–100; dòng đã xác nhận bị khóa); cán bộ ĐVHD #63 xác nhận (khóa
+   dòng) hoặc yêu cầu bổ sung kèm nội dung (dòng về chờ + thông báo SV, UC07 6a). Theo UC07 bước 6, cán bộ xem nhật ký của
+   tuần ngay trên dòng đó (#57 với `from`/`to` của tuần, `utils/lich.ts` đã có `khoangTuan`, `tuanCua`). Thử trên
+   sv.cuong (7/8 tuần) với cb.quang.
+   Sau đó, theo kịch bản demo — B: SCR-17 (`/records/:id/evidences`), SCR-07/08, SCR-22, SCR-23
    (`/records/:id/reports|feedbacks`); A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4), chuông thông báo (#101, #102).
    Phần B vẫn commit bằng SAKER205.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
@@ -326,6 +327,29 @@ lần 2 ⇒ "Bạn đã xác nhận kế hoạch này"; gv.lan xác nhận ⇒ �
 nhận trống, nhật ký `MO_LAI_KE_HOACH`; sv.ha mở link NT-07 ⇒ sửa lại được, có thông báo trỏ đúng link; sv.cuong (seed Đã
 khóa) chỉ đọc; sv.cuong / gv.minh mở kế hoạch sv.ha ⇒ không có quyền, không lộ nội dung; gv.minh (GVHD sv.cuong) chỉ nút
 Mở lại; cb.quang không nút; giáo vụ chỉ đọc, #56 ⇒ 403; sv.giang (Chờ GVHD) ⇒ "Chưa có kế hoạch".
+
+### SCR-15 Nhật ký thực tập (B, 12/11/2026)
+
+`pages/logbooks/LogbookPage` — SV `/my-record/logbook` (hồ sơ qua #40) và `/records/:id/logbooks` (`LogbookRoute`, đích NT-09
+và lối từ ô Nhật ký của SCR-12). #57 cả danh sách, nhóm theo tuần của đợt (mới nhất trước, mỗi nhóm có khoảng ngày, số ngày,
+số giờ; ngày sau ngày kết thúc đợt gom vào "Sau ngày kết thúc đợt"), tab lọc theo tuần có số đếm. Ô số liệu: số ngày đã
+ghi, tổng giờ, ghi gần nhất (x ngày trước), tuần hiện tại. Mỗi dòng: thứ + ngày, "ghi lúc HH:mm" hoặc "ghi bù dd/MM HH:mm"
+khi ghi muộn (từ `ngayTao`). SV khi hồ sơ Đang thực tập: form **Thêm nhật ký** (#58: ngày — `max` hôm nay, `min` ngày bắt
+đầu đợt —, số giờ, nội dung *, kết quả; lỗi VALIDATION_ERROR gắn dưới ô); chọn ngày đã có bản ghi ⇒ gợi ý + nút "Sửa bản
+ghi ngày này" (vẫn để backend trả DUPLICATE_RESOURCE nếu gửi). Sửa ngay trên dòng (#59) — nút Sửa theo cờ `suaDuoc` backend
+trả, dòng quá 7 ngày hiện "Đã khóa". GVHD: nút **Nhắc ghi nhật ký** (#60 một SV) trên trang này và trên `/records` (#60
+không truyền danh sách — backend tự lọc SV quá 5 ngày; kết quả liệt kê tên + ngày ghi cuối; rỗng ⇒ lời backend màu xanh
+dương, không phải lỗi) — `RemindLogbook`, `KetQuaNhacNho`. Cán bộ, giáo vụ: chỉ xem. `utils/lich.ts` (chuyển từ
+`pages/studyPlans/`) thêm `tuanCua`, `thu`, `homNayIso`, `soNgayTruoc`; `api/progress.ts` thêm #58–#60.
+Đã thử 46/46 ca trên CSDL tạm + chạy lại 58/58 ca SCR-12: gv.minh mở từ SCR-12 ⇒ 24 ngày, 192 giờ, ghi gần nhất 30/10 (13
+ngày trước), 8 nhóm tuần, lọc Tuần 3; nhắc sv.cuong ⇒ "Đã nhắc 1 sinh viên"; nhắc từ `/records` ⇒ liệt kê sv.cuong "ghi lần
+cuối 30/10/2026"; sv.cuong nhận NT-09 trỏ `/records/{id}/logbooks`; bản ghi cũ đều "Đã khóa"; ghi trống ⇒ lỗi dưới ô Nội
+dung; 25 giờ ⇒ "Số giờ tối đa 24"; ngày cách 8 ngày ⇒ BUSINESS_RULE_VIOLATION Điều 19 k1c; ngày tương lai ⇒ chặn; ghi hôm
+nay ⇒ 25 ngày, nhóm "Sau ngày kết thúc đợt"; gửi trùng ⇒ DUPLICATE_RESOURCE; sửa 30 giờ ⇒ lỗi trong dòng, 7,5 ⇒ "Đã cập nhật
+nhật ký", tổng 199,5; SV gọi #59 bản ghi 30/10 ⇒ RESOURCE_LOCKED; gv.minh nhắc lại ⇒ "Không có sinh viên nào quá 5 ngày…";
+cb.quang, giáo vụ chỉ xem (#58, #60 ⇒ 403); gv.lan, sv.ha mở nhật ký sv.cuong ⇒ không có quyền; gv.lan #60 cho sv.cuong ⇒
+ACCESS_DENIED; sv.ha (Chờ GVHD) ⇒ chưa ghi được; sv.an (Chờ đánh giá) ⇒ chỉ xem.
+Còn nợ (backend UC07, B): thông điệp DUPLICATE_RESOURCE của #58 in ngày dạng `2026-11-12` thay vì `12/11/2026`.
 
 ## Cách làm một màn FE (cho phiên sau)
 
