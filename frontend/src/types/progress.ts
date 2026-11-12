@@ -13,6 +13,26 @@ export interface NhatKy {
   suaDuoc: boolean;
 }
 
+/** Body #58 — `hoSoId` bỏ trống thì backend lấy hồ sơ đang thực tập của SV; `soGio` 0–24, một chữ số thập phân. */
+export interface NhatKyRequest {
+  hoSoId?: number;
+  ngay: string;
+  noiDung: string;
+  soGio?: number;
+  ketQua?: string;
+}
+
+/** Body #59 — ngày của bản ghi không đổi được. */
+export type CapNhatNhatKyRequest = Omit<NhatKyRequest, 'hoSoId' | 'ngay'>;
+
+/** Phần tử kết quả #60 — SV đã được nhắc; `ngayGhiCuoi` trống là chưa ghi lần nào. */
+export interface NhacNho {
+  hoSoId: number;
+  maSv: string;
+  hoTen: string;
+  ngayGhiCuoi?: string;
+}
+
 /** #61 — một dòng bảng tiến độ TTTN-03. */
 export interface TienDo {
   id: number;

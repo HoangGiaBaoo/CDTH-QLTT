@@ -14,7 +14,7 @@ import { ngay, ngayGio } from '../../utils/format';
 import type { HoSo } from '../../types/record';
 import type { KeHoach } from '../../types/studyPlan';
 import type { Dot } from '../../types/term';
-import { hanConLai, khoangTuan } from './lich';
+import { hanConLai, khoangTuan } from '../../utils/lich';
 
 type NoiDung = { mucTieu: string; ketQuaMongDoi: string; hinhThucMinhChung: string };
 type ThaoTac = 'GUI' | 'XAC_NHAN' | 'MO_LAI';

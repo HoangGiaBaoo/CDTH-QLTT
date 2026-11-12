@@ -11,6 +11,7 @@ import { ngay } from '../../utils/format';
 import type { VaiTro } from '../../types/auth';
 import type { HoSo, TrangThaiHoSo } from '../../types/record';
 import type { Dot } from '../../types/term';
+import RemindLogbook, { KetQuaNhacNho, type KetQuaNhac } from '../logbooks/RemindLogbook';
 
 /** Thứ tự tab trạng thái theo vòng đời hồ sơ. */
 const THU_TU: TrangThaiHoSo[] = [
@@ -46,6 +47,7 @@ export default function RecordListPage() {
   const [ds, setDs] = useState<HoSo[] | null>(null);
   const [loi, setLoi] = useState<unknown>(null);
   const thongBao = (location.state as { thongBao?: string } | null)?.thongBao;
+  const [nhac, setNhac] = useState<KetQuaNhac | null>(null);
 
   const dotChon = params.get('dot') ?? (dsDot ? dotMacDinh(dsDot, vaiTro) : null);
   const locTrangThai = params.get('trangThai') ?? '';
@@ -97,8 +99,11 @@ export default function RecordListPage() {
     <div>
       <div className="page-head">
         <h1 className="page-title">{vaiTro === 'ADMIN' ? 'Hồ sơ thực tập' : 'Sinh viên hướng dẫn'}</h1>
+        {/* Luồng thay thế UC07: GVHD nhắc mọi SV đang thực tập quá 5 ngày chưa ghi nhật ký (#60) — backend tự lọc. */}
+        {vaiTro === 'GIANG_VIEN' && <RemindLogbook onXong={setNhac} />}
       </div>
       {thongBao && <div className="alert alert-xanh mb" role="status">{thongBao}</div>}
+      <KetQuaNhacNho kq={nhac} lietKe />
       <ErrorAlert error={loi} />
 
       <div className="toolbar">

@@ -1,4 +1,4 @@
-import type { Dot } from '../../types/term';
+import type { Dot } from '../types/term';
 
 /** "2026-09-07" → Date giờ địa phương (không qua UTC để khỏi lệch một ngày). */
 function sangNgay(s: string): Date {
@@ -38,4 +38,28 @@ export function hanConLai(hanNop: string, homNay = new Date()): HanConLai {
     if (d.getDay() !== 0 && d.getDay() !== 6) soNgay++;
   }
   return { quaHan: false, homNayLaHan: ngay.getTime() === han.getTime(), soNgay };
+}
+
+/** Tuần thứ mấy của đợt chứa `ngay` (tuần 1 bắt đầu từ ngày bắt đầu đợt); > `soTuan` nghĩa là sau ngày kết thúc. */
+export function tuanCua(dot: Dot, ngay: string): number {
+  const ms = sangNgay(ngay).getTime() - sangNgay(dot.ngayBatDau).getTime();
+  return Math.floor(Math.round(ms / 86_400_000) / 7) + 1;
+}
+
+const THU = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+
+/** "Thứ 2" … "Chủ nhật" của một ngày yyyy-MM-dd. */
+export function thu(ngay: string): string {
+  return THU[sangNgay(ngay).getDay()];
+}
+
+/** Hôm nay dạng yyyy-MM-dd theo giờ máy (giá trị cho `<input type="date">`). */
+export function homNayIso(d = new Date()): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+/** Số ngày lịch từ `ngay` tới hôm nay. */
+export function soNgayTruoc(ngay: string, homNay = new Date()): number {
+  const h = new Date(homNay.getFullYear(), homNay.getMonth(), homNay.getDate());
+  return Math.round((h.getTime() - sangNgay(ngay).getTime()) / 86_400_000);
 }

@@ -456,3 +456,18 @@ a { color: var(--mau-chinh); }
 .ke-hoach .textarea { min-height: 64px; font-size: 14px; }
 .kh-tong-ket td { background: #f7f9fb; }
 .info-grid .ck-dat { font-weight: 600; }
+
+/* ---------- Nhật ký thực tập SCR-15 ---------- */
+.stat .stat-chu { font-size: 16px; line-height: 28px; }
+.nk-form { display: grid; grid-template-columns: minmax(180px, 220px) minmax(120px, 160px); gap: 14px; }
+.nhat-ky { min-width: 720px; }
+.nhat-ky td { font-size: 14px; }
+.nhat-ky .nk-ngay { width: 130px; }
+.nhat-ky .nk-gio { width: 80px; }
+.nhat-ky .nk-gio .input-so { width: 70px; }
+.nhat-ky .nk-tt { width: 90px; text-align: right; }
+.nk-tuan td { background: #f7f9fb; font-size: 13px; }
+.nk-dang-sua td { background: var(--xanh-duong-nen); }
+.nk-nut { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.nhac-ds { margin: 6px 0 0; padding-left: 20px; }
+.nk-trung { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
