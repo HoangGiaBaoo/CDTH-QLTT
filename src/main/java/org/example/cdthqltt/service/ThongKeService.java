@@ -385,7 +385,8 @@ public class ThongKeService {
         List<String> cot = List.of("CLO", "Tên chuẩn đầu ra", "Số SV", "Mức tự đánh giá TB", "Mức chính thức TB",
                 "Độ lệch TB", "Độ lệch tuyệt đối TB", "Số SV tự đánh giá cao hơn", "Số SV trùng khớp", "Số SV tự đánh giá thấp hơn");
         List<List<Object>> dong = new ArrayList<>();
-        dem.forEach((ma, c) -> dong.add(List.of(ma, giaTri(ten.get(ma)), c[0], trungBinh(c[1], c[0]), trungBinh(c[2], c[0]),
+        // Arrays.asList nhận null: CLO chưa có SV nào (đợt chưa công bố kết quả) thì các ô trung bình là "chưa có dữ liệu".
+        dem.forEach((ma, c) -> dong.add(Arrays.asList(ma, giaTri(ten.get(ma)), c[0], trungBinh(c[1], c[0]), trungBinh(c[2], c[0]),
                 trungBinh(c[3], c[0]), trungBinh(c[4], c[0]), c[5], c[0] - c[5] - c[6], c[6])));
         Map<String, Object> tongHop = new LinkedHashMap<>();
         tongHop.put("Số phiếu 08b có kết quả đã công bố", soPhieu);
@@ -435,7 +436,8 @@ public class ThongKeService {
                     tichCuc += phanBo[i][m];
                 }
             }
-            List<Object> d = new ArrayList<>(List.of(i + 1, BieuMauPhanHoi.CHAT_LUONG_08B.get(i), so, trungBinh(tong, so)));
+            // Đợt chưa có phiếu 08b ⇒ trung bình null; List.of không nhận null nên dùng Arrays.asList.
+            List<Object> d = new ArrayList<>(Arrays.asList(i + 1, BieuMauPhanHoi.CHAT_LUONG_08B.get(i), so, trungBinh(tong, so)));
             for (int m = 1; m <= MUC_HAI_LONG_TOI_DA; m++) {
                 d.add(phanBo[i][m]);
             }
