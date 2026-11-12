@@ -302,3 +302,33 @@ a { color: var(--mau-chinh); }
 .dk-truot { border-color: var(--do-vien); background: #fffafa; }
 .dk-truot .dk-dau { background: var(--do-nen); color: var(--do-chu); }
 .dk-chua .dk-dau { background: var(--xam-nen); color: var(--xam-chu); }
+
+/* ---------- Kết quả của tôi SCR-24 ---------- */
+.kq-tren { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(320px, 1.6fr); gap: 16px; align-items: stretch; }
+@media (max-width: 860px) { .kq-tren { grid-template-columns: 1fr; } }
+.hp-the { display: flex; flex-direction: column; gap: 6px; }
+.info-gon { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--vien); font-size: 14px; }
+.info-gon > div { display: flex; justify-content: space-between; gap: 12px; }
+.info-gon > div > span:first-child { flex-shrink: 0; }
+.buoc { margin: 8px 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; }
+
+/* Radar 7 trục: một chuỗi màu chính, lưới và trục chìm. */
+.radar { position: relative; max-width: 420px; margin: 0 auto; }
+.radar svg { width: 100%; height: auto; display: block; overflow: visible; }
+.radar-luoi { fill: none; stroke: var(--vien); stroke-width: 1; }
+.radar-truc { stroke: var(--vien); stroke-width: 1; }
+.radar-thang { font-size: 10px; fill: var(--chu-phu); paint-order: stroke; stroke: var(--the); stroke-width: 3px; }
+.radar-nhan { font-size: 13px; font-weight: 600; fill: var(--chu-phu); }
+.radar-nhan-chon { fill: var(--chu); }
+.radar-vung { fill: var(--mau-chinh); fill-opacity: 0.14; stroke: var(--mau-chinh); stroke-width: 2; stroke-linejoin: round; }
+.radar-diem { fill: var(--mau-chinh); stroke: var(--the); stroke-width: 2; }
+.radar-cham { fill: transparent; cursor: pointer; outline: none; }
+.radar-cham:focus-visible { stroke: var(--mau-chinh); stroke-width: 2; stroke-dasharray: 3 2; }
+.radar-tip {
+  position: absolute; transform: translate(-50%, calc(-100% - 14px)); pointer-events: none; z-index: 2;
+  background: var(--the); border: 1px solid var(--vien); border-radius: 6px; box-shadow: 0 4px 14px rgba(15, 35, 70, 0.12);
+  padding: 6px 10px; display: flex; flex-direction: column; gap: 1px; font-size: 13px; white-space: nowrap;
+}
+.radar-tip b { font-size: 16px; color: var(--chu); }
+.radar-tip span { color: var(--chu-phu); }
+.radar-tip-ten { max-width: 220px; white-space: normal; }

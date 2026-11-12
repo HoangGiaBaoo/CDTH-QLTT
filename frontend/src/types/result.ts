@@ -93,6 +93,22 @@ export interface BangTongHop {
   chuaTinhDuoc: string | null;
 }
 
+/**
+ * #83 (sinh viên, SCR-24) — chỉ điểm tổng hợp; cố ý không có điểm theo nhóm người chấm, điểm từng chặng hay cảnh báo
+ * lệch điểm (UC13). Backend chỉ trả khi kết quả đã công bố và SV đã gửi 08b (BR-12.5).
+ */
+export interface KetQuaSinhVien {
+  thongTin: ThongTinChung;
+  cacClo: { maClo: string; ten: string; alpha: number; diemClo: number | null; muc: number | null }[];
+  diemThuong: number;
+  diemHp: number | null;
+  mucHp: number | null;
+  nhomNangLuc: NhomNangLuc[];
+  ketLuan: KetLuan | null;
+  lyDoKhongDat: string[];
+  nhanXetGvhd: string | null;
+}
+
 /** #85 — null = không đề xuất thưởng. */
 export interface NhanXetKetQuaRequest {
   nhanXet: string;

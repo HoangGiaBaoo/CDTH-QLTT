@@ -4,7 +4,7 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 12/11/2026**: Backend xong cả 13 UC (#1–#102). Seed V4 xong + kiểm chứng; CSDL dev ở V1–V4.
-`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20, SCR-19, SCR-21 xong** (A). **Chưa có**: các màn SCR còn lại,
+`mvnw test` xanh 21/21. Khung frontend xong. **Màn FE: SCR-09/10, SCR-18/20, SCR-19, SCR-21, SCR-24 xong** (A). **Chưa có**: các màn SCR còn lại,
 cập nhật docs, Postman.
 
 ## Bảng 6 tuần
@@ -15,7 +15,7 @@ cập nhật docs, Postman.
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ⬜ màn FE |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
@@ -23,7 +23,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 ## Việc tiếp theo (theo thứ tự)
 
 1. **Màn hình FE** — thay `PlaceholderPage` bằng trang thật (khai báo trong `TRANG` ở `frontend/src/App.tsx`, quyền lấy
-   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, ~~SCR-19~~ ✅, ~~SCR-21~~ ✅, SCR-24, SCR-25,
+   từ `frontend/src/menu.ts`). Thứ tự theo kịch bản demo: A — ~~SCR-09/10~~ ✅, ~~SCR-18/20~~ ✅, ~~SCR-19~~ ✅, ~~SCR-21~~ ✅, ~~SCR-24~~ ✅, SCR-25,
    SCR-03, SCR-06, chuông thông báo; B — SCR-11, SCR-12 (+ trang chi tiết hồ sơ cho GV/cán bộ), SCR-13, SCR-14…17,
    SCR-07/08, SCR-22, SCR-23.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
@@ -191,13 +191,26 @@ Công bố #87; GVHD của SV nhập nhận xét + đề xuất thưởng #85; g
 `RecognitionConditions` (4 điều kiện Đ15 k3 ✓/✗, ghép lý do theo tiền tố "(a)"…"(d)" của `ScoringService`),
 `ReviewForm`. Giao diện không tự tính điểm; trần thưởng 0,5 để backend chặn (trích Đ18 k4).
 Dùng chung: `utils/taiTep.ts` (tải tệp có JWT — B dùng cho #67, #91), `api/client.ts` đọc được lỗi JSON khi tải
-tệp (`responseType: 'blob'`), `format.so2` cho cột trung gian. Route `/results/:id` hiện chưa nhận SV — đích NT-14
-sẽ xử lý khi làm SCR-24.
+tệp (`responseType: 'blob'`), `format.so2` cho cột trung gian.
 Đã thử 39/39 ca trên CSDL tạm: HK2 khớp seed (sv.nam cột (7) 8,2 … 7,5, HP 7,7; sv.toan (b)+(c); sv.vinh (d); sv.oanh
 thưởng 0,3); xuất `TTTN-07_2151220101.docx`; sv.an thiếu phiếu cb.son ⇒ THIEU_PHIEU; cb.son nộp ⇒ tự tính HP 7,7 Không
 đạt (d); xác nhận khi chưa có nhận xét ⇒ chặn; GVHD thưởng 0,6 ⇒ chặn Đ18 k4, 0,2 ⇒ HP 7,9; SV gửi 08b ⇒ cảnh báo dữ
 liệu đổi, xác nhận bị chặn tới khi Tính lại ⇒ Đạt; duyệt thưởng 0,1 ⇒ HP 7,8 Đã xác nhận; công bố đã chọn ⇒ Hoàn thành;
 gv.lan (tổ) không có form nhận xét; cb.son không có nút; SV vào `/results` ⇒ 403.
+
+### SCR-24 Kết quả của tôi (A, 12/11/2026)
+
+`pages/results/MyResultPage` (`/my-result` lấy hồ sơ qua #40; `/results/:id` — đích NT-14 — qua `ResultEntryPage`:
+SV ⇒ SCR-24, cán bộ ⇒ TTTN-07): điểm học phần + mức + kết luận, radar 7 trục (`CloRadar`, SVG thuần, một chuỗi màu
+chính, tooltip khi rê/Tab; bảng điểm bên dưới là bản xem dạng bảng), bảng 7 CLO (trọng số, điểm, mức), 4 điều kiện
+(dùng chung `RecognitionConditions`), nhóm năng lực, nhận xét GVHD. Không có điểm từng người chấm — #83 cho SV không
+trả các trường đó. Chưa công bố / chưa gửi 08b (BR-12.5, nhánh 3a) ⇒ hiện nguyên văn thông điệp backend, giải thích
+hai điều kiện và nút sang SCR-23 (`/my-record/feedback`, kèm `state.tuKetQua` để B hiển thị nếu muốn).
+`api/records.ts` thêm `cuaToi` (#40). Chỉ số tự nhận thức (#97) để ở SCR-23 (B), SCR-24 chỉ dẫn link.
+Đã thử 19/19 ca trên CSDL tạm: JSON #83 của SV không có `theoChang`/`dvhd`/`gvhd`/`canhBao`; sv.nam 7 CLO khớp seed,
+HP 7,7 Đạt, tooltip radar; mở `/results/{id}` của mình ⇒ SCR-24, của SV khác ⇒ ACCESS_DENIED; sv.toan Không đạt
+(b)+(c); sv.an chưa công bố ⇒ giải thích + nút SCR-23; sv.tai đã công bố nhưng xóa 08b ⇒ "Bạn cần gửi phiếu
+phản hồi TTTN-08b…"; giáo vụ mở `/results/{id}` vẫn là TTTN-07.
 
 ## Môi trường thử hiện tại
 

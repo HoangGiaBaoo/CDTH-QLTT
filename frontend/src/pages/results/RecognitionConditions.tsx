@@ -1,6 +1,7 @@
 import { NHAN_CHUONG_TRINH } from '../../utils/constants';
 import { diem } from '../../utils/format';
-import type { BangTongHop } from '../../types/result';
+import type { ChuongTrinhDaoTao } from '../../types/auth';
+import type { KetLuan } from '../../types/result';
 
 interface DieuKien {
   ma: 'a' | 'b' | 'c' | 'd';
@@ -9,11 +10,21 @@ interface DieuKien {
   khiDat: string;
 }
 
+/** Các trường mà cả bảng TTTN-07 (SCR-21) lẫn dạng kết quả của sinh viên (SCR-24) đều có. */
+interface DuLieuCongNhan {
+  cacClo: { maClo: string; muc: number | null }[];
+  thongTin: { chuongTrinh: ChuongTrinhDaoTao };
+  diemHp: number | null;
+  mucHp: number | null;
+  ketLuan: KetLuan | null;
+  lyDoKhongDat: string[];
+}
+
 /**
  * Bốn điều kiện công nhận hoàn thành — đúng bốn điểm a, b, c, d của Điều 15 khoản 3. Kết luận và lý do do backend
  * xét (ScoringService.xetCongNhanHoanThanh); mỗi lý do mở đầu bằng "(a)"…"(d)" nên giao diện chỉ việc ghép đúng dòng.
  */
-export default function RecognitionConditions({ bang }: { bang: BangTongHop }) {
+export default function RecognitionConditions({ bang }: { bang: DuLieuCongNhan }) {
   const clo = (ma: string) => bang.cacClo.find((d) => d.maClo === ma);
   const mucCua = (ma: string) => {
     const m = clo(ma)?.muc;

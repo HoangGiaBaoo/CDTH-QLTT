@@ -1,7 +1,7 @@
 import { api, layData, layPhanHoi } from './client';
 import type { ApiResponse } from '../types/api';
 import type {
-  BangTongHop, CongBoRequest, CongBoResponse, KetQuaTomTat, NhanXetKetQuaRequest, XacNhanKetQuaRequest,
+  BangTongHop, CongBoRequest, CongBoResponse, KetQuaSinhVien, KetQuaTomTat, NhanXetKetQuaRequest, XacNhanKetQuaRequest,
 } from '../types/result';
 import { tenTepTuHeader } from '../utils/taiTep';
 
@@ -13,6 +13,9 @@ export const resultApi = {
 
   /** #83 — cán bộ nhận bảng TTTN-07 đầy đủ (sinh viên nhận dạng rút gọn, dùng ở SCR-24). */
   chiTiet: (recordId: number) => api.get<ApiResponse<BangTongHop>>(`/results/${recordId}`).then(layData),
+
+  /** #83 gọi bằng vai trò sinh viên (SCR-24): chưa công bố hoặc chưa gửi 08b ⇒ BUSINESS_RULE_VIOLATION (BR-12.5). */
+  cuaSinhVien: (recordId: number) => api.get<ApiResponse<KetQuaSinhVien>>(`/results/${recordId}`).then(layData),
 
   /** #84 — chạy lại thuật toán; thiếu phiếu ⇒ THIEU_PHIEU_DVHD / THIEU_PHIEU_GVHD, ghi nhật ký HP trước và sau. */
   tinhLai: (recordId: number) =>

@@ -14,7 +14,8 @@ import GradingPage from './pages/assessments/GradingPage';
 import PanelCreatePage from './pages/panels/PanelCreatePage';
 import PanelDetailPage from './pages/panels/PanelDetailPage';
 import PanelListPage from './pages/panels/PanelListPage';
-import ResultDetailPage from './pages/results/ResultDetailPage';
+import MyResultPage from './pages/results/MyResultPage';
+import ResultEntryPage from './pages/results/ResultEntryPage';
 import ResultListPage from './pages/results/ResultListPage';
 import TermDetailPage from './pages/terms/TermDetailPage';
 import TermListPage from './pages/terms/TermListPage';
@@ -30,6 +31,7 @@ const TRANG: Record<string, ReactElement> = {
   '/assessments': <AssessmentListPage />,
   '/panels': <PanelListPage />,
   '/results': <ResultListPage />,
+  '/my-result': <MyResultPage />,
 };
 
 /** Trang con không hiện trên menu (chi tiết một bản ghi…) — tự khai báo quyền, thường trùng mục menu cha. */
@@ -40,8 +42,8 @@ const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
   // Đích của NT-11 — sinh viên cũng nhận thông báo nên được xem tổ của mình (#78).
   { path: '/panels/:panelId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <PanelDetailPage /> },
   { path: '/assessments/:assessmentId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], element: <AssessmentDetailPage /> },
-  // NT-14 dẫn sinh viên tới /results/{id} — SCR-24 sẽ nhận vai trò SINH_VIEN cho đường dẫn này.
-  { path: '/results/:recordId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD'], element: <ResultDetailPage /> },
+  // Cán bộ: bảng TTTN-07 (SCR-21). Sinh viên tới từ NT-14: kết quả của mình (SCR-24).
+  { path: '/results/:recordId', roles: ['ADMIN', 'GIANG_VIEN', 'CAN_BO_DVHD', 'SINH_VIEN'], element: <ResultEntryPage /> },
 ];
 
 export default function App() {
