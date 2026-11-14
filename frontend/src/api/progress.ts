@@ -1,6 +1,8 @@
 import { api, layData, layPhanHoi } from './client';
 import type { ApiResponse } from '../types/api';
-import type { CapNhatNhatKyRequest, NhacNho, NhatKy, NhatKyRequest, TienDo } from '../types/progress';
+import type {
+  CapNhatNhatKyRequest, CapNhatTienDoRequest, NhacNho, NhatKy, NhatKyRequest, TienDo, XacNhanTienDoRequest,
+} from '../types/progress';
 
 /** Endpoint nhật ký và tiến độ tuần #57–#63 (UC07). */
 export const progressApi = {
@@ -22,4 +24,12 @@ export const progressApi = {
   /** #61 — bảng TTTN-03, mỗi tuần của đợt một dòng. */
   tienDo: (recordId: number) =>
     api.get<ApiResponse<TienDo[]>>(`/internship_records/${recordId}/weekly_progress`).then(layData),
+
+  /** #62 — SV cập nhật dòng tuần; dòng đã được cán bộ ĐVHD xác nhận ⇒ RESOURCE_LOCKED. */
+  capNhatTienDo: (progressId: number, req: CapNhatTienDoRequest) =>
+    api.put<ApiResponse<TienDo>>(`/weekly_progress/${progressId}`, req).then(layPhanHoi),
+
+  /** #63 — cán bộ ĐVHD xác nhận (khóa dòng) hoặc yêu cầu bổ sung kèm nội dung (NT-08 tới SV, UC07 6a). */
+  xacNhanTuan: (progressId: number, req: XacNhanTienDoRequest) =>
+    api.put<ApiResponse<TienDo>>(`/weekly_progress/${progressId}/confirmation`, req).then(layPhanHoi),
 };

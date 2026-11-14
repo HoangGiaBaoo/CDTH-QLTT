@@ -43,5 +43,19 @@ export interface TienDo {
   phanTramHoanThanh?: number;
   daXacNhan: boolean;
   ngayXacNhan?: string;
+  /** Nội dung cán bộ ĐVHD yêu cầu bổ sung gần nhất (UC07 6a); xóa khi cán bộ xác nhận dòng. */
+  yeuCauBoSung?: string;
+}
+
+/** Body #62 — gửi cả ba trường (trường trống ⇒ backend lưu rỗng); `phanTramHoanThanh` 0–100. */
+export interface CapNhatTienDoRequest {
+  congViecDuocGiao?: string;
+  ketQuaThucHien?: string;
+  phanTramHoanThanh?: number;
+}
+
+/** Body #63 — `dongY = false` là yêu cầu bổ sung, bắt buộc `yeuCauBoSung` (tối đa 500 ký tự). */
+export interface XacNhanTienDoRequest {
+  dongY: boolean;
   yeuCauBoSung?: string;
 }
