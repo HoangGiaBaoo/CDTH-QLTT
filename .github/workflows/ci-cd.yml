@@ -1,0 +1,156 @@
+# CI/CD QLTT
+#   CI  — mọi push / pull request: backend biên dịch + `mvnw test` (MySQL thật cho CdthQlttApplicationTests),
+#         frontend kiểm kiểu + build.
+#   CD  — chỉ khi push lên main và CI xanh: build 2 image, đẩy lên GHCR, SSH vào VPS kéo image mới và khởi động lại.
+# Bí mật cần đặt ở Settings › Secrets and variables › Actions: VPS_SSH_KEY (khóa riêng của user deploy trên VPS).
+# Mật khẩu CSDL và JWT_SECRET KHÔNG đi qua GitHub — nằm trong ~/qltt/.env trên VPS.
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', '**/*.md', '.claude/**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  IMAGE_BACKEND: ghcr.io/hoanggiabaoo/cdth-qltt-backend
+  IMAGE_FRONTEND: ghcr.io/hoanggiabaoo/cdth-qltt-frontend
+
+jobs:
+  backend-test:
+    name: Backend — biên dịch + test
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: qltt
+          MYSQL_USER: qltt
+          MYSQL_PASSWORD: qltt
+          MYSQL_ROOT_PASSWORD: root
+          TZ: Asia/Ho_Chi_Minh
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost -uroot -proot"
+          --health-interval 5s --health-timeout 3s --health-retries 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: mvnw test
+        run: chmod +x mvnw && ./mvnw -B -ntp test
+      - name: Lưu báo cáo test khi có lỗi
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: target/surefire-reports
+
+  frontend-build:
+    name: Frontend — kiểm kiểu + build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+
+  images:
+    name: Build image + đẩy lên GHCR
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: [backend-test, frontend-build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Image backend
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE_BACKEND }}:latest
+            ${{ env.IMAGE_BACKEND }}:${{ github.sha }}
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,scope=backend,mode=max
+      - name: Image frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: frontend
+          push: true
+          tags: |
+            ${{ env.IMAGE_FRONTEND }}:latest
+            ${{ env.IMAGE_FRONTEND }}:${{ github.sha }}
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,scope=frontend,mode=max
+
+  deploy:
+    name: Triển khai lên VPS
+    needs: images
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: http://221.121.0.89
+    # Hai lần push sát nhau thì deploy lần lượt, không hủy lần đang chạy dở.
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v5
+      - name: Cấu hình SSH tới VPS
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          if [ -z "$VPS_SSH_KEY" ]; then echo "::error::Chưa đặt secret VPS_SSH_KEY"; exit 1; fi
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
+          # Khóa host của VPS ghi sẵn trong repo — không tin mù quáng bằng ssh-keyscan lúc chạy.
+          cp deploy/known_hosts ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<'EOF'
+          Host vps
+            HostName 221.121.0.89
+            User deploy
+            IdentityFile ~/.ssh/id_deploy
+            IdentitiesOnly yes
+            BatchMode yes
+            ServerAliveInterval 30
+          EOF
+      - name: Chép docker-compose + script lên VPS
+        run: |
+          ssh vps 'mkdir -p qltt'
+          scp deploy/docker-compose.prod.yml vps:qltt/docker-compose.yml
+          scp deploy/deploy.sh vps:qltt/deploy.sh
+      - name: Kéo image mới và khởi động lại
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: printf '%s' "$GHCR_TOKEN" | ssh vps "bash qltt/deploy.sh ${{ github.sha }} ${{ github.actor }}"
+      - name: Kiểm tra từ Internet
+        run: |
+          curl -fsS -o /dev/null -m 15 http://221.121.0.89/ && echo "Trang chủ truy cập được từ Internet" \
+            || echo "::warning::Không vào được http://221.121.0.89 từ Internet — kiểm tra tường lửa cổng 80 trên trang WiServices"

@@ -1,0 +1,15 @@
+# Ngữ cảnh build của image backend chỉ cần pom, mvnw, .mvn, src.
+.git
+.github
+.idea
+.claude
+.vscode
+target
+frontend
+docs
+uploads
+scripts
+deploy
+*.md
+*.iml
+.env

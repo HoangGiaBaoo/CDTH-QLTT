@@ -1,0 +1,66 @@
+# Triển khai QLTT trên VPS (~/qltt/docker-compose.yml — CI chép file này lên mỗi lần deploy).
+# Bí mật nằm trong ~/qltt/.env trên VPS (sinh ngẫu nhiên tại chỗ, không commit):
+#   MYSQL_ROOT_PASSWORD, DB_PASSWORD, JWT_SECRET, PUBLIC_ORIGIN
+# VPS 1 vCPU / 2 GB ⇒ giới hạn bộ nhớ từng dịch vụ; không build ở đây, chỉ kéo image từ GHCR.
+name: qltt
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: qltt
+      MYSQL_USER: qltt
+      MYSQL_PASSWORD: ${DB_PASSWORD:?thiếu DB_PASSWORD trong .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?thiếu MYSQL_ROOT_PASSWORD trong .env}
+      TZ: Asia/Ho_Chi_Minh
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-time-zone=+07:00
+      - --innodb-buffer-pool-size=128M
+      - --performance-schema=OFF
+      - --max-connections=50
+    # Không publish 3306: Docker -p đi vòng qua UFW, mở ra là lộ CSDL ra Internet.
+    volumes:
+      - mysql-data:/var/lib/mysql
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+
+  backend:
+    image: ghcr.io/hoanggiabaoo/cdth-qltt-backend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: mysql
+      DB_USER: qltt
+      DB_PASSWORD: ${DB_PASSWORD:?thiếu DB_PASSWORD trong .env}
+      JWT_SECRET: ${JWT_SECRET:?thiếu JWT_SECRET trong .env}
+      CORS_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost}
+      STORAGE_DIR: /app/uploads
+      JAVA_TOOL_OPTIONS: -Xmx448m -XX:MaxMetaspaceSize=192m -XX:+UseSerialGC
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - uploads:/app/uploads
+    mem_limit: 768m
+
+  frontend:
+    image: ghcr.io/hoanggiabaoo/cdth-qltt-frontend:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    mem_limit: 64m
+
+volumes:
+  mysql-data:
+  uploads:
