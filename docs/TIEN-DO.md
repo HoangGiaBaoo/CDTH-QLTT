@@ -3,9 +3,10 @@
 > File này được hook đầu phiên đọc (4000 ký tự đầu) — **phần đầu giữ ngắn**. Chi tiết bàn giao ở cuối file.
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
-**Cập nhật 12/11/2026 (cuối phiên)**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…15. **Việc kế tiếp:
-SCR-16** (mục 1 dưới). Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
+**Cập nhật 14/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
+CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…16. **Việc kế tiếp:
+SCR-17** (mục 1 dưới). **CI/CD + VPS đã dựng 14–15/11** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển
+khai lên http://221.121.0.89. Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
 
 ## Bảng 6 tuần
 
@@ -15,20 +16,20 @@ SCR-16** (mục 1 dưới). Còn lại: các màn khác, docs mục 10, Postman.
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅) |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **SCR-16 Tiến độ tuần TTTN-03 (B) — làm ngay.** Theo mẫu SCR-14/15: SV `/my-record/progress` và
-   `/records/:id/weekly_progress` (đích NT của backend; thay chỗ giữ trong `MAN_THEO_DOI_HO_SO`). #61 mỗi tuần một dòng; SV
-   sửa #62 (công việc được giao, kết quả, % hoàn thành 0–100; dòng đã xác nhận bị khóa); cán bộ ĐVHD #63 xác nhận (khóa
-   dòng) hoặc yêu cầu bổ sung kèm nội dung (dòng về chờ + thông báo SV, UC07 6a). Theo UC07 bước 6, cán bộ xem nhật ký của
-   tuần ngay trên dòng đó (#57 với `from`/`to` của tuần, `utils/lich.ts` đã có `khoangTuan`, `tuanCua`). Thử trên
-   sv.cuong (7/8 tuần) với cb.quang.
-   Sau đó, theo kịch bản demo — B: SCR-17 (`/records/:id/evidences`), SCR-07/08, SCR-22, SCR-23
+1. **SCR-17 Minh chứng (B) — làm ngay.** Theo mẫu SCR-15/16: SV `/my-record/evidence` và `/records/:id/evidences`
+   (thay chỗ giữ trong `MAN_THEO_DOI_HO_SO`). #65 bảng đối chiếu Đủ/Thiếu theo hình thức (BR-07.6, điều kiện (d) công
+   nhận — `RequiredEvidence` đã có phần hiển thị); #64 danh sách lọc loại + tuần; SV tải lên #66 (multipart, kiểm trước ở
+   client ≤ 20 MB + đuôi pdf/doc/docx/xls/xlsx/jpg/png/mp4 nhưng vẫn dựa vào backend — FILE_TOO_LARGE /
+   UNSUPPORTED_FILE_TYPE, UC07 5a), chọn loại + tuần liên quan; tải về #67 qua `utils/taiTep.ts`; xóa #68 (hỏi lại;
+   RESOURCE_LOCKED khi đã chốt điểm, UC07 8a). Người khác chỉ xem + tải.
+   Sau đó, theo kịch bản demo — B: SCR-07/08, SCR-22, SCR-23
    (`/records/:id/reports|feedbacks`); A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4), chuông thông báo (#101, #102).
    Phần B vẫn commit bằng SAKER205.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
@@ -36,6 +37,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
 4. **Trước demo**: `docker compose down -v` để xóa dữ liệu thử nghiệm trong CSDL dev, rồi chạy lại (Flyway nạp V1–V4).
    Mọi thao tác thử trên CSDL dev từ giờ đều làm bẩn kịch bản demo.
+5. **VPS hết hạn 14/12/2026** — gia hạn nếu bảo vệ sau ngày đó. Không sửa migration cũ (CSDL VPS sống lâu dài).
 
 ## Lưu ý quan trọng
 
@@ -53,7 +55,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ---
 
-# Bàn giao chi tiết (bắt đầu 08/11/2026, cập nhật 12/11/2026)
+# Bàn giao chi tiết (bắt đầu 08/11/2026, cập nhật 14/11/2026)
 
 ## Trạng thái code theo UC
 
@@ -350,6 +352,43 @@ nhật ký", tổng 199,5; SV gọi #59 bản ghi 30/10 ⇒ RESOURCE_LOCKED; gv.
 cb.quang, giáo vụ chỉ xem (#58, #60 ⇒ 403); gv.lan, sv.ha mở nhật ký sv.cuong ⇒ không có quyền; gv.lan #60 cho sv.cuong ⇒
 ACCESS_DENIED; sv.ha (Chờ GVHD) ⇒ chưa ghi được; sv.an (Chờ đánh giá) ⇒ chỉ xem.
 Còn nợ (backend UC07, B): thông điệp DUPLICATE_RESOURCE của #58 in ngày dạng `2026-11-12` thay vì `12/11/2026`.
+
+### SCR-16 Tiến độ tuần TTTN-03 (B, 14/11/2026)
+
+`pages/progress/WeeklyProgressPage` — SV `/my-record/progress` (hồ sơ qua #40) và `/records/:id/weekly_progress`
+(`WeeklyProgressRoute`, đích NT-08 và lối từ ô Tiến độ của SCR-12). Bảng theo mẫu TTTN-03 (#61): tuần + khoảng ngày,
+công việc được giao, kết quả thực hiện, % hoàn thành (thanh), xác nhận ĐVHD. Trạng thái dòng suy từ dữ liệu (không có
+enum backend): Đã xác nhận (xanh lá, kèm giờ) · Cần bổ sung (đỏ, có `yeuCauBoSung` chưa xác nhận) · Chờ xác nhận (vàng,
+đủ ba nội dung — cùng điều kiện #63 kiểm) · Chưa đủ nội dung / Chưa cập nhật (xám). Ô số liệu: x/N đã xác nhận, chờ,
+cần bổ sung, tuần hiện tại. Mỗi dòng có lối "Nhật ký (n ngày)" mở danh sách nhật ký của tuần ngay dưới dòng (#57 tải
+một lần, nhóm theo `tuanCua` như SCR-15) — cán bộ của hồ sơ được mở sẵn những tuần đang chờ mình (UC07 bước 6).
+SV khi hồ sơ Đang thực tập: Cập nhật / Sửa ngay trên dòng chưa xác nhận (#62, lỗi `phanTramHoanThanh` dưới ô), dòng đã
+xác nhận "Đã khóa"; có yêu cầu bổ sung ⇒ cảnh báo đầu trang + nội dung yêu cầu dưới dòng. Cán bộ ĐVHD của hồ sơ: Xác nhận
+(hỏi lại; dòng chưa đủ ⇒ báo trước nhưng vẫn để backend từ chối, lỗi hiện trong hộp thoại) và Yêu cầu bổ sung (hộp thoại,
+nội dung bắt buộc ≤ 500 ký tự, NT-08 tới SV). GVHD, giáo vụ: chỉ xem. `api/progress.ts` thêm #62, #63; `types/progress.ts`
+thêm `CapNhatTienDoRequest`, `XacNhanTienDoRequest`. Backend giữ `yeuCauBoSung` sau khi SV sửa (chỉ xóa khi cán bộ xác
+nhận) nên dòng vẫn "Cần bổ sung" tới khi cán bộ xem lại — thông báo lưu của SV nói rõ "Cán bộ ĐVHD sẽ xem lại tuần x".
+Đã thử 48/48 ca trên CSDL tạm: sv.cuong từ menu ⇒ 8 dòng, 7/8 đã xác nhận, tuần 8 90% Chờ xác nhận, nhật ký tuần 1 mở/đóng;
+150% ⇒ "Phần trăm hoàn thành từ 0 đến 100" dưới ô; 100% ⇒ lưu, backend khớp; SV #62 tuần đã xác nhận ⇒ RESOURCE_LOCKED,
+#63 ⇒ 403; cb.quang từ ô SCR-12 ⇒ nhắc "1 tuần … chờ bạn xác nhận", nhật ký tuần 8 mở sẵn; yêu cầu bổ sung (nút khóa khi
+trống) ⇒ Cần bổ sung, sv.cuong nhận NT-08 trỏ `/records/{id}/weekly_progress`; SV mở link ⇒ cảnh báo + sửa; cán bộ xác
+nhận ⇒ 8/8, Đã khóa, hết dòng yêu cầu; xác nhận lần 2 ⇒ RESOURCE_LOCKED; gv.minh, giáo vụ chỉ xem; sv.ha Chờ GVHD ⇒
+"Chưa có bảng tiến độ", gv.lan duyệt ⇒ 8 dòng Chưa cập nhật, chỉ điền công việc ⇒ Chưa đủ nội dung, đủ ⇒ Chờ xác nhận
+60%; cb.trang xác nhận tuần trống ⇒ "Sinh viên chưa điền đủ tiến độ tuần 2" trong hộp thoại; cb.trang mở / gọi #63 hồ sơ
+sv.cuong ⇒ ACCESS_DENIED; sv.cuong mở tiến độ sv.ha ⇒ không có quyền; sv.an Chờ đánh giá ⇒ chỉ xem; màn 390px không tràn.
+
+## CI/CD + triển khai VPS (A, 14–15/11/2026)
+
+Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã làm:
+- VPS đã được phiên bài tập môn MD05 (`D:\JavaProject\md05_ss10`) cấu hình sẵn: user `deploy` (sudo, group docker), chỉ
+  SSH key, root bị chặn, Docker 29, UFW. Container `nginx-8080`/`nginx-8081` ở `~/bai4` là bài nộp môn đó — không xóa.
+- Phiên này thêm: khóa `github-actions-qltt` vào `deploy`, swap 2 GB, UFW mở 80, `~/qltt/.env` sinh ngẫu nhiên trên VPS.
+- File mới: `Dockerfile`, `.dockerignore`, `frontend/Dockerfile`, `frontend/nginx.conf`, `frontend/.dockerignore`,
+  `deploy/docker-compose.prod.yml`, `deploy/deploy.sh`, `deploy/known_hosts`, `.github/workflows/ci-cd.yml`;
+  `.gitattributes` thêm `*.sh eol=lf`. Không đổi code Java/TS, không đổi lệnh dev.
+- Đã thử ở máy bằng Docker (cổng 18080): Flyway V1–V4, profile `prod`, Swagger 404, đăng nhập + màn SCR-16 qua Nginx,
+  đường dẫn SPA mở thẳng, tạo lại backend không 502, tệp 15 MB qua được, 23 MB ⇒ JSON `FILE_TOO_LARGE`; RAM ~0,7 GB.
+  `actionlint` sạch.
 
 ## Cách làm một màn FE (cho phiên sau)
 
