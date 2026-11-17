@@ -15,3 +15,30 @@ export interface DoiChieuMinhChung {
   }[];
   loaiConThieu: string[];
 }
+
+export type DongDoiChieu = DoiChieuMinhChung['danhMuc'][number];
+
+/** #64, #66 — `MinhChungResponse`; không có đường dẫn lưu trữ, tải tệp qua #67. */
+export interface MinhChung {
+  id: number;
+  hoSoId: number;
+  loaiMinhChung: string;
+  tenLoai: string;
+  /** Tuần liên quan (1…số tuần của đợt); trống = không gắn tuần. */
+  tuan?: number | null;
+  tenFile: string;
+  /** Byte. */
+  kichThuoc: number;
+  nguoiTaiLenId: number;
+  ngayTaiLen: string;
+  /** Giáo vụ đã xác nhận kết quả (#86) ⇒ minh chứng của hồ sơ bị khóa, không xóa được (UC07 8a). */
+  daKhoa: boolean;
+}
+
+/** Tham số multipart của #66. */
+export interface TaiLenMinhChungRequest {
+  recordId: number;
+  type: string;
+  week?: number;
+  file: File;
+}

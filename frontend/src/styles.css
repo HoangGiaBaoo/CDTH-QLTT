@@ -496,3 +496,43 @@ a { color: var(--mau-chinh); }
 .td-nk li { display: grid; grid-template-columns: 110px 64px 1fr; gap: 8px; }
 .td-nk .td-nk-tong { display: block; }
 .td-nk-gio { color: var(--chu-phu); font-variant-numeric: tabular-nums; }
+
+/* ---------- Minh chứng SCR-17 ---------- */
+.mc-bang { min-width: 640px; }
+.mc-bang .mc-tt { width: 110px; }
+.mc-bang .mc-nut { width: 170px; text-align: right; }
+.mc-nut-nhom { display: inline-flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.mc-thieu td { background: #fffbea; }
+.mc-form { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.mc-form select { max-width: 100%; }
+.mc-tien-do { display: flex; flex-direction: column; gap: 4px; max-width: 420px; }
+.mc-tep { min-width: 720px; }
+.mc-tep .mc-tuan { width: 120px; }
+.mc-tep .mc-ngay { width: 140px; white-space: nowrap; }
+.mc-tep .actions { width: 150px; }
+.mc-tep .actions .mc-xoa, .mc-tep .actions .mc-khoa { margin-left: 6px; }
+.mc-ten { display: flex; align-items: center; gap: 10px; }
+.mc-ten-tep { word-break: break-word; }
+.mc-duoi {
+  flex: none; width: 40px; height: 40px; border-radius: 6px; background: var(--xanh-duong-nen); color: var(--xanh-duong-chu);
+  display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; text-transform: uppercase;
+}
+.mc-xoa:hover:not(:disabled) { border-color: var(--do-chu); color: var(--do-chu); }
+.mc-ghi-chu { margin: -6px 0 12px; }
+/* Màn hẹp: hai bảng xếp thành thẻ để cột Trạng thái / Tải về không bị đẩy ra ngoài khung. */
+@media (max-width: 640px) {
+  .mc-bang, .mc-tep { min-width: 0; }
+  .mc-bang, .mc-bang tbody, .mc-tep, .mc-tep tbody { display: block; }
+  .mc-bang thead, .mc-tep thead { display: none; }
+  .mc-bang tr, .mc-tep tr { display: grid; gap: 6px 10px; padding: 10px 12px; border-bottom: 1px solid var(--vien); }
+  .mc-bang tbody tr:last-child, .mc-tep tbody tr:last-child { border-bottom: 0; }
+  .mc-bang td, .mc-tep td { border: 0; padding: 0; width: auto; text-align: left; }
+  .mc-bang tr { grid-template-columns: 1fr auto; }
+  .mc-bang td { grid-column: 1 / -1; }
+  .mc-bang td:first-child { grid-column: 1; }
+  .mc-bang .mc-tt { grid-column: 2; grid-row: 1; }
+  .mc-bang .mc-nut, .mc-tep .actions { text-align: left; }
+  .mc-nut-nhom { justify-content: flex-start; }
+  .mc-tep tr { grid-template-columns: 1fr; }
+  .mc-tep .mc-tuan div { display: inline; margin-left: 6px; white-space: nowrap; }
+}

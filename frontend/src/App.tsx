@@ -14,6 +14,7 @@ import RecordListPage from './pages/records/RecordListPage';
 import StudyPlanPage, { StudyPlanRoute } from './pages/studyPlans/StudyPlanPage';
 import LogbookPage, { LogbookRoute } from './pages/logbooks/LogbookPage';
 import WeeklyProgressPage, { WeeklyProgressRoute } from './pages/progress/WeeklyProgressPage';
+import EvidencePage, { EvidenceRoute } from './pages/evidences/EvidencePage';
 import AssignmentPage from './pages/assignments/AssignmentPage';
 import AssessmentDetailPage from './pages/assessments/AssessmentDetailPage';
 import AssessmentListPage from './pages/assessments/AssessmentListPage';
@@ -45,6 +46,7 @@ const TRANG: Record<string, ReactElement> = {
   '/my-record/plan': <StudyPlanPage />,
   '/my-record/logbook': <LogbookPage />,
   '/my-record/progress': <WeeklyProgressPage />,
+  '/my-record/evidence': <EvidencePage />,
   '/my-result': <MyResultPage />,
   '/statistics': <StatisticsPage />,
 };
@@ -56,7 +58,8 @@ const TRANG: Record<string, ReactElement> = {
  */
 const MAN_THEO_DOI_HO_SO: [string, string, ReactElement?][] = [
   ['study_plan', '/my-record/plan', <StudyPlanRoute />], ['logbooks', '/my-record/logbook', <LogbookRoute />],
-  ['weekly_progress', '/my-record/progress', <WeeklyProgressRoute />], ['evidences', '/my-record/evidence'], ['reports', '/my-record/report'],
+  ['weekly_progress', '/my-record/progress', <WeeklyProgressRoute />], ['evidences', '/my-record/evidence', <EvidenceRoute />],
+  ['reports', '/my-record/report'],
   ['feedbacks', '/my-record/feedback'],
 ];
 

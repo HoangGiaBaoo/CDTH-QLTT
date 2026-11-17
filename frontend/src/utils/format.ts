@@ -43,3 +43,11 @@ export function ngayGio(x: string | null | undefined): string {
   if (Number.isNaN(d.getTime())) return x;
   return `${haiSo(d.getDate())}/${haiSo(d.getMonth() + 1)}/${d.getFullYear()} ${haiSo(d.getHours())}:${haiSo(d.getMinutes())}`;
 }
+
+/** Dung lượng tệp (byte) — 482 KB, 1,4 MB. */
+export function dungLuong(x: number | null | undefined): string {
+  if (x === null || x === undefined || !Number.isFinite(x)) return '—';
+  if (x < 1024) return `${x} B`;
+  if (x < 1024 * 1024) return `${Math.round(x / 1024).toLocaleString('vi-VN')} KB`;
+  return `${(x / (1024 * 1024)).toLocaleString('vi-VN', { maximumFractionDigits: 1 })} MB`;
+}
