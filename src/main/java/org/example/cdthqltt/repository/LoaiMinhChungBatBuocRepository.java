@@ -10,5 +10,6 @@ public interface LoaiMinhChungBatBuocRepository extends JpaRepository<LoaiMinhCh
 
     List<LoaiMinhChungBatBuoc> findByHinhThucThucTapOrderById(HinhThucThucTap hinhThucThucTap);
 
-    List<LoaiMinhChungBatBuoc> findByHinhThucThucTapAndBatBuocTrue(HinhThucThucTap hinhThucThucTap);
+    /** Theo thứ tự seed — đúng thứ tự liệt kê ở Điều 4 (không sắp thì MySQL đọc qua chỉ mục unique, ra theo mã chữ cái). */
+    List<LoaiMinhChungBatBuoc> findByHinhThucThucTapAndBatBuocTrueOrderById(HinhThucThucTap hinhThucThucTap);
 }

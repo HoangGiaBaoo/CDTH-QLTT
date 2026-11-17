@@ -129,7 +129,7 @@ public class MinhChungService {
     // ------------------------------------------------------------------
 
     private DoiChieuResponse lapBangDoiChieu(HoSoThucTap h) {
-        List<LoaiMinhChungBatBuoc> batBuoc = danhMucRepo.findByHinhThucThucTapAndBatBuocTrue(h.getHinhThucThucTap());
+        List<LoaiMinhChungBatBuoc> batBuoc = danhMucRepo.findByHinhThucThucTapAndBatBuocTrueOrderById(h.getHinhThucThucTap());
         Map<String, Long> soTepTheoLoai = new HashMap<>();
         minhChungRepo.findByHoSoIdOrderByNgayTaiLenDesc(h.getId())
                 .forEach(m -> soTepTheoLoai.merge(m.getLoaiMinhChung(), 1L, Long::sum));
