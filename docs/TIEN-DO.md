@@ -4,8 +4,8 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 17/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…17. **Việc kế tiếp:
-SCR-22** (mục 1 dưới). **CI/CD + VPS đã dựng 14–15/11** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển
+CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…17, 22. **Việc kế tiếp:
+SCR-23** (mục 1 dưới). **CI/CD + VPS đã dựng 14–15/11** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển
 khai lên http://221.121.0.89. Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
 
 ## Bảng 6 tuần
@@ -16,20 +16,19 @@ khai lên http://221.121.0.89. Còn lại: các màn khác, docs mục 10, Postm
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅ · SCR-17 ✅) |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅ · SCR-17 ✅ · SCR-22 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **SCR-22 Báo cáo TTTN-06 (B) — làm ngay.** SV `/my-record/report` và `/records/:id/reports` (đích link thông báo,
-   thay chỗ giữ trong `MAN_THEO_DOI_HO_SO`). #89 danh sách phiên bản; SV nộp #90 (multipart, chỉ pdf/docx ≤ 20 MB —
-   dùng lại cách làm của `EvidenceUploadForm`: kiểm trước ở client, lỗi FILE_* dưới ô, thanh tiến độ, timeout riêng);
-   tải về #91 qua `utils/taiTep.ts`; xác nhận #92 (cán bộ ĐVHD trước, GVHD sau; đủ hai ⇒ hồ sơ Chờ đánh giá), GVHD mở
-   lại #93 cho SV thay tệp (BR-11.4); nhãn Nộp muộn — đọc service UC11 trước. Sau đó — B: SCR-23
-   (`/records/:id/feedbacks`, nhận `state.tuKetQua` từ SCR-24), SCR-07/08; A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4), chuông thông báo (#101, #102).
-   Phần B vẫn commit bằng SAKER205.
+1. **SCR-23 Phản hồi 08a/08b (B) — làm ngay.** SV `/my-record/feedback` và `/records/:id/feedbacks` (đích link thông
+   báo, thay chỗ giữ cuối cùng trong `MAN_THEO_DOI_HO_SO`; nhận `state.tuKetQua` từ SCR-24 — hiện thông điệp BR-12.5).
+   #94 phiếu theo phạm vi quyền; SV gửi 08b (#96): đánh giá chất lượng + tự chấm đủ 7 CLO, bấm tính thử HPself (#95,
+   BR-12.3) trước khi gửi; cán bộ ĐVHD gửi 08a (#96); chỉ số tự nhận thức #97 sau công bố (BR-12.4). RP-06 không lộ danh
+   tính — đọc `PhanHoiService` + DTO trước. Sau đó — B: SCR-07/08; A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4),
+   chuông thông báo (#101, #102). Phần B vẫn commit bằng SAKER205.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
@@ -412,6 +411,38 @@ Chờ GVHD ⇒ không form, #66 ⇒ RESOURCE_LOCKED. sv.vinh (HK2) ⇒ Thiếu S
 Còn nợ (backend UC07, B): sau khi giáo vụ xác nhận (hồ sơ vẫn Chờ đánh giá tới lúc công bố) SV vẫn tải thêm được, tệp
 mới không bị khóa — không đổi kết quả đã xác nhận, nhưng có thể chặn `taiLen` khi hồ sơ đã có minh chứng khóa.
 
+### SCR-22 Báo cáo TTTN-06 (B, 17/11/2026)
+
+`pages/reports/ReportPage` — SV `/my-record/report` (hồ sơ qua #40) và `/records/:id/reports` (`ReportRoute`, đích NT-07
+cho cán bộ/GVHD, NT-13 cho SV, lối từ ô Báo cáo của SCR-12). Ô số liệu: hạn nộp (`hanNopBaoCao`, đợt chưa đặt hạn thì
+ngày kết thúc — cùng mốc `BaoCaoService.soNgayTre`) + còn / đã quá bao nhiêu ngày khi chưa nộp, phiên bản hiện tại + số
+lần nộp, x/2 xác nhận. **Phiên bản hiện hành**: tệp + nhãn Nộp muộn N ngày (cả ở đầu trang), Tải về #91; thanh 3 bước
+ĐVHD xác nhận hoàn thành kế hoạch → GVHD xác nhận đủ điều kiện chấm → Chờ đánh giá cuối kỳ (tên người + thời điểm).
+Nút theo người: cán bộ ĐVHD của hồ sơ "Xác nhận hoàn thành kế hoạch thực tập"; GVHD "Xác nhận đủ điều kiện chấm" (khóa
++ "Chờ cán bộ ĐVHD xác nhận trước" khi ĐVHD chưa xác nhận) và "Mở lại cho sinh viên thay tệp" khi đã có xác nhận
+(Đang thực tập / Chờ đánh giá); hộp thoại dùng lời xác nhận mục IV mẫu TTTN-06, mở lại khi Chờ đánh giá nhắc hồ sơ quay
+về Đang thực tập; lỗi backend hiện trong hộp thoại. `ReportSubmitForm` (SV, Đang thực tập, bản mới nhất chưa có xác
+nhận nào): **sáu ô Phần 1–6 mục II** (kèm gợi ý nội dung, đếm x/6, chưa tích đủ ⇒ lỗi dưới danh mục, không gọi #90) +
+khung **yêu cầu trình bày mục III** (bìa/mục lục, ≥ 20 trang A4, Times New Roman 13, giãn dòng 1,5, lề 3–2–2–2,
+đánh số, trang ký xác nhận); quá hạn ⇒ cảnh báo vàng Nộp muộn (UC11 5a); tệp pdf/docx kiểm trước ở client như SCR-17.
+Bản mới nhất đã có xác nhận ⇒ không form, hướng dẫn liên hệ GVHD mở lại (6a, BR-11.4). **Các phiên bản đã nộp** (#89):
+mọi phiên bản, bản cũ chữ nhạt, mỗi bản tải về được. Người khác chỉ xem. Màn < 640px bảng xếp thành thẻ.
+Tách `utils/tepTaiLen.ts` (`kiemTep(tệp, đuôi)`, `LOI_TEP`, `duoiTep`, `TOI_DA_TEP`) dùng chung với `EvidenceUploadForm`;
+`.mc-tien-do` đổi tên `.tai-len-tien-do`. `api/reports.ts` thêm #90–#93; `types/report.ts` thêm `NopBaoCaoRequest`.
+Đã thử 63/63 ca trên CSDL tạm + chạy lại 71/71 ca SCR-17: sv.cuong hạn 06/11 "đã quá 11 ngày"; bấm Nộp khi trống ⇒ "Còn
+6 phần chưa tích" + "Chưa chọn tệp"; 5/6 ⇒ vẫn chặn, không lưu; 21 MB, .doc ⇒ chặn ở client; .pdf content-type text/plain ⇒
+backend báo dưới ô, không lưu; v1 pdf ⇒ thông điệp backend "nộp muộn 11 ngày", CSDL `nop_muon` 1, NT-07 tới cb.quang +
+gv.minh đúng link; v2 docx ⇒ 2 phiên bản, tải về v1 + v2 đúng tên + kích thước. gv.minh trước ĐVHD ⇒ nút khóa, #92 ⇒
+BUSINESS_RULE_VIOLATION, #93 ⇒ "chưa có xác nhận nào". cb.quang xác nhận v2 ⇒ bước 1 ✓, 1/2; lần 2 ⇒ RESOURCE_LOCKED;
+#92 trên v1 ⇒ "phiên bản mới nhất". SV ⇒ không form, #90 ⇒ RESOURCE_LOCKED (BR-11.4); `checklistConfirmed=false` ⇒
+VALIDATION_ERROR. gv.minh mở lại ⇒ 0/2, nhật ký `MO_LAI_BAO_CAO`, NT-13; SV từ link NT-13 nộp v3; cb.quang + gv.minh xác
+nhận ⇒ "đủ hai xác nhận", hồ sơ CHO_DANH_GIA, NT-12, ô SCR-12 "Phiên bản 3 · Nộp muộn 11 ngày"; mở lại khi Chờ đánh giá
+⇒ về Đang thực tập. sv.an: đủ xác nhận, không form; tệp seed không có trên đĩa ⇒ "Không tìm thấy tệp"; gv.tung mở lại ⇒
+"Tổ đánh giá đã nộp phiếu cuối kỳ…" trong hộp thoại, hồ sơ giữ Chờ đánh giá; gv.lan (Tổ, không phải GVHD) không nút.
+SV khác ⇒ không có quyền, không lộ tên tệp; cb.son #89/#91 ⇒ 403; cán bộ khác #92 ⇒ ACCESS_DENIED; giáo vụ chỉ xem, #92/#93
+⇒ 403; sv.ha Chờ GVHD ⇒ không form, #90 ⇒ RESOURCE_LOCKED; sv.nam HK2 ⇒ chỉ xem. Màn 390px không tràn.
+Ghi chú demo: hôm nay đã qua hạn nộp báo cáo HK1 (06/11/2026) nên mọi bản SV nộp trong demo đều gắn Nộp muộn.
+
 ## CI/CD + triển khai VPS (A, 14–15/11/2026)
 
 Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã làm:
@@ -448,7 +479,7 @@ Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã
 `api/records.ts` (#39–#44: `danhSach`, `cuaToi`, `chiTiet`, `tao`, `capNhat`, `gui`), `types/record.ts`
 (`HinhThucThucTap`, `HinhThucLamViec`, `HoSoRequest`), `api/client.ts` (đọc lỗi JSON khi tải blob), `utils/taiTep.ts`,
 `format.so2`, `components/ConfirmDialog` (`rong`), `TermSelect`, `RubricLevelPicker`, `App.tsx`, `menu.ts`
-(`/assessments` thêm ADMIN), `styles.css`, `format.dungLuong` (SCR-17). Liên kết từ SCR-24 sang SCR-23 truyền `state.tuKetQua` (thông điệp BR-12.5).
+(`/assessments` thêm ADMIN), `styles.css`, `format.dungLuong` (SCR-17), `utils/tepTaiLen.ts` (SCR-22). Liên kết từ SCR-24 sang SCR-23 truyền `state.tuKetQua` (thông điệp BR-12.5).
 Backend UC02: đặc tả ghi đề xuất ĐVHD mới "thông báo giáo vụ" nhưng #19 chưa gửi (15 mã NT chưa có mã cho việc này).
 
 ## Môi trường thử hiện tại
