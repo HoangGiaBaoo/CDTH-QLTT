@@ -3,10 +3,12 @@
 > File này được hook đầu phiên đọc (4000 ký tự đầu) — **phần đầu giữ ngắn**. Chi tiết bàn giao ở cuối file.
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
-**Cập nhật 17/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…17, 22. **Việc kế tiếp:
-SCR-23** (mục 1 dưới). **CI/CD + VPS đã dựng 14–15/11** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển
-khai lên http://221.121.0.89. Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
+**Cập nhật 18/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh; seed V4 đã kiểm chứng;
+CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…17, 22, 23. Giao diện đã đổi
+sang tông cổng sinh viên HUCE và bỏ hết mã nội bộ (UC/#/CBR/BR/NT/SCR) khỏi chữ hiển thị + `message` backend — quy tắc ở
+skill `giao-dien-react`. **Việc kế tiếp**: B — SCR-07/08; A — SCR-03, SCR-06, chuông thông báo (mục 1 dưới). **CI/CD +
+VPS đã dựng 14–15/11** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển khai lên http://221.121.0.89.
+Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
 
 ## Bảng 6 tuần
 
@@ -16,19 +18,16 @@ khai lên http://221.121.0.89. Còn lại: các màn khác, docs mục 10, Postm
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅ · SCR-17 ✅ · SCR-22 ✅) |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅ · SCR-17 ✅ · SCR-22 ✅ · SCR-23 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **SCR-23 Phản hồi 08a/08b (B) — làm ngay.** SV `/my-record/feedback` và `/records/:id/feedbacks` (đích link thông
-   báo, thay chỗ giữ cuối cùng trong `MAN_THEO_DOI_HO_SO`; nhận `state.tuKetQua` từ SCR-24 — hiện thông điệp BR-12.5).
-   #94 phiếu theo phạm vi quyền; SV gửi 08b (#96): đánh giá chất lượng + tự chấm đủ 7 CLO, bấm tính thử HPself (#95,
-   BR-12.3) trước khi gửi; cán bộ ĐVHD gửi 08a (#96); chỉ số tự nhận thức #97 sau công bố (BR-12.4). RP-06 không lộ danh
-   tính — đọc `PhanHoiService` + DTO trước. Sau đó — B: SCR-07/08; A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4),
-   chuông thông báo (#101, #102). Phần B vẫn commit bằng SAKER205.
+1. **Màn FE còn lại.** B — SCR-07/08 (ĐVHD); A — SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4), chuông thông báo
+   (#101, #102). Phần B vẫn commit bằng SAKER205. Mỗi màn: icon `lucide-react` trong `menu.ts`, chữ hiển thị không có
+   mã nội bộ, thử cả 390px; đổi CSS/chữ dùng chung thì chạy lại bộ hồi quy (`chay-hoi-quy.sh`, xem memory Claude).
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
@@ -443,6 +442,39 @@ SV khác ⇒ không có quyền, không lộ tên tệp; cb.son #89/#91 ⇒ 403;
 ⇒ 403; sv.ha Chờ GVHD ⇒ không form, #90 ⇒ RESOURCE_LOCKED; sv.nam HK2 ⇒ chỉ xem. Màn 390px không tràn.
 Ghi chú demo: hôm nay đã qua hạn nộp báo cáo HK1 (06/11/2026) nên mọi bản SV nộp trong demo đều gắn Nộp muộn.
 
+### Giao diện theo cổng sinh viên HUCE (18/11/2026)
+
+Tông màu, bố cục tham khảo sinhvien.huce.edu.vn: thanh trên trắng + tên trường xanh đậm, nền xám xanh, thẻ trắng bóng nhẹ,
+chữ xám đen, icon xanh da trời, ô số liệu nền pastel, chân trang khoa. Biến màu + quy tắc ở skill `giao-dien-react` (mục
+*Giao diện — tông màu cổng sinh viên HUCE*). Font Roboto (Google Fonts, có tiếng Việt); icon `lucide-react@0.468.0` —
+mỗi mục `menu.ts` một icon, trang Tổng quan là lưới ô icon (bỏ dòng mô tả có mã UC/#). Logo trường **chưa** đưa vào
+(đang dùng biểu tượng mũ tốt nghiệp) — muốn dùng logo thật thì cần tệp logo được phép dùng.
+Bỏ mã nội bộ (UC, #endpoint, CBR, BR, NT, RP, SCR, `#id`) khỏi mọi chữ hiển thị và `message` backend; giữ trích điều khoản
+đầy đủ ("Điều 10 khoản 2") và tên biểu mẫu (TTTN-xx, 08a, 08b). Đã chụp 15 màn (cả 390px) — không tràn ngang; chạy lại
+bộ hồi quy terms, panels, grading, myresult, report, evidence, register sau khi đổi chữ.
+
+### SCR-23 Phản hồi TTTN-08a / 08b (B, 18/11/2026)
+
+`pages/feedbacks/`: `FeedbackPage` (+ `FeedbackRoute` cho `/records/:recordId/feedbacks`), `Form08b`, `Form08a`,
+`PhieuDaGui` (`Xem08a`, `Xem08b`, `TuNhanThucCard`), `BangHpSelf`, `MucDoChon`, `bieuMau.ts` (chữ biểu mẫu theo Quy định);
+`api/feedbacks.ts` (#94–#97), `types/feedback.ts`. SV `/my-record/feedback`; ô Phản hồi của SCR-12 mở `/records/:id/feedbacks`.
+- **SV** (từ Chờ đánh giá trở đi): phiếu 08b đúng bố cục mẫu — I thông tin chung, A.1 sáu nội dung mức 1–5 + ghi chú,
+  ý kiến khác, A.2 phản hồi mở; B tự đánh giá 7 CLO mức 0–4 + minh chứng; C bốn câu; D bảng (1)–(4) + HPself (5) tự
+  tính lại qua #95 sau mỗi lần đổi mức; II cam kết. Bấm gửi khi thiếu ⇒ liệt kê đủ chỗ thiếu một lần + tô đỏ từng hàng.
+  Hộp thoại nêu HPself. Gửi xong chỉ xem; chỉ số tự nhận thức (#97) hiện sau công bố, kèm bảng lệch từng CLO; 08a của
+  ĐVHD chỉ hiện sau công bố (backend lọc). Từ SCR-24 sang thì hiện lý do (`state.tuKetQua`).
+- **Cán bộ ĐVHD** của SV: phiếu 08a sáu tiêu chí mức 0–4 + nhận xét, ý kiến bổ sung; cán bộ khác ⇒ lỗi quyền.
+- **GVHD / giáo vụ**: xem hai phiếu; 08b không có phần A, phản hồi mở (backend không trả — thống kê ẩn danh); GVHD
+  thêm thẻ chỉ số tự nhận thức sau công bố.
+
+Đã thử trên CSDL tạm (43/43 ca): sv.cuong Đang thực tập ⇒ cảnh báo, không form; sv.an từ SCR-24 sang có lý do; gửi trống
+⇒ liệt kê thiếu A 1–6, B CLO1–7, C 1–4, cam kết + 13 hàng đỏ; 6/7 CLO ⇒ HPself "—"; đủ 7 ⇒ HPself giao diện = #95 = cột
+`hp_self` (7,6); gửi lần 2 ⇒ DUPLICATE_RESOURCE; #95 hồ sơ SV khác ⇒ ACCESS_DENIED; nhật ký GUI_PHAN_HOI. cb.son: seed đã
+có 08a của sv.an (06/11) ⇒ chỉ xem; xóa dòng đó trên CSDL tạm ⇒ form 08a, gửi đủ 6 tiêu chí. gv.tung thấy hai phiếu,
+không thấy phần A/phản hồi mở; cb.quang ⇒ lỗi quyền. sv.nam (đã công bố) thấy 08a + chỉ số 0,00 khớp CSDL; GVHD sv.nam
+thấy thẻ chỉ số; giáo vụ không thấy phần A, không thẻ chỉ số. 390px không tràn; không mã nội bộ trên màn; console sạch.
+Ghi chú demo: seed có sẵn 08a cho sv.an nên demo phía cán bộ chỉ xem được — muốn demo gửi 08a cần hồ sơ khác tới Chờ đánh giá.
+
 ## CI/CD + triển khai VPS (A, 14–15/11/2026)
 
 Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã làm:
@@ -480,9 +512,12 @@ Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã
 (`HinhThucThucTap`, `HinhThucLamViec`, `HoSoRequest`), `api/client.ts` (đọc lỗi JSON khi tải blob), `utils/taiTep.ts`,
 `format.so2`, `components/ConfirmDialog` (`rong`), `TermSelect`, `RubricLevelPicker`, `App.tsx`, `menu.ts`
 (`/assessments` thêm ADMIN), `styles.css`, `format.dungLuong` (SCR-17), `utils/tepTaiLen.ts` (SCR-22). Liên kết từ SCR-24 sang SCR-23 truyền `state.tuKetQua` (thông điệp BR-12.5).
+Đợt đổi giao diện 18/11 (cả hai phần): `menu.ts` bỏ `moTa`, thêm `icon`; `layouts/*`, `components/Brand.tsx`, `HomePage`,
+`PlaceholderPage`, đầu `styles.css` (biến màu mới); gói `lucide-react@0.468.0`; bỏ mã nội bộ khỏi chữ ở mọi màn của A và B
+và khỏi `message` của các service backend (`KetQuaService`, `PhieuDanhGiaService`, `ScoringService`, `ThongKeService`…).
 Backend UC02: đặc tả ghi đề xuất ĐVHD mới "thông báo giáo vụ" nhưng #19 chưa gửi (15 mã NT chưa có mã cho việc này).
 
 ## Môi trường thử hiện tại
 
 CSDL dev đã `down -v` ngày 10/11/2026 và nạp lại sạch V1–V4 (chỉ thêm dữ liệu của `mvnw test`, không thao tác API).
-Không có tiến trình thử nào đang chạy; container tạm `qltt-mysql-uitest` đã xóa.
+Không có tiến trình thử nào đang chạy; container tạm `qltt-mysql-uitest` đã xóa (18/11/2026, sau SCR-23).
