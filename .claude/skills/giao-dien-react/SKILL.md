@@ -1,6 +1,6 @@
 ---
 name: giao-dien-react
-description: Quy ước frontend React 18 + TypeScript + Vite của QLTT (thư mục frontend/) — gọi API qua một axios client duy nhất, xử lý ApiResponse và mã lỗi, AuthContext lưu JWT, RequireRole bảo vệ route theo bốn vai trò, cấu trúc thư mục theo module, màn hình chấm điểm theo rubric, bảng TTTN-07, hiển thị số liệu kiểu Việt Nam. Nạp skill này khi tạo hoặc sửa file trong frontend/, khi làm bất kỳ màn hình SCR-xx nào, hoặc khi nối giao diện với API.
+description: Quy ước frontend React 18 + TypeScript + Vite của QLTT (thư mục frontend/) — gọi API qua một axios client duy nhất, xử lý ApiResponse và mã lỗi, AuthContext lưu JWT, RequireRole bảo vệ route theo bốn vai trò, cấu trúc thư mục theo module, màn hình chấm điểm theo rubric, bảng TTTN-07, hiển thị số liệu kiểu Việt Nam, tông màu và bố cục theo cổng sinh viên HUCE, chữ hiển thị không chứa mã UC/#/CBR. Nạp skill này khi tạo hoặc sửa file trong frontend/, khi làm bất kỳ màn hình SCR-xx nào, hoặc khi nối giao diện với API.
 ---
 
 # Frontend QLTT
@@ -39,7 +39,7 @@ api.interceptors.response.use(
 ```
 
 - Không gọi `axios.get('http://...')` rải rác trong component.
-- Lỗi hiển thị **nguyên văn `message`** của backend (đã là tiếng Việt có trích điều khoản); `VALIDATION_ERROR` thì gắn `errors[].thongDiep` dưới từng ô nhập.
+- Lỗi hiển thị **nguyên văn `message`** của backend (đã là tiếng Việt, trích điều khoản Quy định, không mã CBR/BR/UC); `VALIDATION_ERROR` thì gắn `errors[].thongDiep` dưới từng ô nhập.
 - `QUOTA_EXCEEDED`, `RESOURCE_LOCKED`… không phải lỗi hệ thống — hiện cảnh báo vàng, không hiện "Đã xảy ra lỗi".
 
 ## Phân quyền trên giao diện
@@ -70,4 +70,45 @@ backend vẫn phải chặn (hội đồng sẽ thử bằng Postman).
 | Enum | nhãn tiếng Việt trong `utils/constants.ts` — `CHO_DVHD` → "Chờ ĐVHD xác nhận" |
 | Trạng thái | `StatusBadge` màu cố định: nháp xám · chờ vàng · đang chạy xanh dương · xong xanh lá · từ chối/không đạt đỏ |
 
-Toàn bộ chữ trên giao diện là tiếng Việt có dấu.
+## Chữ trên giao diện — không có mã nội bộ
+
+Toàn bộ chữ trên giao diện là tiếng Việt có dấu, viết cho người dùng chứ không cho người làm đồ án.
+
+- **Không** hiện mã thiết kế: `UC04`, `UC11 5a`, `#93`, `CBR-24`, `BR-11.4`, `NT-07`, `RP-01`, `SCR-22`, "bước 8".
+  Áp cho chữ trong JSX, `title`, `placeholder`, thông báo client **và** `message` lỗi backend (chuỗi nào lên màn
+  hình là thuộc quy tắc này). Mã chỉ được nằm trong comment, tên biến, khóa dữ liệu (`maSuKien`, `?rp=`).
+- Cần nêu căn cứ thì trích **Quy định** viết đầy đủ: "(Điều 10 khoản 2)" — không viết tắt "Đ10 k2".
+- Tên biểu mẫu chính thức giữ nguyên vì người dùng biết: TTTN-01…TTTN-07, 08a, 08b.
+- Không hiện `#id` của bản ghi: "Tổ 3", "Phiếu số 25", không "Tổ #3".
+- Màn chưa làm: "Chức năng đang được xây dựng", không ghi mã màn hay người phụ trách.
+
+Soát nhanh trước khi báo xong một màn:
+`grep -rnE "UC ?[0-9]|#[0-9]|CBR-|BR-[0-9]|NT-[0-9]|SCR-|RP-0" frontend/src --include=*.tsx` — chỉ được còn trong comment.
+
+## Giao diện — tông màu cổng sinh viên HUCE
+
+Tham chiếu: trang chủ Cổng thông tin sinh viên (sinhvien.huce.edu.vn) — đối chiếu bằng ảnh chụp và CSS của trang.
+Mọi màu khai báo một lần ở `:root` trong `styles.css`; màn hình chỉ dùng biến, **không viết mã màu riêng**.
+
+| Biến | Giá trị | Dùng cho |
+|---|---|---|
+| `--nen` | `#e7ecf0` | Nền trang (xám xanh) |
+| `--the` | `#ffffff` | Thẻ, bảng, thanh trên, menu trái — không viền đậm, chỉ `--bong` |
+| `--chu` / `--chu-tieu-de` / `--chu-phu` | `#3f4e5a` / `#4e606e` / `#687782` | Chữ thường / tiêu đề / chú thích (xám đá) |
+| `--mau-chinh` → `--mau-chinh-dam` | `#0b72c7` → `#005ab7` | Nút chính, link, mục menu đang chọn → khi rê chuột |
+| `--mau-nhan` | `#2a9fff` | Biểu tượng, vạch nhấn, viền focus — **không** dùng cho chữ nhỏ (tương phản 2,8:1) |
+| `--thuong-hieu` | `#172759` | Tên trường, dấu logo |
+| `--xanh-duong-nen`, `--vang-nen`, `--xanh-la-nen`, `--do-nen` | pastel | Ô số liệu (`.stat-*`), badge, cảnh báo — chữ đi kèm dùng biến `*-chu` cùng tông |
+
+Bố cục và thành phần:
+
+- Khung: thanh trên trắng cao 64px (dấu + "Trường Đại học Xây dựng Hà Nội / Quản lý thực tập tốt nghiệp", avatar
+  chữ cái, Đăng xuất), menu trái trắng có biểu tượng, nội dung trên `--nen`, chân trang một dòng.
+- Biểu tượng: `lucide-react` (nét mảnh), khai báo `icon` cho mỗi mục trong `menu.ts`; trang Tổng quan là lưới ô
+  chức năng biểu tượng xanh + nhãn, **không** dòng mô tả.
+- Thẻ có tiêu đề: `.the-tieu-de` (chữ đậm xám đá, gạch chân mảnh) như khối "Thông tin sinh viên".
+- Ô số liệu `.stat` / `.stat-vang|xanh-duong|xanh-la`: nền pastel, số lớn cùng tông — như "Lịch học trong tuần".
+- Font Roboto (Google Fonts, có `subset=vietnamese`), dự phòng Segoe UI / Tahoma. Bo góc 4–6px.
+- Tương phản chữ ≥ 4,5:1 (WCAG AA); trạng thái không chỉ dựa vào màu — luôn kèm chữ (badge, ✓/✗).
+- Màn hẹp (≤ 640px): không tràn ngang ở 390px; bảng nhiều cột xếp thành thẻ; thanh trên chỉ còn dấu, avatar,
+  biểu tượng đăng xuất. Kiểm bằng `ui-test/chup-giao-dien.mjs`.

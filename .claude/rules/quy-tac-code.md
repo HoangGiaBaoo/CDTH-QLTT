@@ -44,7 +44,9 @@ Không có trong thiết kế thì đặt theo cùng kiểu với phần đã c�
 Không viết comment kể lại dòng code.
 
 **Thông điệp lỗi trả về** (`message`) là tiếng Việt có dấu, đủ để hiển thị thẳng lên giao diện; lỗi
-`BUSINESS_RULE_VIOLATION` **kèm trích dẫn điều khoản** (ví dụ "… (Điều 7 khoản 2 điểm c)").
+`BUSINESS_RULE_VIOLATION` **kèm trích dẫn điều khoản** (ví dụ "… (Điều 7 khoản 2 điểm c)"). **Không** ghi mã nội
+bộ (`CBR-12`, `BR-11.4`, `UC10 bước 8`, `#93`) trong `message` hay nội dung thông báo — người dùng không biết các mã
+này; mã chỉ để trong comment. Quy tắc chữ hiển thị đầy đủ ở skill `giao-dien-react`.
 
 **Commit message tiếng Anh** — xem `.claude/rules/git.md`.
 
