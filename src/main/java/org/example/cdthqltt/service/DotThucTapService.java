@@ -300,7 +300,7 @@ public class DotThucTapService {
         }
         if (phieuRepo.coPhieuTheoTrangThai(dot.getId(), TrangThaiPhieu.DA_NOP)) {
             throw new BusinessException(ErrorCode.RESOURCE_LOCKED,
-                    "Đợt đã có phiếu đánh giá được nộp, không sửa được trọng số; cần mở lại các phiếu trước (CBR-12)");
+                    "Đợt đã có phiếu đánh giá được nộp, không sửa được trọng số; cần mở lại các phiếu trước");
         }
         if (req.tyLeDvhd().add(req.tyLeGvhd()).compareTo(TRAM) != 0) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
@@ -397,9 +397,9 @@ public class DotThucTapService {
         for (ChuanDauRa c : clos) {
             long n = soLanDanhGia.getOrDefault(c.getId(), 0L);
             if (n == 0) {
-                loi.add(c.getMaClo() + " chưa được đánh giá ở chặng nào (CBR-23)");
+                loi.add(c.getMaClo() + " chưa được đánh giá ở chặng nào");
             } else if (n < 2) {
-                canhBao.add(c.getMaClo() + " chỉ được đánh giá ở 1 chặng — trọng số chặng sẽ được chuẩn hóa (CBR-23)");
+                canhBao.add(c.getMaClo() + " chỉ được đánh giá ở 1 chặng — trọng số chặng sẽ được chuẩn hóa");
             }
         }
         if (chan && !loi.isEmpty()) {

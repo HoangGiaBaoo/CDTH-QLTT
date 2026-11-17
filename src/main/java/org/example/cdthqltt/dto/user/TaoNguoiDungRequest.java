@@ -38,8 +38,8 @@ public record TaoNguoiDungRequest(
             @Size(max = 100) String khoaVien,
             @Size(max = 50) String hocHamHocVi,
             // CBR-04: hạn mức 5–10 SV/đợt.
-            @Min(value = 5, message = "Hạn mức sinh viên từ 5 đến 10 (CBR-04)")
-            @Max(value = 10, message = "Hạn mức sinh viên từ 5 đến 10 (CBR-04)") Integer soSvToiDa) {
+            @Min(value = 5, message = "Hạn mức sinh viên từ 5 đến 10")
+            @Max(value = 10, message = "Hạn mức sinh viên từ 5 đến 10") Integer soSvToiDa) {
     }
 
     public record HoSoCanBo(

@@ -69,7 +69,7 @@ public class BaoCaoService {
         Optional<BaoCaoThucTap> cu = baoCaoRepo.findTopByHoSoIdOrderByPhienBanDesc(h.getId());
         if (cu.isPresent() && (cu.get().getXacNhanDvhd() != null || cu.get().getXacNhanGvhd() != null)) {
             throw new BusinessException(ErrorCode.RESOURCE_LOCKED,
-                    "Báo cáo đã được xác nhận; liên hệ GVHD để mở lại trước khi thay tệp (BR-11.4)");
+                    "Báo cáo đã được xác nhận; liên hệ GVHD để mở lại trước khi thay tệp");
         }
         FileStorageService.TepDaLuu luu = storage.luu(tep, h.getId(), FileStorageService.DUOI_BAO_CAO);
         BaoCaoThucTap b = new BaoCaoThucTap();

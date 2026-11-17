@@ -65,7 +65,7 @@ public class FileStorageService {
             throw new BusinessException(ErrorCode.VALIDATION_ERROR, "Chưa chọn tệp hoặc tệp rỗng");
         }
         if (tep.getSize() > KICH_THUOC_TOI_DA) {
-            throw new BusinessException(ErrorCode.FILE_TOO_LARGE, "Tệp vượt quá 20 MB (CBR-24)");
+            throw new BusinessException(ErrorCode.FILE_TOO_LARGE, "Tệp vượt quá 20 MB");
         }
         String tenGoc = tenAnToan(tep.getOriginalFilename());
         String duoi = layDuoi(tenGoc);

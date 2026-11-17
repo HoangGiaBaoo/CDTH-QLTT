@@ -208,7 +208,7 @@ public class NguoiDungService {
                 .orElseThrow(() -> BusinessException.khongTimThay("đơn vị hướng dẫn"));
         if (dv.getTrangThaiPheDuyet() != TrangThaiPheDuyet.DA_DUYET) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                    "Chỉ tạo tài khoản cán bộ cho đơn vị đã được phê duyệt (CBR-02)");
+                    "Chỉ tạo tài khoản cán bộ cho đơn vị đã được phê duyệt");
         }
         if (hs.soNamKinhNghiem() < 3) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,

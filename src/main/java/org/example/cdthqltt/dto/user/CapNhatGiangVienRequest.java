@@ -11,6 +11,6 @@ public record CapNhatGiangVienRequest(
         @Size(max = 100) String khoaVien,
         @Size(max = 50) String hocHamHocVi,
         @NotNull(message = "Vui lòng nhập hạn mức sinh viên")
-        @Min(value = 5, message = "Hạn mức sinh viên từ 5 đến 10 (CBR-04)")
-        @Max(value = 10, message = "Hạn mức sinh viên từ 5 đến 10 (CBR-04)") Integer soSvToiDa) {
+        @Min(value = 5, message = "Hạn mức sinh viên từ 5 đến 10")
+        @Max(value = 10, message = "Hạn mức sinh viên từ 5 đến 10") Integer soSvToiDa) {
 }

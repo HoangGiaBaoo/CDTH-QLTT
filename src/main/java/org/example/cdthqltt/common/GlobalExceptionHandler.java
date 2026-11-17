@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<ApiResponse<Void>> tepQuaLon(MaxUploadSizeExceededException ex) {
-        return tra(ErrorCode.FILE_TOO_LARGE, "Tệp vượt quá 20 MB (CBR-24)", null);
+        return tra(ErrorCode.FILE_TOO_LARGE, "Tệp vượt quá 20 MB", null);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

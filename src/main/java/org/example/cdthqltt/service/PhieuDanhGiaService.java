@@ -102,7 +102,7 @@ public class PhieuDanhGiaService {
         boolean duocXem = p.daNop() && (!chamCungChang || cuaToi.map(PhieuDanhGia::daNop).orElse(false));
         if (!duocXem) {
             throw new BusinessException(ErrorCode.ACCESS_DENIED,
-                    "Chỉ xem được phiếu của người chấm khác khi cả hai đã nộp phiếu (BR-08.7)");
+                    "Chỉ xem được phiếu của người chấm khác khi cả hai đã nộp phiếu");
         }
         return PhieuResponse.tu(p, true);
     }
@@ -118,7 +118,7 @@ public class PhieuDanhGiaService {
         kiemHoSoChoCham(h, c);
         phieuRepo.findByHoSoIdAndChangIdAndNguoiChamId(h.getId(), c.getId(), u.nguoiDungId()).ifPresent(cu -> {
             throw new BusinessException(ErrorCode.DUPLICATE_RESOURCE, "Bạn đã có phiếu (mã " + cu.getId()
-                    + ") cho sinh viên này ở " + c.getTen() + "; mỗi người chấm chỉ một phiếu (CBR-11)");
+                    + ") cho sinh viên này ở " + c.getTen() + "; mỗi người chấm chỉ một phiếu");
         });
         PhieuDanhGia p = new PhieuDanhGia();
         p.setHoSo(h);
@@ -310,7 +310,7 @@ public class PhieuDanhGiaService {
     /** Phiếu đã nộp bị khóa (CBR-12); người chấm vẫn phải còn đúng vai trò (ví dụ chưa bị đổi GVHD, chưa vắng mặt). */
     private void kiemConSuaDuoc(PhieuDanhGia p, CurrentUser u) {
         if (p.getTrangThai() == TrangThaiPhieu.DA_NOP) {
-            throw new BusinessException(ErrorCode.RESOURCE_LOCKED, "Phiếu đã nộp và bị khóa; cần giáo vụ mở lại (CBR-12)");
+            throw new BusinessException(ErrorCode.RESOURCE_LOCKED, "Phiếu đã nộp và bị khóa; cần giáo vụ mở lại");
         }
         xacDinhNhom(p.getHoSo(), p.getChang(), u);
         if (p.getTrangThai() == TrangThaiPhieu.NHAP) {

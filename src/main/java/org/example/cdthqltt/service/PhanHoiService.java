@@ -148,7 +148,7 @@ public class PhanHoiService {
         }
         KetQuaService.KetQuaChinhThuc kq = ketQuaService.ketQuaDaCongBo(h.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                        "Chỉ số tự nhận thức chỉ có sau khi kết quả chính thức được công bố (BR-12.4)"));
+                        "Chỉ số tự nhận thức chỉ có sau khi kết quả chính thức được công bố"));
 
         Phieu08b b = doc(p, Phieu08b.class);
         Map<String, String> tenClo = tenClo(h);

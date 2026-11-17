@@ -52,7 +52,7 @@ public class ScoringService {
             }
             if (changCoClo.size() < cacChang.size()) {
                 canhBao.add(clo.maClo() + " chỉ được đánh giá ở " + changCoClo.stream().map(CauHinhChang::ten)
-                        .collect(Collectors.joining(", ")) + "; trọng số chặng đã được chuẩn hóa (CBR-23)");
+                        .collect(Collectors.joining(", ")) + "; trọng số chặng đã được chuẩn hóa");
             }
             Map<Integer, DiemChang> theoChang = new LinkedHashMap<>();
             for (CauHinhChang chang : changCoClo) {

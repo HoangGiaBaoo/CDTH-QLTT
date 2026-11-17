@@ -62,7 +62,7 @@ public class KeHoachService {
         kiemCuaSinhVienDangThucTap(kh);
         if (kh.getTrangThai() != TrangThaiKeHoach.NHAP) {
             throw new BusinessException(ErrorCode.RESOURCE_LOCKED,
-                    "Kế hoạch đã gửi xác nhận; cần GVHD mở lại mới sửa được (BR-06.4)");
+                    "Kế hoạch đã gửi xác nhận; cần GVHD mở lại mới sửa được");
         }
         for (CapNhatKeHoachRequest.Muc m : req.cacMuc()) {
             MucKeHoach muc = kh.getCacMuc().stream().filter(x -> x.getTuan().equals(m.tuan())).findFirst()

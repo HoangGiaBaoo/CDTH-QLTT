@@ -395,7 +395,7 @@ public class ThongKeService {
         return baoCao("RP-05", "Chỉ số tự nhận thức năng lực", dot, cot, dong, tongHop, List.of(
                 "Chỉ số tự nhận thức = trung bình |mức tự đánh giá − mức chính thức| trên 7 CLO; càng gần 0 càng tự nhận thức đúng.",
                 "Độ lệch dương: sinh viên tự đánh giá cao hơn kết quả chính thức.",
-                "Chỉ tính hồ sơ đã công bố kết quả (BR-12.4)."));
+                "Chỉ tính hồ sơ đã công bố kết quả."));
     }
 
     /**

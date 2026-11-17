@@ -211,7 +211,7 @@ public class KetQuaService {
         kiemChoDanhGia(h);
         if (kq.getNhanXetGvhd() == null || kq.getNhanXetGvhd().isBlank()) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                    "GVHD chưa rà soát và nhập nhận xét cho bảng tổng hợp (mẫu TTTN-07 mục V, UC10 bước 8)");
+                    "GVHD chưa rà soát và nhập nhận xét cho bảng tổng hợp (mẫu TTTN-07 mục V)");
         }
         BigDecimal duyet = req == null ? null : req.diemThuongDuyet();
         if (duyet != null) {
@@ -252,7 +252,7 @@ public class KetQuaService {
                     .toList();
             if (ds.isEmpty()) {
                 throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                        "Đợt " + dot.getMaDot() + " chưa có kết quả nào đã được giáo vụ xác nhận để công bố (UC10 bước 10)");
+                        "Đợt " + dot.getMaDot() + " chưa có kết quả nào đã được giáo vụ xác nhận để công bố");
             }
             long dangThucHien = hoSoRepo.findByDotIdOrderById(dot.getId()).stream()
                     .filter(h -> NhomTrangThaiHoSo.DANG_THUC_HIEN.contains(h.getTrangThai())).count();
@@ -490,7 +490,7 @@ public class KetQuaService {
         }
         if (kq.getTrangThai() == TrangThaiKetQua.DA_XAC_NHAN) {
             throw new BusinessException(ErrorCode.RESOURCE_LOCKED,
-                    "Kết quả học phần đã được giáo vụ xác nhận; muốn thay đổi điểm cần mở lại phiếu liên quan (CBR-12)");
+                    "Kết quả học phần đã được giáo vụ xác nhận; muốn thay đổi điểm cần mở lại phiếu liên quan");
         }
     }
 
@@ -544,8 +544,7 @@ public class KetQuaService {
         }
         if (!loi.isEmpty()) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                    "Chỉ công bố được kết quả đã xác nhận; không công bố hồ sơ nào vì: " + String.join("; ", loi)
-                            + " (UC10 bước 10)");
+                    "Chỉ công bố được kết quả đã xác nhận; không công bố hồ sơ nào vì: " + String.join("; ", loi));
         }
         return ds;
     }
@@ -556,11 +555,11 @@ public class KetQuaService {
 
     private KetQuaSinhVienResponse choSinhVien(HoSoThucTap h, KetQuaHocPhan kq) {
         if (kq == null || kq.getTrangThai() != TrangThaiKetQua.DA_CONG_BO) {
-            throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION, "Kết quả học phần chưa được công bố (BR-12.5)");
+            throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION, "Kết quả học phần chưa được công bố");
         }
         if (!phanHoiRepo.existsByHoSoIdAndLoai(h.getId(), LoaiPhanHoi.TTTN_08B)) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                    "Bạn cần gửi phiếu phản hồi TTTN-08b trước khi xem kết quả học phần (BR-12.5)");
+                    "Bạn cần gửi phiếu phản hồi TTTN-08b trước khi xem kết quả học phần");
         }
         BangTongHopResponse bang = lapBangTongHop(h, kq);
         return new KetQuaSinhVienResponse(bang.thongTin(),
