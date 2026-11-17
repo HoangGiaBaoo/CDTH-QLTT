@@ -3,9 +3,9 @@
 > File này được hook đầu phiên đọc (4000 ký tự đầu) — **phần đầu giữ ngắn**. Chi tiết bàn giao ở cuối file.
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
-**Cập nhật 14/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…16. **Việc kế tiếp:
-SCR-17** (mục 1 dưới). **CI/CD + VPS đã dựng 14–15/11** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển
+**Cập nhật 17/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh 21/21; seed V4 đã kiểm chứng;
+CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-09/10, 18/20, 19, 21, 24, 25 · B — SCR-11…17. **Việc kế tiếp:
+SCR-22** (mục 1 dưới). **CI/CD + VPS đã dựng 14–15/11** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển
 khai lên http://221.121.0.89. Còn lại: các màn khác, docs mục 10, Postman. Cách làm + cách thử một màn: *Bàn giao › Cách làm một màn FE*.
 
 ## Bảng 6 tuần
@@ -16,21 +16,19 @@ khai lên http://221.121.0.89. Còn lại: các màn khác, docs mục 10, Postm
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅) |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · 🔶 FE (SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅ · SCR-17 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **SCR-17 Minh chứng (B) — làm ngay.** Theo mẫu SCR-15/16: SV `/my-record/evidence` và `/records/:id/evidences`
-   (thay chỗ giữ trong `MAN_THEO_DOI_HO_SO`). #65 bảng đối chiếu Đủ/Thiếu theo hình thức (BR-07.6, điều kiện (d) công
-   nhận — `RequiredEvidence` đã có phần hiển thị); #64 danh sách lọc loại + tuần; SV tải lên #66 (multipart, kiểm trước ở
-   client ≤ 20 MB + đuôi pdf/doc/docx/xls/xlsx/jpg/png/mp4 nhưng vẫn dựa vào backend — FILE_TOO_LARGE /
-   UNSUPPORTED_FILE_TYPE, UC07 5a), chọn loại + tuần liên quan; tải về #67 qua `utils/taiTep.ts`; xóa #68 (hỏi lại;
-   RESOURCE_LOCKED khi đã chốt điểm, UC07 8a). Người khác chỉ xem + tải.
-   Sau đó, theo kịch bản demo — B: SCR-07/08, SCR-22, SCR-23
-   (`/records/:id/reports|feedbacks`); A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4), chuông thông báo (#101, #102).
+1. **SCR-22 Báo cáo TTTN-06 (B) — làm ngay.** SV `/my-record/report` và `/records/:id/reports` (đích link thông báo,
+   thay chỗ giữ trong `MAN_THEO_DOI_HO_SO`). #89 danh sách phiên bản; SV nộp #90 (multipart, chỉ pdf/docx ≤ 20 MB —
+   dùng lại cách làm của `EvidenceUploadForm`: kiểm trước ở client, lỗi FILE_* dưới ô, thanh tiến độ, timeout riêng);
+   tải về #91 qua `utils/taiTep.ts`; xác nhận #92 (cán bộ ĐVHD trước, GVHD sau; đủ hai ⇒ hồ sơ Chờ đánh giá), GVHD mở
+   lại #93 cho SV thay tệp (BR-11.4); nhãn Nộp muộn — đọc service UC11 trước. Sau đó — B: SCR-23
+   (`/records/:id/feedbacks`, nhận `state.tuKetQua` từ SCR-24), SCR-07/08; A: SCR-03 (mở rộng `api/users.ts`), SCR-06 (#3, #4), chuông thông báo (#101, #102).
    Phần B vẫn commit bằng SAKER205.
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
@@ -377,6 +375,43 @@ nhận ⇒ 8/8, Đã khóa, hết dòng yêu cầu; xác nhận lần 2 ⇒ RESO
 60%; cb.trang xác nhận tuần trống ⇒ "Sinh viên chưa điền đủ tiến độ tuần 2" trong hộp thoại; cb.trang mở / gọi #63 hồ sơ
 sv.cuong ⇒ ACCESS_DENIED; sv.cuong mở tiến độ sv.ha ⇒ không có quyền; sv.an Chờ đánh giá ⇒ chỉ xem; màn 390px không tràn.
 
+### SCR-17 Minh chứng (B, 17/11/2026)
+
+`pages/evidences/EvidencePage` — SV `/my-record/evidence` (hồ sơ qua #40) và `/records/:id/evidences` (`EvidenceRoute`,
+lối từ ô Minh chứng của SCR-12 và từ `RequiredEvidence`). Ô số liệu: x/N loại bắt buộc đã có, số tệp + tổng dung lượng,
+tuần hiện tại. **Bảng đối chiếu** (#65, BR-07.6, điều kiện (d) Đ15 k3, CBR-16): mỗi loại bắt buộc của hình thức thực tập
+một dòng — mục hệ thống tự ghi nhận có câu "khi nào được coi là Đã có" (mô tả lại `MinhChungService.coTuHeThong`, chỉ để
+giải thích) + lối "Mở →" sang màn có dữ liệu đó; mục SV tải lên có số tệp, nút Xem tệp (lọc danh sách theo loại) và Tải
+lên (chọn sẵn loại). Đang thực tập ⇒ mục chưa có xám "Chưa có", badge "Chưa đủ"; từ Chờ đánh giá ⇒ "Thiếu" vàng + dòng
+tô vàng + "Còn thiếu: …" (cùng quy ước ô SCR-12). `EvidenceUploadForm` (SV, hồ sơ Đang thực tập / Chờ đánh giá — cùng
+tập `DUOC_TAI_LEN` backend): loại = các loại TAI_LEN của danh mục (loại còn thiếu lên đầu, ghi "(bắt buộc, chưa có)") +
+"Minh chứng khác"; hình thức Doanh nghiệp mọi mục đều do hệ thống ghi nhận nên chỉ còn "Minh chứng khác" kèm lời nhắc;
+tuần liên quan (mặc định tuần hiện tại nếu còn trong đợt); tệp — **kiểm trước ở client** ≤ 20 MB + đuôi
+pdf/doc/docx/xls/xlsx/jpg/jpeg/png/mp4 (cùng `FileStorageService`) ⇒ lỗi dưới ô + khóa nút; lỗi FILE_TOO_LARGE /
+UNSUPPORTED_FILE_TYPE của backend (ví dụ content-type không khớp đuôi) cũng hiện dưới ô; thanh tiến độ tải lên; #66 nới
+timeout riêng 10 phút. **Danh sách** (#64): biểu tượng đuôi, tên gốc + dung lượng, loại, tuần + khoảng ngày, giờ tải; lọc
+loại + tuần (có số đếm, giữ trong URL `?loai=&tuan=`, lọc trên danh sách đã tải — #64 vẫn nhận `type`, `week`). Tải về
+#67 qua `utils/taiTep.ts` (lỗi như tệp không có trên đĩa hiện nguyên văn). SV xóa #68 (hỏi lại; tệp duy nhất của loại bắt
+buộc ⇒ nhắc mục sẽ thành chưa có; lỗi hiện trong hộp thoại); minh chứng đã khóa (giáo vụ xác nhận kết quả #86) ⇒ "Đã khóa"
+thay nút Xóa + cảnh báo đầu trang. Cán bộ, GVHD, giáo vụ: chỉ xem + tải. Màn < 640px hai bảng xếp thành thẻ.
+`api/evidences.ts` thêm #64, #66–#68; `types/evidence.ts` thêm `MinhChung`, `TaiLenMinhChungRequest`; `format.dungLuong`.
+**Sửa backend UC07**: #65 trả danh mục theo mã chữ cái (MySQL đọc qua chỉ mục unique) ⇒ repository thêm `OrderById` để
+đúng thứ tự seed / Điều 4 (Phiếu đăng ký, Nhật ký, Kế hoạch, Báo cáo, 08a, 08b). Ảnh hưởng cả SCR-11/12 (chỉ thứ tự).
+Đã thử 71/71 ca trên CSDL tạm (backend chạy với `--app.storage.dir` riêng của bộ thử) + chạy lại 58/58 ca SCR-12:
+sv.cuong 6 dòng đúng thứ tự Đ4, khớp #65, "Chưa đủ 3/6"; chỉ "Minh chứng khác"; 21 MB, .txt ⇒ chặn ở client; tệp .pdf
+content-type text/plain ⇒ client cho qua, backend "Nội dung tệp không khớp với đuôi .pdf" dưới ô, không lưu; ảnh tuần 8
+⇒ backend `tuan` 8, người tải sv.cuong, 48000 byte; pdf không gắn tuần; lọc Tuần 8 / Không gắn tuần / Bỏ lọc; #64 lọc
+backend; tải về đúng tên + kích thước; xóa ⇒ nhật ký `XOA_MINH_CHUNG`, tệp trên đĩa mất; #66 thẳng 21 MB ⇒ FILE_TOO_LARGE,
+.txt ⇒ UNSUPPORTED_FILE_TYPE, loại hệ thống ⇒ VALIDATION_ERROR, tuần 9 ⇒ "Tuần phải từ 1 đến 8"; SV xem hồ sơ khác ⇒ 403.
+sv.binh (đổi sang Nghiên cứu trong CSDL tạm): Đề cương + Sản phẩm "(bắt buộc, chưa có)", nút Tải lên chọn sẵn loại, docx
+⇒ Sản phẩm "✓ Đã có", Xem tệp lọc đúng, xóa tệp duy nhất ⇒ cảnh báo rồi về Chưa có. cb.quang từ ô SCR-12 ⇒ chỉ Tải về,
+#66/#68 ⇒ 403; gv.minh, giáo vụ chỉ xem; cb.son ⇒ ACCESS_DENIED (#67 cũng 403). sv.an Chờ đánh giá ⇒ "Thiếu 1/6" (08b),
+vẫn tải được; khóa giữa chừng ⇒ bấm Xóa nhận "Hồ sơ đã chốt điểm…" (UC07 8a) trong hộp thoại, tải lại ⇒ "Đã khóa". sv.ha
+Chờ GVHD ⇒ không form, #66 ⇒ RESOURCE_LOCKED. sv.vinh (HK2) ⇒ Thiếu Sản phẩm nghiên cứu, tệp seed không có trên đĩa ⇒
+"Không tìm thấy tệp", #68 ⇒ RESOURCE_LOCKED. Màn 390px không tràn.
+Còn nợ (backend UC07, B): sau khi giáo vụ xác nhận (hồ sơ vẫn Chờ đánh giá tới lúc công bố) SV vẫn tải thêm được, tệp
+mới không bị khóa — không đổi kết quả đã xác nhận, nhưng có thể chặn `taiLen` khi hồ sơ đã có minh chứng khóa.
+
 ## CI/CD + triển khai VPS (A, 14–15/11/2026)
 
 Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã làm:
@@ -413,7 +448,7 @@ Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã
 `api/records.ts` (#39–#44: `danhSach`, `cuaToi`, `chiTiet`, `tao`, `capNhat`, `gui`), `types/record.ts`
 (`HinhThucThucTap`, `HinhThucLamViec`, `HoSoRequest`), `api/client.ts` (đọc lỗi JSON khi tải blob), `utils/taiTep.ts`,
 `format.so2`, `components/ConfirmDialog` (`rong`), `TermSelect`, `RubricLevelPicker`, `App.tsx`, `menu.ts`
-(`/assessments` thêm ADMIN), `styles.css`. Liên kết từ SCR-24 sang SCR-23 truyền `state.tuKetQua` (thông điệp BR-12.5).
+(`/assessments` thêm ADMIN), `styles.css`, `format.dungLuong` (SCR-17). Liên kết từ SCR-24 sang SCR-23 truyền `state.tuKetQua` (thông điệp BR-12.5).
 Backend UC02: đặc tả ghi đề xuất ĐVHD mới "thông báo giáo vụ" nhưng #19 chưa gửi (15 mã NT chưa có mã cho việc này).
 
 ## Môi trường thử hiện tại
