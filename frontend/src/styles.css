@@ -505,7 +505,8 @@ a { color: var(--mau-chinh); }
 .mc-thieu td { background: #fffbea; }
 .mc-form { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
 .mc-form select { max-width: 100%; }
-.mc-tien-do { display: flex; flex-direction: column; gap: 4px; max-width: 420px; }
+/* Thanh tiến độ tải tệp — dùng chung với SCR-22. */
+.tai-len-tien-do { display: flex; flex-direction: column; gap: 4px; max-width: 420px; }
 .mc-tep { min-width: 720px; }
 .mc-tep .mc-tuan { width: 120px; }
 .mc-tep .mc-ngay { width: 140px; white-space: nowrap; }
@@ -535,4 +536,42 @@ a { color: var(--mau-chinh); }
   .mc-nut-nhom { justify-content: flex-start; }
   .mc-tep tr { grid-template-columns: 1fr; }
   .mc-tep .mc-tuan div { display: inline; margin-left: 6px; white-space: nowrap; }
+}
+
+/* ---------- Báo cáo TTTN-06 SCR-22 ---------- */
+.bc-khung { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; align-items: start; }
+.bc-sau-phan { border: 1px solid var(--vien); border-radius: var(--bo-goc); padding: 10px 14px 12px; margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.bc-sau-phan legend { font-size: 14px; font-weight: 600; padding: 0 4px; }
+.bc-sau-phan-loi { border-color: var(--do-chu); }
+.bc-goi { display: block; }
+.bc-yeu-cau { background: var(--nen); border-radius: var(--bo-goc); padding: 10px 14px; font-size: 14px; }
+.bc-yeu-cau h3 { font-size: 14px; margin: 0 0 6px; }
+.bc-yeu-cau ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.bc-tep { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.bc-muon { margin-left: 8px; }
+.bc-buoc-ct { display: block; font-size: 12px; font-weight: 400; color: var(--chu-phu); }
+.stepper .step-xong .bc-buoc-ct { color: var(--xanh-la-chu); }
+.bc-cho { align-self: center; margin-right: auto; }
+.bc-bang { min-width: 760px; }
+.bc-bang .bc-pb { width: 120px; white-space: nowrap; }
+.bc-bang .bc-ngay { width: 150px; white-space: nowrap; }
+.bc-bang .bc-xn { width: 150px; white-space: nowrap; }
+.bc-bang .actions { width: 100px; }
+.bc-hh { margin-left: 8px; }
+.bc-cu td { color: var(--chu-phu); }
+.bc-nhan-xn { display: none; }
+@media (max-width: 760px) {
+  .bc-khung { grid-template-columns: 1fr; }
+}
+/* Màn hẹp: bảng phiên bản xếp thành thẻ như bảng tệp của SCR-17. */
+@media (max-width: 640px) {
+  .bc-bang { min-width: 0; }
+  .bc-bang, .bc-bang tbody { display: block; }
+  .bc-bang thead { display: none; }
+  .bc-bang tr { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 10px 12px; border-bottom: 1px solid var(--vien); }
+  .bc-bang tbody tr:last-child { border-bottom: 0; }
+  .bc-bang td, .bc-bang .actions { border: 0; padding: 0; width: auto; text-align: left; }
+  .bc-bang .bc-pb::before { content: 'Phiên bản '; color: var(--chu-phu); }
+  .bc-nhan-xn { display: inline; color: var(--chu-phu); }
+  .bc-bang .bc-ngay div { display: inline; margin-left: 6px; }
 }

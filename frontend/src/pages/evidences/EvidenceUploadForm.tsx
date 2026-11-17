@@ -4,28 +4,13 @@ import { evidenceApi } from '../../api/evidences';
 import ErrorAlert from '../../components/ErrorAlert';
 import { dungLuong } from '../../utils/format';
 import { homNayIso, khoangTuan, tuanCua } from '../../utils/lich';
+import { kiemTep, LOI_TEP } from '../../utils/tepTaiLen';
 import type { MinhChung } from '../../types/evidence';
 import type { Dot } from '../../types/term';
 
-/**
- * Đuôi và dung lượng giống `FileStorageService.DUOI_MINH_CHUNG`, `KICH_THUOC_TOI_DA` (CBR-24). Kiểm ở đây chỉ để báo
- * sớm, không tải 20 MB lên rồi mới biết; backend vẫn kiểm lại cả đuôi lẫn content-type.
- */
+/** Giống `FileStorageService.DUOI_MINH_CHUNG` (CBR-24). */
 const DUOI_CHO_PHEP = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'mp4'];
-const TOI_DA = 20 * 1024 * 1024;
-/** Lỗi về chính tệp — hiện dưới ô chọn tệp thay vì hộp lỗi chung. */
-const LOI_TEP = new Set(['FILE_TOO_LARGE', 'UNSUPPORTED_FILE_TYPE']);
-
-function kiemTep(f: File): string | undefined {
-  if (f.size === 0) return 'Tệp rỗng, hãy chọn tệp khác.';
-  if (f.size > TOI_DA) return `Tệp nặng ${dungLuong(f.size)}, vượt quá 20 MB (CBR-24).`;
-  const i = f.name.lastIndexOf('.');
-  const duoi = i < 0 ? '' : f.name.slice(i + 1).toLowerCase();
-  if (!DUOI_CHO_PHEP.includes(duoi)) {
-    return `Định dạng ${duoi ? `.${duoi}` : 'không có đuôi'} không được hỗ trợ, chỉ nhận pdf, doc, docx, xls, xlsx, jpg, png, mp4 (CBR-24).`;
-  }
-  return undefined;
-}
+const MO_TA_DUOI = 'pdf, doc, docx, xls, xlsx, jpg, png, mp4';
 
 export interface LoaiTaiLen {
   ma: string;
@@ -60,7 +45,7 @@ export default function EvidenceUploadForm({ hoSoId, dot, loai, loaiChon, onDoiL
   const chonTep = (f: File | null) => {
     setLoi(null);
     setTep(f);
-    setLoiTep(f ? kiemTep(f) : undefined);
+    setLoiTep(f ? kiemTep(f, DUOI_CHO_PHEP, MO_TA_DUOI) : undefined);
   };
 
   const gui = async (e: FormEvent) => {
@@ -126,7 +111,7 @@ export default function EvidenceUploadForm({ hoSoId, dot, loai, loaiChon, onDoiL
         <small className="muted">Tối đa 20 MB; pdf, doc, docx, xls, xlsx, jpg, png, mp4 (CBR-24).</small>
       </label>
       {dangTai && (
-        <div className="mc-tien-do mt" role="status">
+        <div className="tai-len-tien-do mt" role="status">
           <div className="meter-ray"><div className="meter-dat" style={{ width: `${tienDo}%` }} /></div>
           <span className="small muted">Đang tải lên {tienDo}%</span>
         </div>

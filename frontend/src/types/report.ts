@@ -12,3 +12,11 @@ export interface BaoCao {
   laMoiNhat: boolean;
   daDuXacNhan: boolean;
 }
+
+/** Tham số multipart của #90 (`BaoCaoController.submit`). */
+export interface NopBaoCaoRequest {
+  recordId: number;
+  /** SV đã tích đủ sáu phần mục II mẫu TTTN-06 — backend từ chối nếu false. */
+  checklistConfirmed: boolean;
+  file: File;
+}

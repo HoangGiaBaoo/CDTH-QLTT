@@ -13,6 +13,7 @@ import { NHAN_HINH_THUC_THUC_TAP, NHAN_TRANG_THAI_HO_SO } from '../../utils/cons
 import { dungLuong, ngayGio } from '../../utils/format';
 import { homNayIso, khoangTuan, tuanCua } from '../../utils/lich';
 import { luuTep } from '../../utils/taiTep';
+import { duoiTep } from '../../utils/tepTaiLen';
 import EvidenceUploadForm, { type LoaiTaiLen } from './EvidenceUploadForm';
 import type { DoiChieuMinhChung, DongDoiChieu, MinhChung } from '../../types/evidence';
 import type { HoSo, TrangThaiHoSo } from '../../types/record';
@@ -37,11 +38,6 @@ const HE_THONG: Record<string, { khi: string; con?: string; menuSv?: string }> =
   PHAN_HOI_08A: { khi: 'khi cán bộ ĐVHD gửi phiếu 08a', con: 'feedbacks', menuSv: '/my-record/feedback' },
   PHAN_HOI_08B: { khi: 'khi sinh viên gửi phiếu 08b', con: 'feedbacks', menuSv: '/my-record/feedback' },
   NHAN_XET_GVHD: { khi: 'khi GVHD nộp phiếu đánh giá kèm nhận xét' },
-};
-
-const duoiTep = (ten: string) => {
-  const i = ten.lastIndexOf('.');
-  return i < 0 ? '' : ten.slice(i + 1).toLowerCase();
 };
 
 /** `/records/:recordId/evidences` — lối từ ô Minh chứng của SCR-12 và từ danh mục minh chứng bắt buộc. */
