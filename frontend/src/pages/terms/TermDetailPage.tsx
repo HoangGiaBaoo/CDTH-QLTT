@@ -15,7 +15,7 @@ import TermForm from './TermForm';
 /** Giải thích hệ quả của từng bước chuyển trạng thái đợt — hiện trong hộp thoại xác nhận (#30 chỉ đi tiến). */
 const HE_QUA: Partial<Record<TrangThaiDot, string>> = {
   DANG_NHAN_DANG_KY: 'Hệ thống kiểm cấu hình chấm điểm trước khi mở: tổng α của 7 CLO bằng 100, tỷ lệ đồng chấm mỗi CLO '
-    + 'bằng 100, mỗi CLO được đánh giá ở ít nhất một chặng (CBR-07, CBR-08, CBR-23). Sau khi mở, sinh viên gửi được phiếu TTTN-01.',
+    + 'bằng 100, mỗi CLO được đánh giá ở ít nhất một chặng. Sau khi mở, sinh viên gửi được phiếu TTTN-01.',
   DANG_THUC_HIEN: 'Đợt bước vào giai đoạn thực tập. Chặng 1 tự mở vào đầu tuần thứ 4, chặng 2 tự mở sau ngày kết thúc '
     + '(Điều 10 khoản 2); giáo vụ vẫn có thể mở thủ công nếu đủ điều kiện.',
   DA_KET_THUC: 'Đợt kết thúc: không sửa được thông tin đợt nữa.',
@@ -113,8 +113,8 @@ export default function TermDetailPage() {
   const hoiDoiChang = (c: Chang, mo: boolean) => setXacNhan({
     tieuDe: `${mo ? 'Mở' : 'Đóng'} ${c.ten}?`,
     noiDung: mo
-      ? `Mở thủ công, bổ sung cho lịch tự động. Hệ thống kiểm điều kiện mở chặng (CBR-13) và gửi thông báo tới `
-        + `${c.thuTu === 1 ? 'GVHD và cán bộ ĐVHD (NT-10)' : 'người liên quan (NT-12)'}.`
+      ? `Mở thủ công, bổ sung cho lịch tự động. Hệ thống kiểm điều kiện mở chặng và gửi thông báo tới `
+        + `${c.thuTu === 1 ? 'GVHD và cán bộ ĐVHD' : 'người liên quan'}.`
       : 'Người chấm sẽ không nhập được phiếu của chặng này cho đến khi chặng được mở lại.',
     nhan: mo ? 'Mở chặng' : 'Đóng chặng',
     lam: async () => {
@@ -229,7 +229,7 @@ export default function TermDetailPage() {
         </div>
         <p className="hint">
           Trọng số chặng cố định 30% / 70% (Điều 13 khoản 2). CLO chỉ được đánh giá ở một chặng (CLO7) được chuẩn hóa
-          trọng số chặng khi tính điểm (CBR-23).
+          trọng số chặng khi tính điểm.
         </p>
       </div>
 

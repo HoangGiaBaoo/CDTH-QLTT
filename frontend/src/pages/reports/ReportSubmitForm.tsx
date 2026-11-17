@@ -103,7 +103,7 @@ export default function ReportSubmitForm({ hoSoId, phienBanMoi, han, onDaNop }: 
       {soNgayTre > 0 && (
         <div className="alert alert-vang mb" role="status">
           Đã quá hạn nộp {ngay(han)} {soNgayTre} ngày — vẫn nộp được, nhưng báo cáo bị gắn nhãn Nộp muộn kèm số ngày trễ
-          và hiển thị cho GVHD, giáo vụ (UC11 5a).
+          và hiển thị cho GVHD, giáo vụ.
         </div>
       )}
       <ErrorAlert error={loi} />
@@ -137,7 +137,7 @@ export default function ReportSubmitForm({ hoSoId, phienBanMoi, han, onDaNop }: 
                accept=".pdf,.docx" onChange={(e) => chonTep(e.target.files?.[0] ?? null)} />
         {tep && !loiTep && <small className="muted">{tep.name} · {dungLuong(tep.size)}</small>}
         {loiTep && <small className="field-error" role="alert">{loiTep}</small>}
-        <small className="muted">Chỉ pdf hoặc docx, tối đa 20 MB (CBR-24).</small>
+        <small className="muted">Chỉ pdf hoặc docx, tối đa 20 MB.</small>
       </label>
       {dangNop && (
         <div className="tai-len-tien-do mt" role="status">

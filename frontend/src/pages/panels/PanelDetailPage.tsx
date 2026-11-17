@@ -106,10 +106,10 @@ export default function PanelDetailPage() {
       <Link to="/panels" className="back-link">← Danh sách tổ</Link>
       <div className="page-head">
         <h1 className="page-title">
-          Tổ đánh giá #{to.id} · {to.maDot}
+          Tổ đánh giá {to.id} · {to.maDot}
           {to.canhBao?.length
             ? <span className="badge badge-do">Thành phần chưa đạt</span>
-            : <span className="badge badge-xanh-la">Đạt CBR-14</span>}
+            : <span className="badge badge-xanh-la">Thành phần đạt</span>}
         </h1>
       </div>
 
@@ -203,7 +203,7 @@ export default function PanelDetailPage() {
             </tbody>
           </table>
         </div>
-        <p className="hint">Phiếu của thành viên vắng mặt bị loại khỏi trung bình nhóm khi tính điểm chặng 2 (CBR-15).</p>
+        <p className="hint">Phiếu của thành viên vắng mặt bị loại khỏi trung bình nhóm khi tính điểm chặng 2.</p>
       </div>
 
       {/* Sinh viên */}

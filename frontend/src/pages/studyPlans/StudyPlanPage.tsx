@@ -182,7 +182,7 @@ export default function StudyPlanPage({ recordId }: { recordId?: number }) {
   });
 
   const huongDan = (() => {
-    if (kh.trangThai === 'DA_KHOA') return { loai: 'xanh', noiDung: 'Kế hoạch đã được cán bộ ĐVHD và GVHD xác nhận và khóa. Cần sửa thì GVHD mở lại (BR-06.4).' };
+    if (kh.trangThai === 'DA_KHOA') return { loai: 'xanh', noiDung: 'Kế hoạch đã được cán bộ ĐVHD và GVHD xác nhận và khóa. Cần sửa thì GVHD mở lại.' };
     if (kh.trangThai === 'CHO_XAC_NHAN') {
       const cho = [!kh.xacNhanDvhd && 'cán bộ ĐVHD', !kh.xacNhanGvhd && 'GVHD'].filter(Boolean).join(' và ');
       return { loai: 'xanh-duong', noiDung: `Đã gửi ${ngayGio(kh.ngayNop)}, chờ ${cho} xác nhận.${laSv ? ' Muốn sửa, hãy đề nghị GVHD mở lại kế hoạch.' : ''}` };
@@ -193,7 +193,7 @@ export default function StudyPlanPage({ recordId }: { recordId?: number }) {
       loai: han.quaHan ? 'vang' : 'xanh-duong',
       noiDung: `Điền đủ mục tiêu, kết quả mong đợi và hình thức minh chứng cho ${soTuan} tuần và dòng Tổng kết, rồi bấm Gửi xác nhận. `
         + `Hạn nộp ${ngay(kh.hanNop)} — 5 ngày làm việc kể từ ngày bắt đầu đợt (Điều 6 khoản 3 điểm a)`
-        + (han.quaHan ? '; đã quá hạn, gửi vẫn được nhưng kế hoạch bị gắn nhãn Nộp muộn (BR-06.3).' : '.'),
+        + (han.quaHan ? '; đã quá hạn, gửi vẫn được nhưng kế hoạch bị gắn nhãn Nộp muộn.' : '.'),
     };
   })();
 
@@ -315,7 +315,7 @@ export default function StudyPlanPage({ recordId }: { recordId?: number }) {
         onHuy={() => setHoi(null)}
       >
         <p>Cán bộ ĐVHD và GVHD nhận thông báo để xác nhận. Sau khi gửi, bạn không sửa được nữa trừ khi GVHD mở lại.</p>
-        {han.quaHan && <p className="text-vang">Đã quá hạn nộp {ngay(kh.hanNop)}: kế hoạch sẽ bị gắn nhãn Nộp muộn (BR-06.3).</p>}
+        {han.quaHan && <p className="text-vang">Đã quá hạn nộp {ngay(kh.hanNop)}: kế hoạch sẽ bị gắn nhãn Nộp muộn.</p>}
         {soDongDu < kh.cacMuc.length && (
           <p className="text-vang">Còn {kh.cacMuc.length - soDongDu} dòng chưa đủ ba nội dung — hệ thống sẽ không nhận.</p>
         )}
@@ -344,7 +344,7 @@ export default function StudyPlanPage({ recordId }: { recordId?: number }) {
       >
         <p>
           Kế hoạch trở về Bản nháp và <b>mất cả hai xác nhận</b>; sinh viên sửa xong phải gửi lại để ĐVHD và GVHD xác nhận
-          lần nữa (BR-06.4). Thao tác được ghi nhật ký, sinh viên nhận thông báo.
+          lần nữa. Thao tác được ghi nhật ký, sinh viên nhận thông báo.
         </p>
       </ConfirmDialog>
     </div>

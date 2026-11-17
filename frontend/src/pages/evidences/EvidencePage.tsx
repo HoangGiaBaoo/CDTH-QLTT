@@ -245,7 +245,7 @@ export default function EvidencePage({ recordId }: { recordId?: number }) {
       <div className={`alert alert-${huongDan.loai} mb`}>{huongDan.noiDung}</div>
       {daKhoa && (
         <div className="alert alert-vang mb" role="status">
-          Giáo vụ đã xác nhận kết quả học phần — các minh chứng đã nộp bị khóa, không xóa được (UC07 8a).
+          Giáo vụ đã xác nhận kết quả học phần — các minh chứng đã nộp bị khóa, không xóa được.
         </div>
       )}
 
@@ -272,7 +272,7 @@ export default function EvidencePage({ recordId }: { recordId?: number }) {
         </div>
         <p className="muted small mt0">
           Danh mục theo hình thức thực tập (Điều 4). Đủ minh chứng bắt buộc là điều kiện (d) để công nhận hoàn thành học
-          phần (Điều 15 khoản 3) — thiếu thì kết quả là Không đạt (CBR-16).
+          phần (Điều 15 khoản 3) — thiếu thì kết quả là Không đạt.
         </p>
         <div className="table-wrap">
           <table className="table table-giua mc-bang">

@@ -325,7 +325,7 @@ export default function LogbookPage({ recordId }: { recordId?: number }) {
                           <td className="nk-tt">
                             {n.suaDuoc
                               ? <button type="button" className="btn btn-phu btn-nho" disabled={dangGui} onClick={() => moSua(n)}>Sửa</button>
-                              : <span className="muted small" title="Chỉ sửa được trong 7 ngày gần nhất (BR-07.2)">Đã khóa</span>}
+                              : <span className="muted small" title="Chỉ sửa được trong 7 ngày gần nhất">Đã khóa</span>}
                           </td>
                         )}
                       </tr>

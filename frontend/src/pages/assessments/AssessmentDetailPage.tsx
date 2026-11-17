@@ -63,7 +63,7 @@ export default function AssessmentDetailPage() {
       {quayLai}
       <div className="page-head">
         <h1 className="page-title">
-          Phiếu #{p.id} — {p.hoTenSinhVien} <StatusBadge value={p.trangThai} labels={NHAN_TRANG_THAI_PHIEU} />
+          Phiếu số {p.id} — {p.hoTenSinhVien} <StatusBadge value={p.trangThai} labels={NHAN_TRANG_THAI_PHIEU} />
         </h1>
         {laAdmin && p.trangThai === 'DA_NOP' && (
           <button className="btn btn-phu" onClick={() => setMoHoi(true)}>Mở lại phiếu</button>
@@ -114,7 +114,7 @@ export default function AssessmentDetailPage() {
                      onHuy={() => setMoHoi(false)} onXacNhan={() => void moLai()}>
         <p>
           Phiếu chuyển sang <b>Mở lại</b> để {p.hoTenNguoiCham} sửa. Hệ thống ghi nhật ký điểm cũ từng CLO, người thực hiện,
-          thời điểm (CBR-12); kết quả học phần (nếu đã tính) quay về Chưa tính và được tính lại khi phiếu được nộp lại.
+          thời điểm; kết quả học phần (nếu đã tính) quay về Chưa tính và được tính lại khi phiếu được nộp lại.
         </p>
         <label className="field">
           <span>Lý do mở lại *</span>

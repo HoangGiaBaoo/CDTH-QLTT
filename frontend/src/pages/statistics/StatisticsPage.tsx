@@ -84,7 +84,7 @@ export default function StatisticsPage() {
         {BAO_CAO.map((b) => (
           <button key={b.ma} role="tab" aria-selected={b.ma === ma} className={`tab${b.ma === ma ? ' tab-active' : ''}`}
                   onClick={() => chonTab(b.ma)}>
-            {b.ma} · {b.nhan}
+            {b.nhan}
           </button>
         ))}
       </div>
@@ -94,7 +94,7 @@ export default function StatisticsPage() {
         <>
           <div className="card mb">
             <div className="card-head">
-              <h2 className="section-title mt0">{bc.maBaoCao} — {bc.tenBaoCao}</h2>
+              <h2 className="section-title mt0">{bc.tenBaoCao}</h2>
               <span className="muted small">{bc.maDot} · lập lúc {ngayGio(bc.thoiDiemLap)}</span>
             </div>
             <div className="chi-so-ds">

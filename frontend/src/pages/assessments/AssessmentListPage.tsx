@@ -151,7 +151,7 @@ function MyGradingList() {
                     <td><StatusBadge value={d.trangThai} labels={NHAN_TRANG_THAI_HO_SO} /></td>
                     {stage === 2 && (
                       <td className="small">
-                        Tổ #{d.to?.id}{d.nhom && <> · {NHAN_NHOM_NGUOI_CHAM[d.nhom]}</>}
+                        Tổ {d.to?.id}{d.nhom && <> · {NHAN_NHOM_NGUOI_CHAM[d.nhom]}</>}
                         {d.to?.thoiGian && <div className="muted">{ngayGio(d.to.thoiGian)}{d.to.diaDiem && ` · ${d.to.diaDiem}`}</div>}
                       </td>
                     )}
@@ -161,7 +161,7 @@ function MyGradingList() {
                     </td>
                     <td className="actions">
                       {d.vangMat ? (
-                        <span className="muted small" title="Thành viên vắng mặt bị loại khỏi phép tính (CBR-15)">Vắng mặt</span>
+                        <span className="muted small" title="Thành viên vắng mặt bị loại khỏi phép tính">Vắng mặt</span>
                       ) : (
                         <Link className={`btn btn-nho ${!p || p.trangThai !== 'DA_NOP' ? 'btn-chinh' : 'btn-phu'}`}
                               to={`/assessments/form?recordId=${d.hoSoId}&stage=${stage}`}>

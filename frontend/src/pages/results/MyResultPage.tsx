@@ -95,14 +95,14 @@ export default function MyResultPage({ recordId }: { recordId?: number }) {
         <div className="alert alert-vang mb">{chuaXem.message}</div>
         <div className="card">
           <h2 className="section-title mt0">Khi nào xem được kết quả?</h2>
-          <p className="mt0">Theo BR-12.5, bạn xem được điểm học phần khi có đủ hai điều kiện:</p>
+          <p className="mt0">Bạn xem được điểm học phần khi có đủ hai điều kiện:</p>
           <ol className="buoc">
-            <li>Giáo vụ Khoa đã <b>công bố</b> kết quả — hệ thống gửi thông báo NT-14 khi công bố.</li>
+            <li>Giáo vụ Khoa đã <b>công bố</b> kết quả — hệ thống gửi thông báo cho bạn khi công bố.</li>
             <li>Bạn đã <b>gửi phiếu phản hồi TTTN-08b</b> (đánh giá chất lượng đợt thực tập và tự đánh giá 7 CLO).</li>
           </ol>
           <p className="muted">
             Phiếu 08b gửi được ngay cả khi kết quả chưa công bố. Phần tự đánh giá giúp so sánh nhận thức của bạn với kết quả
-            chính thức (chỉ số tự nhận thức, BR-12.4).
+            chính thức (chỉ số tự nhận thức).
           </p>
           <div className="form-actions">
             <Link className="btn btn-chinh" to={SCR_23} state={{ tuKetQua: chuaXem.message }}>Đến phiếu phản hồi TTTN-08b</Link>

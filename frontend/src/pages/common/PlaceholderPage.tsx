@@ -8,12 +8,9 @@ export default function PlaceholderPage({ muc }: { muc: MucMenu }) {
     <div>
       <h1 className="page-title">{nguoiDung ? nhanMenu(muc, nguoiDung.vaiTro) : muc.path}</h1>
       <div className="card empty">
-        <div className="empty-title">Màn hình đang được xây dựng</div>
-        <div className="muted">
-          {muc.scr && <>{muc.scr} · </>}
-          {muc.phuTrach && <>Phụ trách: người {muc.phuTrach}</>}
-        </div>
-        {muc.moTa && <p>{muc.moTa}</p>}
+        <muc.icon size={40} strokeWidth={1.5} className="empty-icon" aria-hidden="true" />
+        <div className="empty-title">Chức năng đang được xây dựng</div>
+        <div className="muted">Chức năng này sẽ sớm được hoàn thiện.</div>
       </div>
     </div>
   );

@@ -148,7 +148,7 @@ function PhanCongGiaoVu() {
       {thongBao && <div className="alert alert-xanh mb" role="status">{thongBao}</div>}
       <ErrorAlert error={loi} />
       {loi instanceof ApiError && loi.code === 'QUOTA_EXCEEDED' && (
-        <p className="hint mb">Không sinh viên nào được phân công (cả lô bị hủy — UC05 4a). Chọn giảng viên còn đủ chỗ hoặc bớt sinh viên rồi phân công lại.</p>
+        <p className="hint mb">Không sinh viên nào được phân công (cả lô bị hủy). Chọn giảng viên còn đủ chỗ hoặc bớt sinh viên rồi phân công lại.</p>
       )}
 
       {!termId ? (dsDot ? <div className="card empty"><div className="muted">Chưa có đợt thực tập nào.</div></div> : <Loading />)
@@ -304,7 +304,7 @@ function PhanCongGiaoVu() {
               </>
             )}
             <p className="hint">
-              Mỗi sinh viên có đúng một GVHD trong đợt; số sinh viên của mỗi giảng viên không vượt hạn mức riêng (CBR-04).
+              Mỗi sinh viên có đúng một GVHD trong đợt; số sinh viên của mỗi giảng viên không vượt hạn mức riêng.
               Kết quả phân công được công bố ngay cho giảng viên và sinh viên (Điều 6 khoản 2 điểm c); giảng viên duyệt hồ sơ ở
               mục Sinh viên hướng dẫn.
             </p>

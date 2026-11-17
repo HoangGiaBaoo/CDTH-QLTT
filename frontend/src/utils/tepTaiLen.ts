@@ -17,10 +17,10 @@ export function duoiTep(ten: string): string {
 /** Thông điệp lỗi của tệp, hoặc `undefined` khi tệp qua được lần kiểm ở client. */
 export function kiemTep(f: File, duoiChoPhep: string[], moTaDuoi = duoiChoPhep.join(', ')): string | undefined {
   if (f.size === 0) return 'Tệp rỗng, hãy chọn tệp khác.';
-  if (f.size > TOI_DA_TEP) return `Tệp nặng ${dungLuong(f.size)}, vượt quá 20 MB (CBR-24).`;
+  if (f.size > TOI_DA_TEP) return `Tệp nặng ${dungLuong(f.size)}, vượt quá 20 MB.`;
   const duoi = duoiTep(f.name);
   if (!duoiChoPhep.includes(duoi)) {
-    return `Định dạng ${duoi ? `.${duoi}` : 'không có đuôi'} không được hỗ trợ, chỉ nhận ${moTaDuoi} (CBR-24).`;
+    return `Định dạng ${duoi ? `.${duoi}` : 'không có đuôi'} không được hỗ trợ, chỉ nhận ${moTaDuoi}.`;
   }
   return undefined;
 }

@@ -230,8 +230,8 @@ export default function PanelCreatePage() {
           ))}
         </ul>
         <p className="hint">
-          Điều 10 khoản 3 điểm a (CBR-14). Điểm chặng 2 lấy trung bình trong từng nhóm người chấm trước khi áp tỷ lệ đồng
-          chấm, nên số người mỗi nhóm không làm lệch tỷ lệ (CBR-15).
+          Điều 10 khoản 3 điểm a. Điểm chặng 2 lấy trung bình trong từng nhóm người chấm trước khi áp tỷ lệ đồng
+          chấm, nên số người mỗi nhóm không làm lệch tỷ lệ.
         </p>
       </div>
 

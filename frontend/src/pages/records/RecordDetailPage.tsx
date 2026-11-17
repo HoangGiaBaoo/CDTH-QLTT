@@ -227,8 +227,8 @@ export default function RecordDetailPage({ recordId }: { recordId: number }) {
               </h2>
               <div className="muted small mt-nho">
                 {laCanBoCuaHoSo
-                  ? 'Xem phiếu đăng ký bên dưới rồi xác nhận tiếp nhận, hoặc từ chối kèm lý do (UC04 bước 8).'
-                  : 'Bạn đã được phân công hướng dẫn sinh viên này. Phê duyệt, hoặc từ chối kèm lý do (UC04 bước 10).'}
+                  ? 'Xem phiếu đăng ký bên dưới rồi xác nhận tiếp nhận, hoặc từ chối kèm lý do.'
+                  : 'Bạn đã được phân công hướng dẫn sinh viên này. Phê duyệt, hoặc từ chối kèm lý do.'}
               </div>
             </div>
             {nutThaoTac}

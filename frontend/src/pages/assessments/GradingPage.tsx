@@ -189,7 +189,7 @@ export default function GradingPage() {
     if (hopLeDeNop) setHoiNop(true);
   };
 
-  const scr = stage === 1 ? 'SCR-18 · TTTN-04' : 'SCR-20 · TTTN-05';
+  const scr = stage === 1 ? 'Mẫu TTTN-04' : 'Mẫu TTTN-05';
   const tenNhom = NHAN_NHOM_NGUOI_CHAM[bm.nhom];
 
   return (
@@ -225,12 +225,12 @@ export default function GradingPage() {
       {phieu?.trangThai === 'MO_LAI' && (
         <div className="alert alert-vang mb">
           Giáo vụ đã mở lại phiếu{phieu.lyDoMoLai && <> — lý do: <b>{phieu.lyDoMoLai}</b></>}. Sửa rồi nộp lại; hệ thống sẽ tính lại
-          điểm và ghi nhật ký (CBR-12).
+          điểm và ghi nhật ký.
         </div>
       )}
       {phieu?.trangThai === 'DA_NOP' && (
         <div className="alert alert-xanh mb">
-          Phiếu đã nộp lúc {ngayGio(phieu.ngayNop)} và bị khóa. Cần sửa thì đề nghị giáo vụ mở lại phiếu (CBR-12).
+          Phiếu đã nộp lúc {ngayGio(phieu.ngayNop)} và bị khóa. Cần sửa thì đề nghị giáo vụ mở lại phiếu.
         </div>
       )}
       {!suaDuoc && phieu?.trangThai !== 'DA_NOP' && (
@@ -289,7 +289,7 @@ export default function GradingPage() {
             <div className="clo-cauhoi">{q.noiDung}</div>
             <div className="muted small">
               Không thuộc phạm vi chấm của {tenNhom.charAt(0).toLowerCase() + tenNhom.slice(1)} — tỷ lệ đồng chấm của nhóm bằng 0 nên hệ thống bỏ qua mọi
-              điểm gửi lên cho CLO này và ghi nhật ký (CBR-09).
+              điểm gửi lên cho CLO này và ghi nhật ký.
             </div>
           </div>
         ))}
@@ -329,8 +329,8 @@ export default function GradingPage() {
       <ConfirmDialog mo={hoiNop} tieuDe="Nộp phiếu đánh giá?" nhanXacNhan="Nộp phiếu" nguyHiem dangXuLy={dangGui}
                      onHuy={() => setHoiNop(false)} onXacNhan={() => void nop()}>
         <p>
-          Nộp xong phiếu bị <b>khóa</b>; muốn sửa phải đề nghị giáo vụ mở lại (CBR-12). Điểm của bạn được giữ kín với người
-          chấm còn lại cho đến khi cả hai cùng nộp (BR-08.7).
+          Nộp xong phiếu bị <b>khóa</b>; muốn sửa phải đề nghị giáo vụ mở lại. Điểm của bạn được giữ kín với người
+          chấm còn lại cho đến khi cả hai cùng nộp.
         </p>
         <table className="table table-gon">
           <tbody>

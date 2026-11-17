@@ -206,7 +206,7 @@ export default function ResultListPage() {
           {hienThi.length === 0 && <p className="muted center">Không có hồ sơ khớp bộ lọc.</p>}
           <p className="hint">
             Điểm do hệ thống tính theo Điều 13–15, làm tròn 0,1 ở bước cuối. Bấm một dòng để xem bảng tổng hợp TTTN-07
-            {laAdmin ? ', tính lại, xác nhận hoặc xuất biểu mẫu.' : '; GVHD rà soát và nhập nhận xét ở đó (UC10 bước 8).'}
+            {laAdmin ? ', tính lại, xác nhận hoặc xuất biểu mẫu.' : '; GVHD rà soát và nhập nhận xét ở đó.'}
           </p>
         </>
       )}
@@ -227,7 +227,7 @@ export default function ResultListPage() {
         </p>
         <p>
           Hồ sơ chuyển <b>Hoàn thành</b> hoặc <b>Không hoàn thành</b> theo kết luận Điều 15 khoản 3; sinh viên nhận thông
-          báo NT-14 và xem được kết quả sau khi gửi phiếu TTTN-08b. Không hoàn tác được.
+          báo và xem được kết quả sau khi gửi phiếu TTTN-08b. Không hoàn tác được.
         </p>
       </ConfirmDialog>
     </div>

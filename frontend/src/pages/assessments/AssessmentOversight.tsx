@@ -70,7 +70,7 @@ export default function AssessmentOversight() {
         <div className="card mb">
           <h2 className="section-title mt0">Cảnh báo lệch điểm giữa hai nhóm ({lech.length})</h2>
           <p className="hint mt0">
-            Trung bình nhóm ĐVHD và nhóm GVHD chênh nhau trên 2,0 điểm ở cùng một CLO (BR-08.9, Điều 20 khoản 3). Hệ thống chỉ
+            Trung bình nhóm ĐVHD và nhóm GVHD chênh nhau trên 2,0 điểm ở cùng một CLO (Điều 20 khoản 3). Hệ thống chỉ
             cảnh báo — giáo vụ xem xét, cần thì mở lại phiếu.
           </p>
           <div className="table-wrap">

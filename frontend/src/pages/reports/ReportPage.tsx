@@ -183,11 +183,11 @@ export default function ReportPage({ recordId }: { recordId?: number }) {
     }
     if (moiNhat.daDuXacNhan) {
       return { loai: 'xanh', noiDung: 'Báo cáo đã đủ xác nhận của cán bộ ĐVHD và GVHD; hồ sơ chờ đánh giá cuối kỳ.'
-        + (laSv ? ' Muốn thay tệp, hãy liên hệ GVHD để mở lại (BR-11.4).' : laGvhd ? ' Cần sinh viên thay tệp thì bấm Mở lại (BR-11.4).' : '') };
+        + (laSv ? ' Muốn thay tệp, hãy liên hệ GVHD để mở lại.' : laGvhd ? ' Cần sinh viên thay tệp thì bấm Mở lại.' : '') };
     }
     if (moiNhat.xacNhanDvhd) {
       return { loai: laSv ? 'vang' : 'xanh-duong', noiDung: `Cán bộ ĐVHD đã xác nhận phiên bản ${moiNhat.phienBan}, chờ GVHD xác nhận đủ điều kiện chấm.`
-        + (laSv ? ' Muốn thay tệp, hãy liên hệ GVHD để mở lại (BR-11.4).' : '') };
+        + (laSv ? ' Muốn thay tệp, hãy liên hệ GVHD để mở lại.' : '') };
     }
     return { loai: 'xanh-duong', noiDung: `Phiên bản ${moiNhat.phienBan} chờ cán bộ ĐVHD xác nhận hoàn thành kế hoạch thực tập.`
       + (laSv ? ' Trước khi có xác nhận, bạn vẫn nộp được phiên bản mới — bản cũ vẫn được lưu.' : '') };
@@ -256,7 +256,7 @@ export default function ReportPage({ recordId }: { recordId?: number }) {
             {buoc(!!moiNhat.xacNhanGvhd, !!moiNhat.xacNhanDvhd && !moiNhat.xacNhanGvhd, 2, 'GVHD xác nhận đủ điều kiện chấm',
               xacNhanCua(moiNhat.xacNhanGvhd, hoSo.gvhd?.hoTen))}
             {buoc(moiNhat.daDuXacNhan, false, 3, 'Hồ sơ chờ đánh giá cuối kỳ',
-              'Mở điều kiện chấm chặng 2 (Đ10 k2)')}
+              'Mở điều kiện chấm chặng 2 (Điều 10 khoản 2)')}
           </ol>
 
           {(canBoXacNhanDuoc || gvhdXacNhanDuoc || moLaiDuoc) && (
@@ -380,7 +380,7 @@ export default function ReportPage({ recordId }: { recordId?: number }) {
           <>
             <p>
               Phiên bản {moiNhat.phienBan} <b>mất cả hai xác nhận</b>; sinh viên nộp phiên bản mới rồi cán bộ ĐVHD và GVHD xác nhận
-              lại (BR-11.4). Thao tác được ghi nhật ký, sinh viên nhận thông báo.
+              lại. Thao tác được ghi nhật ký, sinh viên nhận thông báo.
             </p>
             {hoSo.trangThai === 'CHO_DANH_GIA' && (
               <p className="text-vang">

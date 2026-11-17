@@ -84,7 +84,7 @@ export default function PanelListPage() {
                 return (
                   <tr key={t.id} tabIndex={0} onClick={() => navigate(`/panels/${t.id}`)}
                       onKeyDown={(e) => e.key === 'Enter' && navigate(`/panels/${t.id}`)}>
-                    <td className="nowrap"><b>Tổ #{t.id}</b></td>
+                    <td className="nowrap"><b>Tổ {t.id}</b></td>
                     <td className="nowrap">{ngayGio(t.thoiGianBaoCao)}</td>
                     <td>{t.diaDiem ?? '—'} · {NHAN_HINH_THUC_LAM_VIEC[t.hinhThuc ?? 'TRUC_TIEP']}</td>
                     <td>
@@ -98,7 +98,7 @@ export default function PanelListPage() {
                     <td>
                       {t.canhBao?.length
                         ? <span className="badge badge-do" title={t.canhBao.join('\n')}>Chưa đạt ({t.canhBao.length})</span>
-                        : <span className="badge badge-xanh-la">Đạt CBR-14</span>}
+                        : <span className="badge badge-xanh-la">Thành phần đạt</span>}
                     </td>
                   </tr>
                 );

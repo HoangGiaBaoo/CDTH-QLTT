@@ -108,7 +108,7 @@ export default function EvidenceUploadForm({ hoSoId, dot, loai, loaiChon, onDoiL
                onChange={(e) => chonTep(e.target.files?.[0] ?? null)} />
         {tep && !loiTep && <small className="muted">{tep.name} · {dungLuong(tep.size)}</small>}
         {loiTep && <small className="field-error" role="alert">{loiTep}</small>}
-        <small className="muted">Tối đa 20 MB; pdf, doc, docx, xls, xlsx, jpg, png, mp4 (CBR-24).</small>
+        <small className="muted">Tối đa 20 MB; pdf, doc, docx, xls, xlsx, jpg, png, mp4.</small>
       </label>
       {dangTai && (
         <div className="tai-len-tien-do mt" role="status">

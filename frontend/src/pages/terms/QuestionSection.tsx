@@ -56,7 +56,7 @@ export default function QuestionSection({ chang, clos }: { chang: Chang[]; clos:
                       <td className="small">
                         {soChang === 0 && <span className="text-do">Chưa được đánh giá ở chặng nào — không tính được điểm</span>}
                         {soChang === 1 && chang.length > 1 && (
-                          <span className="text-vang">Chỉ ở 1 chặng — trọng số chặng được chuẩn hóa (CBR-23)</span>
+                          <span className="text-vang">Chỉ ở 1 chặng — trọng số chặng được chuẩn hóa</span>
                         )}
                       </td>
                     </tr>

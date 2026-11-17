@@ -161,7 +161,7 @@ export default function ResultDetailPage() {
       <ErrorAlert error={loi} />
       {loiCauHinh && (
         <p className="hint">
-          Sửa bộ câu hỏi để mọi CLO được đánh giá ở ít nhất một chặng: <Link to={`/terms/${hoSo.dot.id}`}>cấu hình đợt {hoSo.dot.maDot} (SCR-10)</Link>.
+          Sửa bộ câu hỏi để mọi CLO được đánh giá ở ít nhất một chặng: <Link to={`/terms/${hoSo.dot.id}`}>cấu hình đợt {hoSo.dot.maDot}</Link>.
         </p>
       )}
       {bang.chuaTinhDuoc && (
@@ -177,8 +177,8 @@ export default function ResultDetailPage() {
       )}
       {laAdmin && trangThai === 'DA_XAC_NHAN' && (
         <p className="hint">
-          Kết quả đã xác nhận, minh chứng của hồ sơ đã khóa (CBR-22). Muốn thay đổi điểm cần mở lại phiếu liên quan ở{' '}
-          <Link to="/assessments">Giám sát phiếu chấm</Link> (CBR-12) — kết quả sẽ được tính lại.
+          Kết quả đã xác nhận, minh chứng của hồ sơ đã khóa. Muốn thay đổi điểm cần mở lại phiếu liên quan ở{' '}
+          <Link to="/assessments">Giám sát phiếu chấm</Link> — kết quả sẽ được tính lại.
         </p>
       )}
 
@@ -279,7 +279,7 @@ export default function ResultDetailPage() {
         <h2 className="section-title mt0">VI. Xác nhận và lưu trữ</h2>
         <div className="info-grid">
           <div><span className="muted">Ngày tính điểm</span>{ngayGio(bang.ngayTinh)}</div>
-          <div><span className="muted">Bộ trọng số đã dùng (CBR-22)</span>{bang.phienBanTrongSo ?? '—'}</div>
+          <div><span className="muted">Bộ trọng số đã dùng</span>{bang.phienBanTrongSo ?? '—'}</div>
           <div><span className="muted">Mã hồ sơ</span>{tt.hoSoId}</div>
         </div>
       </div>
@@ -299,7 +299,7 @@ export default function ResultDetailPage() {
         </label>
         <p className="hint">
           GVHD đề xuất {diem(bang.diemThuong)}. Đổi mức thì hệ thống tính lại điểm học phần trước khi xác nhận.
-          Sau khi xác nhận, minh chứng của hồ sơ bị khóa (CBR-22); muốn sửa điểm phải mở lại phiếu (CBR-12).
+          Sau khi xác nhận, minh chứng của hồ sơ bị khóa; muốn sửa điểm phải mở lại phiếu.
         </p>
       </ConfirmDialog>
 
@@ -314,7 +314,7 @@ export default function ResultDetailPage() {
       >
         <p>
           Hồ sơ của <b>{tt.hoTen}</b> chuyển <b>{bang.ketLuan === 'DAT' ? 'Hoàn thành' : 'Không hoàn thành'}</b>. Sinh viên nhận
-          thông báo NT-14 và xem được kết quả sau khi gửi phiếu TTTN-08b (BR-12.5). Không hoàn tác được.
+          thông báo và xem được kết quả sau khi gửi phiếu TTTN-08b. Không hoàn tác được.
         </p>
       </ConfirmDialog>
     </div>
