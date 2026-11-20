@@ -29,6 +29,8 @@ import ResultEntryPage from './pages/results/ResultEntryPage';
 import ResultListPage from './pages/results/ResultListPage';
 import StatisticsPage from './pages/statistics/StatisticsPage';
 import TermDetailPage from './pages/terms/TermDetailPage';
+import HostOrgDetailPage from './pages/hostOrgs/HostOrgDetailPage';
+import HostOrgListPage from './pages/hostOrgs/HostOrgListPage';
 import TermListPage from './pages/terms/TermListPage';
 import type { VaiTro } from './types/auth';
 
@@ -39,6 +41,7 @@ import type { VaiTro } from './types/auth';
 const TRANG: Record<string, ReactElement> = {
   '/': <HomePage />,
   '/terms': <TermListPage />,
+  '/host-orgs': <HostOrgListPage />,
   '/assessments': <AssessmentListPage />,
   '/panels': <PanelListPage />,
   '/records': <RecordListPage />,
@@ -70,6 +73,7 @@ const MAN_THEO_DOI_HO_SO: [string, string, ReactElement?][] = [
 /** Trang con không hiện trên menu (chi tiết một bản ghi…) — tự khai báo quyền, thường trùng mục menu cha. */
 const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
   { path: '/terms/:termId', roles: ['ADMIN'], element: <TermDetailPage /> },
+  { path: '/host-orgs/:orgId', roles: ['ADMIN'], element: <HostOrgDetailPage /> },
   { path: '/assessments/form', roles: ['GIANG_VIEN', 'CAN_BO_DVHD'], element: <GradingPage /> },
   { path: '/panels/new', roles: ['ADMIN'], element: <PanelCreatePage /> },
   // Đích của NT-11 — sinh viên cũng nhận thông báo nên được xem tổ của mình (#78).

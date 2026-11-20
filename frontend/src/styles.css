@@ -713,3 +713,31 @@ b, strong { font-weight: 600; }
   .ph-dong { grid-template-columns: 1fr; gap: 8px; }
   .ph-noi-dung, .ph-ghi-chu, .ph-muc-xem { padding-top: 0; }
 }
+
+/* ---------- Đơn vị hướng dẫn SCR-07/08 ---------- */
+.dv-tim { min-width: 260px; }
+.dv-ten { font-weight: 500; color: var(--chu-tieu-de); }
+.dv-nhan-cb, .dv-nhan-hm { display: none; }
+.dv-quyet-dinh { display: flex; gap: 8px; flex-wrap: wrap; }
+.dv-xoa { display: flex; justify-content: flex-end; }
+.dv-mat-khau { background: var(--the); border: 1px solid var(--vien); max-width: 560px; }
+.dv-mat-khau code, .dv-cb code {
+  font-family: Consolas, 'Courier New', monospace; font-size: 14px; background: var(--nen-nhat); padding: 1px 6px; border-radius: 4px;
+}
+/* Màn hẹp: hai bảng xếp thành thẻ — dòng đầu là mã/họ tên + trạng thái, các ô còn lại xuống dòng. */
+@media (max-width: 640px) {
+  .dv-bang, .dv-bang tbody, .dv-cb, .dv-cb tbody { display: block; }
+  .dv-bang thead, .dv-cb thead { display: none; }
+  .dv-bang tr, .dv-cb tr {
+    display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 10px 12px; border-bottom: 1px solid var(--vien);
+  }
+  .dv-bang tbody tr:last-child, .dv-cb tbody tr:last-child { border-bottom: 0; }
+  .dv-bang td, .dv-cb td { border: 0; padding: 0; grid-column: 1 / -1; text-align: left; }
+  .dv-bang td:first-child, .dv-cb td:first-child { grid-column: 1; }
+  .dv-bang .dv-tt, .dv-cb td:nth-child(6) { grid-column: 2; grid-row: 1; }
+  .table .dv-so-cb, .dv-cb .num, .dv-cb .actions { text-align: left; }
+  .dv-nhan-cb, .dv-nhan-hm { display: inline; }
+  .dv-cb td:nth-child(2):not(:empty)::before { content: 'Tên đăng nhập: '; color: var(--chu-phu); }
+  .dv-cb td:nth-child(4)::before { content: 'Kinh nghiệm: '; color: var(--chu-phu); }
+  .dv-cb td:nth-child(5)::before { content: 'Đang hướng dẫn: '; color: var(--chu-phu); }
+}
