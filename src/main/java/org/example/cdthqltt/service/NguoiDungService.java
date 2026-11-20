@@ -117,6 +117,16 @@ public class NguoiDungService {
                 throw new BusinessException(ErrorCode.RESOURCE_IN_USE, "Người dùng đang hướng dẫn " + dangHuongDan
                         + " sinh viên trong đợt đang chạy; cần đổi người hướng dẫn trước khi vô hiệu hóa");
             }
+        } else if (n.getVaiTro() == VaiTro.CAN_BO_DVHD) {
+            // Quyết định 10.12: tài khoản cán bộ chỉ mở khi đơn vị được duyệt — kích hoạt sớm ở đây thì lúc duyệt (#21)
+            // không còn cấp mật khẩu ban đầu nữa. Đơn vị đã loại vẫn cho mở lại: hồ sơ đang chạy giữ hiệu lực (UC02 5b).
+            canBoRepo.findByNguoiDungId(n.getId())
+                    .map(cb -> cb.getDonVi().getTrangThaiPheDuyet())
+                    .filter(tt -> tt == TrangThaiPheDuyet.CHO_DUYET || tt == TrangThaiPheDuyet.TU_CHOI)
+                    .ifPresent(tt -> {
+                        throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
+                                "Đơn vị hướng dẫn của cán bộ chưa được phê duyệt; tài khoản sẽ được kích hoạt khi đơn vị được phê duyệt");
+                    });
         }
         TrangThaiTaiKhoan cu = n.getTrangThai();
         n.setTrangThai(trangThaiMoi);
