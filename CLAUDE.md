@@ -15,6 +15,7 @@ Stack: Spring Boot 4.1.1 · Java 21 · MySQL 8 · Flyway · Spring Security JWT 
 | `docs/03-csdl.md` | 28 bảng (sinh từ Excel, không sửa tay) |
 | `docs/04-ke-hoach.md` | Phân công 2 người, hợp đồng hàm, lịch 6 tuần, thứ tự cắt |
 | `docs/05-trien-khai.md` | CI/CD, VPS, vận hành bản chạy thật http://221.121.0.89 |
+| `docs/06-kich-ban-demo.md` | Kịch bản demo 12 bước theo từng cú bấm, tài khoản seed, câu hỏi thử trực tiếp |
 | `docs/TIEN-DO.md` | Tiến độ hiện tại, việc tiếp theo |
 
 Tài liệu gốc (docx, pdf, xlsx) ở `docs/tai-lieu-goc/`; khi bản tóm tắt mâu thuẫn tài liệu gốc thì tài liệu gốc thắng.
