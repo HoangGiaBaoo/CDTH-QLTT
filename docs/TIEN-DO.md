@@ -4,11 +4,11 @@
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
 **Cập nhật 20/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Màn FE đã xong**: A — SCR-06, 09/10, 18/20, 19, 21, 24, 25, chuông thông báo · B — SCR-07/08,
-11…17, 22, 23. **Luồng demo 12 bước đi được trọn trên giao diện** — kịch bản từng cú bấm: `docs/06-kich-ban-demo.md`.
-Chỉ còn SCR-03 (Tài khoản, A) là trang giữ chỗ — demo không cần. Giao diện theo tông cổng sinh viên HUCE, không có mã
-nội bộ trong chữ hiển thị (skill `giao-dien-react`). **CI/CD + VPS** (`docs/05-trien-khai.md`): mỗi push `main` tự test
-rồi triển khai lên http://221.121.0.89. Còn lại: SCR-03, docs mục 10, Postman.
+CSDL dev ở V1–V4. **Đủ mọi màn FE** (không còn trang giữ chỗ): A — SCR-03, 06, 09/10, 18/20, 19, 21, 24, 25, chuông
+thông báo · B — SCR-07/08, 11…17, 22, 23. **Luồng demo 12 bước đi được trọn trên giao diện** — kịch bản từng cú bấm:
+`docs/06-kich-ban-demo.md`. Giao diện theo tông cổng sinh viên HUCE, không có mã nội bộ trong chữ hiển thị (skill
+`giao-dien-react`). **CI/CD + VPS** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển khai lên
+http://221.121.0.89. Còn lại: tập kịch bản demo trên CSDL sạch, docs mục 10, Postman, tag mốc.
 
 ## Bảng 6 tuần
 
@@ -18,18 +18,17 @@ rồi triển khai lên http://221.121.0.89. Còn lại: SCR-03, docs mục 10, 
 | 2 | `t2-dang-ky-den-thuc-tap` | ✅ | ✅ |
 | 3 | `t3-cham-chang-1` | ✅ | ✅ |
 | 4 | `t4-luong-day-du` | ✅ | ✅ |
-| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · 🔶 FE (SCR-06 ✅ · SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅ · chuông ✅ · SCR-03 ⬜) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ✅ FE (SCR-07/08 ✅ · SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅ · SCR-17 ✅ · SCR-22 ✅ · SCR-23 ✅) |
+| 5 | `t5-thong-ke` | ✅ backend (UC13 RP-01…06 + Excel) · ✅ FE (SCR-03 ✅ · SCR-06 ✅ · SCR-09/10 ✅ · SCR-18/20 ✅ · SCR-19 ✅ · SCR-21 ✅ · SCR-24 ✅ · SCR-25 ✅ · chuông ✅) | ✅ seed V4 · ✅ khung FE · ⬜ Postman · ✅ FE (SCR-07/08 ✅ · SCR-11 ✅ · SCR-12 ✅ · SCR-13 ✅ · SCR-14 ✅ · SCR-15 ✅ · SCR-16 ✅ · SCR-17 ✅ · SCR-22 ✅ · SCR-23 ✅) |
 | 6 | `t6-ban-demo` | ⬜ | ⬜ |
 
 Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **Trước demo** — đi một lượt `docs/06-kich-ban-demo.md` trên máy demo; `docker compose down -v` để CSDL dev sạch
-   (Flyway nạp lại V1–V4). Mọi thao tác thử trên CSDL dev đều làm bẩn kịch bản demo.
-   **A — SCR-03** (Tài khoản: mở rộng `api/users.ts`, #5–#16) nếu còn thời gian. Mỗi màn: icon `lucide-react` trong
-   `menu.ts`, chữ hiển thị không có mã nội bộ, thử cả 390px; đổi CSS/chữ dùng chung thì chạy lại bộ hồi quy
-   (`chay-hoi-quy.sh`, xem memory Claude).
+1. **Trước demo** — bật Docker Desktop, `docker compose down -v` rồi `up -d` để CSDL dev sạch (Flyway nạp lại V1–V4),
+   đi trọn một lượt `docs/06-kich-ban-demo.md` liền mạch, rồi `down -v` lần nữa trước giờ demo (bước 1 tạo đợt
+   `TTTN-2027-HK1` nên tập xong là CSDL bẩn). Đổi CSS/chữ dùng chung thì chạy lại bộ hồi quy (`chay-hoi-quy.sh`, xem
+   memory Claude).
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
@@ -78,7 +77,8 @@ thưởng 0,2 ⇒ 7,9). Mọi RP-01…RP-06 khớp dữ liệu; vai trò khác A
 
 ## Quyết định cần ghi vào `docs/01-nghiep-vu.md` mục 10
 
-- **10.12** Tài khoản cán bộ ĐVHD tạo ở trạng thái `VO_HIEU_HOA`, chỉ kích hoạt khi ĐVHD được duyệt.
+- **10.12** Tài khoản cán bộ ĐVHD tạo ở trạng thái `VO_HIEU_HOA`, chỉ kích hoạt khi ĐVHD được duyệt; giáo vụ không
+  kích hoạt tay (#9) được tài khoản cán bộ của đơn vị Chờ duyệt / Từ chối.
 - **10.13** Sửa α một CLO (#34) phải gửi kèm `dieuChinhAlphaKhac` (đổi α các CLO khác trong cùng lần lưu); hệ thống
   kiểm Σα = 100 sau khi áp tất cả (CBR-07).
 - **10.14** Thiếu minh chứng **không chặn** tính điểm ⇒ kết quả `KHONG_DAT` lý do (d). Khi xác nhận (#86) nếu minh
@@ -499,6 +499,26 @@ chặn; duyệt Bình Minh ⇒ `cb.phuong` đăng nhập được bằng mật k
 xác nhận ⇒ giáo vụ chuông 2, mục mới ở đầu "Vừa xong"; sai mật khẩu hiện tại / không khớp / yếu ⇒ báo, ở lại trang; đổi
 được ⇒ token cũ 401, đăng nhập bằng mật khẩu mới.
 
+### SCR-03 Tài khoản (A, 20/11/2026)
+
+`pages/users/`: `UserListPage` (`/users`, #5 — lọc vai trò / trạng thái / tìm theo họ tên, tên đăng nhập, email; 15 dòng
+một trang; bộ lọc + trang giữ trong URL `?vaiTro=&trangThai=&q=&trang=`, mở chi tiết mang theo để nút quay lại về đúng
+chỗ; cột Hồ sơ tóm tắt mã SV · lớp · chương trình / mã GV · bộ môn / đơn vị · chức vụ), `UserCreateForm` (#7 — vai trò
+quyết định khối hồ sơ; cán bộ chỉ chọn đơn vị đã duyệt; bỏ trống mật khẩu ⇒ hệ thống sinh; lỗi `sinhVien.maSv`… gắn dưới
+ô), `UserDetailPage` (`/users/:userId`, #6 — sửa thông tin #8, hồ sơ SV #13 (chương trình đào tạo đổi ngưỡng CLO1,
+CLO2), hồ sơ GV #16 (hạn mức), cán bộ chỉ xem + "Mở đơn vị"; Vô hiệu hóa / Kích hoạt #9 có hỏi lại — tài khoản đang đăng
+nhập không có nút Vô hiệu hóa; Đặt lại mật khẩu #10), `MatKhauMotLan` (mật khẩu ban đầu / đặt lại chỉ hiện một lần).
+`api/users.ts` thêm #6–#10, #13, #16; `types/user.ts`.
+**Sửa backend UC01** `NguoiDungService.doiTrangThai`: kích hoạt tay tài khoản cán bộ của đơn vị Chờ duyệt / Từ chối ⇒
+BUSINESS_RULE_VIOLATION (quyết định 10.12) — trước đây kích hoạt được, và khi duyệt đơn vị (#21) tài khoản đã Hoạt động
+nên không còn cấp mật khẩu ban đầu ⇒ hỏng bước demo 2. Đơn vị đã loại vẫn mở lại được (hồ sơ đang chạy giữ hiệu lực).
+Đã thử 41/41 ca trên CSDL tạm (`ui-test/test-users.mjs`): 34 tài khoản / 3 trang; lọc Giảng viên ghi vào URL, mở chi
+tiết rồi quay lại vẫn lọc, tải lại trang 2 vẫn trang 2; tạo trống ⇒ lỗi dưới ô (cả mã SV lồng); trùng `sv.an` ⇒ báo
+trùng, form giữ; tạo SV ⇒ mật khẩu 10 ký tự đăng nhập được; GV hạn mức 12 ⇒ "Hạn mức sinh viên từ 5 đến 10"; cán bộ 2
+năm ⇒ Điều 7; sửa thông tin, hồ sơ SV (Chuẩn), hồ sơ GV (hạn mức 6, TS.); đặt lại ⇒ mật khẩu cũ 401; vô hiệu hóa ⇒
+không đăng nhập được, kích hoạt lại được; gv.hoa đang hướng dẫn 4 SV ⇒ chặn; cb.phuong ⇒ chặn kích hoạt, khung vàng, sau
+đó duyệt Bình Minh vẫn cấp mật khẩu; giáo vụ không tự vô hiệu hóa được; GV mở `/users` ⇒ 403; 390px không tràn.
+
 ## CI/CD + triển khai VPS (A, 14–15/11/2026)
 
 Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã làm:
@@ -540,11 +560,13 @@ Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã
 `PlaceholderPage`, đầu `styles.css` (biến màu mới); gói `lucide-react@0.468.0`; bỏ mã nội bộ khỏi chữ ở mọi màn của A và B
 và khỏi `message` của các service backend (`KetQuaService`, `PhieuDanhGiaService`, `ScoringService`, `ThongKeService`…).
 Đợt 20/11: `AppLayout` gắn chuông; `LoginPage` thêm thông báo `?doiMatKhau=1`; `styles.css` ≤ 640px cắt tên hệ thống
-bằng "…" để chừa chỗ chuông; `api/hostOrgs.ts`, `types/hostOrg.ts` mở rộng #20–#25.
+bằng "…" để chừa chỗ chuông; `api/hostOrgs.ts`, `types/hostOrg.ts` mở rộng #20–#25. SCR-03: `App.tsx` (route `/users`, `/users/:userId`), cuối
+`styles.css` khối `.tk-*`, `api/users.ts` (#6–#10, #13, #16), `types/user.ts`.
 Backend UC02: đặc tả ghi đề xuất ĐVHD mới "thông báo giáo vụ" nhưng #19 chưa gửi (15 mã NT chưa có mã cho việc này).
 
 ## Môi trường thử hiện tại
 
 CSDL dev đã `down -v` ngày 10/11/2026 và nạp lại sạch V1–V4 (chỉ thêm dữ liệu của `mvnw test`, không thao tác API).
-Hồi quy toàn bộ 20/11/2026 (sau SCR-07/08, chuông, SCR-06): 16 kịch bản, 644 ca, 0 lỗi. Không có tiến trình thử nào đang
-chạy; container tạm `qltt-mysql-uitest` đã xóa.
+Hồi quy toàn bộ 20/11/2026 (sau SCR-07/08, chuông, SCR-06): 16 kịch bản, 644 ca, 0 lỗi. SCR-03 (20/11): 41/41 ca; chỉ
+thêm khối CSS `.tk-*` và route riêng nên không chạy lại hồi quy. Không có tiến trình thử nào đang chạy; container tạm
+`qltt-mysql-uitest` đã xóa.

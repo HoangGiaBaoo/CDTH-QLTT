@@ -107,8 +107,11 @@ nhưng **không thấy điểm** của cán bộ. Chọn mức/điểm, nhận x
 | "Đổi mật khẩu thì token cũ còn dùng được không?" | **Hồ sơ cá nhân** → đổi mật khẩu ⇒ bị đăng xuất, token cũ trả 401 |
 | "Sai mật khẩu nhiều lần?" | Sai 5 lần ⇒ khóa 15 phút, thông báo không nói rõ sai tên hay sai mật khẩu |
 | "Điểm có làm tròn đúng không?" | `.\mvnw.cmd test -Dtest=ScoringServiceTest` — 12+ ca tính tay, chạy < 1 giây |
+| "Xóa giảng viên đang hướng dẫn?" | `giaovu` → **Tài khoản** → *Đỗ Thu Hoà* → **Vô hiệu hóa** ⇒ bị chặn (đang hướng dẫn 4 sinh viên); hệ thống không xóa tài khoản, chỉ vô hiệu hóa |
 
-## Còn chưa có giao diện
+## Màn Tài khoản (nếu bị hỏi)
 
-**Tài khoản** (giáo vụ quản lý người dùng) vẫn là trang "đang xây dựng" — API đã có đủ (#5–#16), demo không cần.
-Nếu bị hỏi: tài khoản cán bộ sinh qua phê duyệt ĐVHD (bước 2); sinh viên, giảng viên nạp từ seed / API.
+`giaovu` → **Tài khoản**: tạo sinh viên / giảng viên / cán bộ kèm hồ sơ trong một giao dịch, mật khẩu ban đầu chỉ hiện
+một lần; đổi chương trình đào tạo của sinh viên (quyết định ngưỡng đạt CLO1, CLO2); đặt lại mật khẩu; vô hiệu hóa.
+Tài khoản cán bộ của đơn vị chưa duyệt (`cb.phuong`) không kích hoạt tay được — chỉ kích hoạt qua phê duyệt đơn vị
+(bước 2). Không tạo / sửa tài khoản trên CSDL demo trước buổi demo nếu không định `down -v` lại.
