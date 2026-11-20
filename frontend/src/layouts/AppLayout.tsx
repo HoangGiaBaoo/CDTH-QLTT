@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LogOut, Menu } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
 import Brand from '../components/Brand';
+import NotificationBell from '../components/NotificationBell';
 import { MENU, menuCua, nhanMenu } from '../menu';
 import { NHAN_VAI_TRO } from '../utils/constants';
 
@@ -40,7 +41,7 @@ export default function AppLayout() {
         <button className="menu-toggle" onClick={() => setMoMenu((x) => !x)} aria-label="Mở menu"><Menu size={22} /></button>
         <Link to="/" className="topbar-brand"><Brand /></Link>
         <div className="topbar-spacer" />
-        {/* Chuông thông báo (#100–#101) — người A gắn vào đây. */}
+        <NotificationBell />
         <div className="topbar-user">
           <span className="topbar-avatar" aria-hidden="true">{chuCaiDau(nguoiDung.hoTen)}</span>
           <div>
