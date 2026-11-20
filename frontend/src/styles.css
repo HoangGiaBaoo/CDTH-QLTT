@@ -804,3 +804,30 @@ b, strong { font-weight: 600; }
 .hs-luoi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .hs-o { display: flex; flex-direction: column; gap: 14px; }
 @media (max-width: 860px) { .hs-luoi { grid-template-columns: 1fr; } }
+
+/* ---------- Tài khoản SCR-03 ---------- */
+.tk-tim { min-width: 280px; }
+.tk-ten { font-weight: 500; color: var(--chu-tieu-de); }
+.tk-nut { display: flex; gap: 8px; flex-wrap: wrap; }
+.tk-nhom { font-size: 15px; font-weight: 600; color: var(--chu-tieu-de); margin: 20px 0 10px; padding-top: 14px; border-top: 1px solid var(--vien); }
+.tk-trang { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+.tk-trang-nut { display: flex; gap: 6px; }
+.tk-mat-khau dl { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 10px 0; }
+.tk-mat-khau dl div { display: flex; gap: 8px; align-items: center; }
+.tk-mat-khau dt { color: var(--chu-phu); }
+.tk-mat-khau dd { margin: 0; }
+.tk-mat-khau code {
+  font-family: Consolas, 'Courier New', monospace; font-size: 15px; background: var(--the); padding: 2px 8px; border-radius: 4px;
+  border: 1px solid var(--vien); color: var(--chu-tieu-de);
+}
+/* Màn hẹp: bảng tài khoản xếp thành thẻ — họ tên + trạng thái ở dòng đầu. */
+@media (max-width: 640px) {
+  .tk-bang, .tk-bang tbody { display: block; }
+  .tk-bang thead { display: none; }
+  .tk-bang tr { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 10px 12px; border-bottom: 1px solid var(--vien); }
+  .tk-bang tbody tr:last-child { border-bottom: 0; }
+  .tk-bang td { border: 0; padding: 0; grid-column: 1 / -1; }
+  .tk-bang td:first-child { grid-column: 1; }
+  .tk-bang .tk-tt { grid-column: 2; grid-row: 1; }
+  .tk-tim { min-width: 0; width: 100%; }
+}

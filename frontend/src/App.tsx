@@ -32,6 +32,8 @@ import TermDetailPage from './pages/terms/TermDetailPage';
 import HostOrgDetailPage from './pages/hostOrgs/HostOrgDetailPage';
 import HostOrgListPage from './pages/hostOrgs/HostOrgListPage';
 import ProfilePage from './pages/profile/ProfilePage';
+import UserDetailPage from './pages/users/UserDetailPage';
+import UserListPage from './pages/users/UserListPage';
 import TermListPage from './pages/terms/TermListPage';
 import type { VaiTro } from './types/auth';
 
@@ -43,6 +45,7 @@ const TRANG: Record<string, ReactElement> = {
   '/': <HomePage />,
   '/terms': <TermListPage />,
   '/host-orgs': <HostOrgListPage />,
+  '/users': <UserListPage />,
   '/assessments': <AssessmentListPage />,
   '/panels': <PanelListPage />,
   '/records': <RecordListPage />,
@@ -76,6 +79,7 @@ const MAN_THEO_DOI_HO_SO: [string, string, ReactElement?][] = [
 const TRANG_CON: { path: string; roles: VaiTro[]; element: ReactElement }[] = [
   { path: '/terms/:termId', roles: ['ADMIN'], element: <TermDetailPage /> },
   { path: '/host-orgs/:orgId', roles: ['ADMIN'], element: <HostOrgDetailPage /> },
+  { path: '/users/:userId', roles: ['ADMIN'], element: <UserDetailPage /> },
   { path: '/assessments/form', roles: ['GIANG_VIEN', 'CAN_BO_DVHD'], element: <GradingPage /> },
   { path: '/panels/new', roles: ['ADMIN'], element: <PanelCreatePage /> },
   // Đích của NT-11 — sinh viên cũng nhận thông báo nên được xem tổ của mình (#78).
