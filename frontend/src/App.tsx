@@ -31,6 +31,7 @@ import StatisticsPage from './pages/statistics/StatisticsPage';
 import TermDetailPage from './pages/terms/TermDetailPage';
 import HostOrgDetailPage from './pages/hostOrgs/HostOrgDetailPage';
 import HostOrgListPage from './pages/hostOrgs/HostOrgListPage';
+import ProfilePage from './pages/profile/ProfilePage';
 import TermListPage from './pages/terms/TermListPage';
 import type { VaiTro } from './types/auth';
 
@@ -56,6 +57,7 @@ const TRANG: Record<string, ReactElement> = {
   '/my-record/feedback': <FeedbackPage />,
   '/my-result': <MyResultPage />,
   '/statistics': <StatisticsPage />,
+  '/profile': <ProfilePage />,
 };
 
 /**

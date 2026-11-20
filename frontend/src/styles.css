@@ -799,3 +799,8 @@ b, strong { font-weight: 600; }
   .tb-bang { position: fixed; top: 64px; left: 8px; right: 8px; width: auto; max-height: calc(100vh - 80px); }
   .tb-nut { width: 36px; height: 36px; }
 }
+
+/* ---------- Hồ sơ cá nhân SCR-06 ---------- */
+.hs-luoi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.hs-o { display: flex; flex-direction: column; gap: 14px; }
+@media (max-width: 860px) { .hs-luoi { grid-template-columns: 1fr; } }

@@ -50,6 +50,9 @@ export default function LoginPage() {
         {params.get('hetPhien') && !loi && (
           <div className="alert alert-vang">Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại.</div>
         )}
+        {params.get('doiMatKhau') && !loi && (
+          <div className="alert alert-xanh">Đã đổi mật khẩu, vui lòng đăng nhập lại bằng mật khẩu mới.</div>
+        )}
         <ErrorAlert error={loi} />
         <label className="field">
           <span>Tên đăng nhập</span>
