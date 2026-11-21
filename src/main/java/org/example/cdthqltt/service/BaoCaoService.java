@@ -134,7 +134,9 @@ public class BaoCaoService {
             hoSoService.chuyenTrangThai(h, TrangThaiHoSo.CHO_DANH_GIA, "Báo cáo TTTN-06 đủ hai xác nhận");
             List<Long> nguoiNhan = new ArrayList<>();
             nguoiNhan.add(h.getSinhVien().getNguoiDung().getId());
-            thanhVienRepo.theoHoSo(h.getId()).forEach(tv -> nguoiNhan.add(tv.getNguoiDung().getId()));
+            // NT-12 tới người chấm chặng cuối của SV: giảng viên trong Tổ và cán bộ của chính SV.
+            thanhVienRepo.theoHoSo(h.getId()).stream().filter(tv -> ToDanhGiaService.chamHoSo(tv, h))
+                    .forEach(tv -> nguoiNhan.add(tv.getNguoiDung().getId()));
             thongBaoService.gui("NT-12", nguoiNhan, "Báo cáo của sinh viên " + h.getSinhVien().getNguoiDung().getHoTen()
                     + " đã đủ xác nhận; hồ sơ chờ đánh giá cuối kỳ", "/records/" + h.getId());
         }

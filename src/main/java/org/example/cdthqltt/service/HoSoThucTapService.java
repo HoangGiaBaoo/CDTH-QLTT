@@ -55,7 +55,7 @@ public class HoSoThucTapService {
 
     /**
      * Nạp hồ sơ và kiểm quyền sở hữu (lớp 2): ADMIN mọi hồ sơ · SV hồ sơ của mình · GV hồ sơ mình là GVHD ·
-     * cán bộ hồ sơ mình hướng dẫn · GV/cán bộ là thành viên Tổ đánh giá chứa hồ sơ (chặng 2).
+     * cán bộ hồ sơ mình hướng dẫn · GV là thành viên Tổ đánh giá chứa hồ sơ (chặng 2; cán bộ trong tổ chỉ chấm SV mình).
      * Không có quyền ⇒ ACCESS_DENIED và không tiết lộ hồ sơ có tồn tại hay không.
      */
     @Transactional(readOnly = true)
@@ -293,7 +293,8 @@ public class HoSoThucTapService {
             case ADMIN -> true;
             case SINH_VIEN -> h.getSinhVien().getId().equals(u.sinhVienId());
             case GIANG_VIEN -> phanCongRepo.existsByHoSoIdAndGiangVienId(h.getId(), u.giangVienId()) || laThanhVienTo(h, u);
-            case CAN_BO_DVHD -> (h.getCanBoDvhd() != null && h.getCanBoDvhd().getId().equals(u.canBoDvhdId())) || laThanhVienTo(h, u);
+            // Cán bộ chỉ SV mình hướng dẫn, kể cả khi ngồi chung Tổ với SV đơn vị khác (Tổ chỉ cho cán bộ chấm SV của mình).
+            case CAN_BO_DVHD -> h.getCanBoDvhd() != null && h.getCanBoDvhd().getId().equals(u.canBoDvhdId());
         };
     }
 
