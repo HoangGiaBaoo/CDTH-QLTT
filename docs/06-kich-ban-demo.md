@@ -15,7 +15,11 @@ mở đúng màn cần xử lý.
 | Backend | `.\mvnw.cmd spring-boot:run` — chờ dòng `Started CdthQlttApplication` |
 | Giao diện | `npm --prefix frontend run dev` → mở http://localhost:5173 |
 | Hoặc bản chạy thật | http://221.121.0.89 (xem `docs/05-trien-khai.md`; CSDL VPS đã có thao tác thử thì không còn sạch) |
-| Trình duyệt | Mỗi vai trò một cửa sổ ẩn danh riêng (giáo vụ, giảng viên, cán bộ, sinh viên) để khỏi đăng xuất / đăng nhập lại |
+| Trình duyệt | Mỗi vai trò một **phiên trình duyệt tách biệt**: Edge thường · Edge InPrivate · Chrome thường · Chrome ẩn danh (hoặc mỗi vai trò một hồ sơ/profile trình duyệt riêng), đăng nhập sẵn giáo vụ, giảng viên, cán bộ, sinh viên |
+
+**Không** mở hai cửa sổ ẩn danh của cùng một trình duyệt cho hai vai trò. Token lưu trong `localStorage`, mà mọi
+cửa sổ ẩn danh/InPrivate của một trình duyệt dùng chung một chỗ lưu ⇒ đăng nhập người thứ hai sẽ đè người thứ nhất,
+quay lại cửa sổ cũ bấm gì cũng chạy dưới tên người mới.
 
 Trang đăng nhập ở chế độ dev có nút điền nhanh 4 tài khoản mẫu.
 
