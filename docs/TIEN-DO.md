@@ -3,8 +3,9 @@
 > File này được hook đầu phiên đọc (4000 ký tự đầu) — **phần đầu giữ ngắn**. Chi tiết bàn giao ở cuối file.
 > Kế hoạch đầy đủ: `docs/04-ke-hoach.md`.
 
-**Cập nhật 20/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh; seed V4 đã kiểm chứng;
-CSDL dev ở V1–V4. **Đủ mọi màn FE** (không còn trang giữ chỗ): A — SCR-03, 06, 09/10, 18/20, 19, 21, 24, 25, chuông
+**Cập nhật 21/11/2026**: Backend xong cả 13 UC (#1–#102); `mvnw test` xanh; seed V4 đã kiểm chứng.
+**Tổ đánh giá chấm theo từng SV** (docs/01 mục 10.5): người chấm chặng 2 của SV = các GV của tổ + cán bộ của chính
+SV (TTTN-05 "3 bản mỗi SV"); cán bộ đơn vị khác không chấm/không xem; V5 sửa seed tổ 3 đợt HK2. **Đủ mọi màn FE** (không còn trang giữ chỗ): A — SCR-03, 06, 09/10, 18/20, 19, 21, 24, 25, chuông
 thông báo · B — SCR-07/08, 11…17, 22, 23. **Luồng demo 12 bước đi được trọn trên giao diện** — kịch bản từng cú bấm:
 `docs/06-kich-ban-demo.md`. Giao diện theo tông cổng sinh viên HUCE, không có mã nội bộ trong chữ hiển thị (skill
 `giao-dien-react`). **CI/CD + VPS** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển khai lên
@@ -25,7 +26,7 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Việc tiếp theo (theo thứ tự)
 
-1. **Trước demo** — bật Docker Desktop, `docker compose down -v` rồi `up -d` để CSDL dev sạch (Flyway nạp lại V1–V4),
+1. **Trước demo** — bật Docker Desktop, `docker compose down -v` rồi `up -d` để CSDL dev sạch (Flyway nạp lại V1–V5),
    đi trọn một lượt `docs/06-kich-ban-demo.md` liền mạch, rồi `down -v` lần nữa trước giờ demo (bước 1 tạo đợt
    `TTTN-2027-HK1` nên tập xong là CSDL bẩn). Đổi CSS/chữ dùng chung thì chạy lại bộ hồi quy (`chay-hoi-quy.sh`, xem
    memory Claude).
@@ -102,7 +103,7 @@ thưởng 0,2 ⇒ 7,9). Mọi RP-01…RP-06 khớp dữ liệu; vai trò khác A
 (Viện Thăng Long), `cb.phuong` (Bình Minh — ĐVHD `CHO_DUYET`, tài khoản `VO_HIEU_HOA`); SV K66 `sv.nam` … `sv.toan`;
 SV K67 `sv.mai`, `sv.nga`, `sv.phat`, `sv.quan`, `sv.thu`.
 
-**Đợt `TTTN-2025-HK2`** (02/03–26/04/2026, `DA_KET_THUC`, đã công bố) — 3 Tổ, 59 phiếu, 08a+08b đủ cả 10 hồ sơ:
+**Đợt `TTTN-2025-HK2`** (02/03–26/04/2026, `DA_KET_THUC`, đã công bố) — 3 Tổ, 51 phiếu (V5 bỏ 8 phiếu của tổ 3 theo luật chấm từng SV), 08a+08b đủ cả 10 hồ sơ. Tổ 3: gv.lan + gv.hoa (vắng) → gv.tung thay, cb.quang chấm Xuân/Thảo/Toàn, cb.duc chấm Vinh:
 
 | SV | Ca | CLO1…CLO7 | HP | Kết luận |
 |---|---|---|---|---|
@@ -112,8 +113,8 @@ SV K67 `sv.mai`, `sv.nga`, `sv.phat`, `sv.quan`, `sv.thu`.
 | sv.quyen | CLC/STEM, CLO2 = 5,0 Mức 1 | | 6,9 | Không đạt (b) |
 | sv.tai | Chuẩn, cùng CLO2 = 5,0 (đối chứng) | | 6,9 | Đạt |
 | sv.uyen | CLC/STEM giỏi | | 9,1 Mức 4 | Đạt |
-| sv.vinh | Nghiên cứu, thiếu Sản phẩm nghiên cứu | | 7,6 | Không đạt (d) |
-| sv.xuan | Tổ 3: gv.hoa vắng (phiếu 2,0 bị loại), gv.tung thay | | 7,1 | Đạt |
+| sv.vinh | Nghiên cứu, thiếu Sản phẩm nghiên cứu | | 7,7 | Không đạt (d) |
+| sv.xuan | Tổ 3: gv.hoa vắng (phiếu 2,0 bị loại), gv.tung thay | | 7,0 | Đạt |
 | sv.thao | HP Mức 1, vừa đủ | | 4,7 | Đạt |
 | sv.toan | HP < 4, CLO1/CLO2 Mức 0 | | 3,4 | Không đạt (b)+(c) |
 
@@ -544,7 +545,7 @@ Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã
    (`utils/taiTep.ts`), chọn đợt (`TermSelect`), thanh bước (`.stepper`). Đích thông báo mà SV và cán bộ cùng mở ⇒ trang
    "Entry" rẽ theo vai trò (`ResultEntryPage`, `RecordEntryPage`).
 3. `npx tsc --noEmit -p frontend` + `npm --prefix frontend run build`.
-4. Thử trên **CSDL tạm** (MySQL container `qltt-mysql-uitest` cổng 3307, DB `qltt_uitest`, Flyway tự nạp V1–V4) + backend
+4. Thử trên **CSDL tạm** (MySQL container `qltt-mysql-uitest` cổng 3307, DB `qltt_uitest`, Flyway tự nạp V1–V5) + backend
    cổng 8081 trỏ CSDL đó + Vite 5173 với `VITE_API_URL=http://localhost:8081/api`; trình duyệt Edge headless qua CDP.
    Bộ thử (driver `cdp.mjs`, `test-<màn>.mjs`, `moi-truong.sh`) để ngoài git, trên máy này — vị trí ghi trong memory của
    Claude. Mỗi lần chạy kịch bản cần CSDL vừa tạo lại (kịch bản tự sinh dữ liệu). Xong thì tắt hết, xóa container tạm.

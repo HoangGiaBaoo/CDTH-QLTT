@@ -11,7 +11,7 @@ mở đúng màn cần xử lý.
 
 | Việc | Lệnh / thao tác |
 |---|---|
-| CSDL sạch | `docker compose down -v` → `docker compose up -d` (Flyway nạp lại V1–V4 khi backend chạy) |
+| CSDL sạch | `docker compose down -v` → `docker compose up -d` (Flyway nạp lại V1–V5 khi backend chạy) |
 | Backend | `.\mvnw.cmd spring-boot:run` — chờ dòng `Started CdthQlttApplication` |
 | Giao diện | `npm --prefix frontend run dev` → mở http://localhost:5173 |
 | Hoặc bản chạy thật | http://221.121.0.89 (xem `docs/05-trien-khai.md`; CSDL VPS đã có thao tác thử thì không còn sạch) |
@@ -81,9 +81,16 @@ Thứ tự quan trọng (cb.yen chỉ nhận 1 sinh viên):
 nhưng **không thấy điểm** của cán bộ. Chọn mức/điểm, nhận xét chung → **Nộp phiếu** ⇒ giờ mới xem được phiếu cán bộ.
 - Nói: *chặn ở service chứ không chỉ ẩn ở giao diện — gõ thẳng id phiếu cũng bị 403.*
 
-### 9. Giáo vụ lập Tổ đánh giá — số thành viên phải lẻ
-`giaovu` → **Tổ đánh giá** → **+ Thành lập tổ** → chọn sinh viên (Hà Thúy Nga…) → thêm 4 thành viên ⇒ bị chặn
-(Điều 10 khoản 3a); bỏ một người còn 3 → **Thành lập**.
+### 9. Giáo vụ lập Tổ đánh giá — 2 thầy cô chấm cả nhóm, mỗi SV thêm cán bộ của mình
+`giaovu` → **Tổ đánh giá** → **+ Thành lập tổ** → tích *Hà Thúy Nga* (Sao Mai) và *Mai Đức Quân* (Hồng Hà) → **Thêm
+GVHD và cán bộ ĐVHD của SV đã chọn** ⇒ Đỗ Thu Hoà + Ngô Thanh Sơn + Đinh Văn Quang; bảng kiểm báo ✗ nhóm giảng viên
+mới 1 người → thêm giảng viên **Lê Quang Minh** ⇒ mọi dòng ✓.
+- Thử thêm **Phạm Hữu Tùng** ⇒ ✗ *"Mỗi sinh viên được 3 giảng viên của tổ và cán bộ của mình đánh giá: 4 người, phải
+  từ 3 và là số lẻ"* (Điều 10 khoản 3a) → bỏ Tùng → **Thành lập tổ**.
+- Nói: *mẫu TTTN-05 in 3 bản mỗi sinh viên — GVHD, ủy viên đánh giá, cán bộ hướng dẫn. Hai giảng viên chấm cả nhóm;
+  cán bộ Sao Mai chỉ chấm Nga, cán bộ Hồng Hà chỉ chấm Quân — không chấm sinh viên mình không hướng dẫn.*
+- Thử nhanh (tùy chọn): `cb.quang` → **Phiếu đánh giá** → chặng 2 ⇒ chỉ thấy Mai Đức Quân; gõ thẳng
+  `/records/<id của Nga>` ⇒ không có quyền.
 
 ### 10. Chặng 2 — cán bộ ĐVHD không chấm CLO7
 **Nên làm trước bước này:** `sv.an` → **Phản hồi 08b** → gửi phiếu (để kết quả ra *Đạt* ngay, không phải tính lại).

@@ -20,7 +20,8 @@ mỗi service tự viết một kiểu. Thiếu quyền ⇒ `ACCESS_DENIED`, **k
 - [ ] **SV chỉ xem kết quả khi đã công bố và đã gửi 08b** (BR-12.5).
 - [ ] **Thống kê phản hồi 08b không lộ danh tính** (RP-06).
 - [ ] **Mọi thay đổi ảnh hưởng điểm ghi nhật ký** (Đ14 k4c): nộp/mở lại phiếu, tính lại điểm (HP trước/sau), đổi GVHD, sửa trọng số, điểm thưởng, xác nhận/công bố.
-- [ ] Người chấm phải đúng là GVHD / cán bộ của SV (chặng 1) hoặc thành viên **không vắng mặt** của tổ chứa SV (chặng 2).
+- [ ] Người chấm phải đúng là GVHD / cán bộ của SV (chặng 1); chặng 2 là giảng viên **không vắng mặt** của tổ chứa SV
+  hoặc **cán bộ đã hướng dẫn chính SV đó** (thành viên tổ) — cán bộ đơn vị khác ngồi chung tổ không chấm, không xem SV đó.
 
 ## Xác thực
 

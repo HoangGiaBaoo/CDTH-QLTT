@@ -6,7 +6,7 @@
 ## Luồng CI/CD — `.github/workflows/ci-cd.yml`
 
 ```
-push main ─┬─ backend-test    ./mvnw test trên MySQL 8 thật (CdthQlttApplicationTests nạp Flyway V1–V4)
+push main ─┬─ backend-test    ./mvnw test trên MySQL 8 thật (CdthQlttApplicationTests nạp Flyway V1–V5)
            └─ frontend-build  npm ci + tsc + vite build
                     │ cả hai xanh
                     ▼
@@ -55,12 +55,12 @@ IMAGE_TAG=<mã commit cũ> docker compose up -d   # quay về bản cũ
 
 Chạy lại triển khai mà không cần commit: GitHub › Actions › CI/CD › *Run workflow*.
 
-**Làm sạch dữ liệu demo** (xóa CSDL + tệp tải lên, Flyway nạp lại V1–V4 khi backend khởi động):
+**Làm sạch dữ liệu demo** (xóa CSDL + tệp tải lên, Flyway nạp lại V1–V5 khi backend khởi động):
 `docker compose down -v && docker compose up -d`. Không đảo ngược được.
 
 ## Điều cần nhớ khi code tiếp
 
-- **Không sửa migration đã có (V1–V4…).** CSDL trên VPS sống lâu dài; sửa file cũ ⇒ Flyway báo sai checksum ⇒ backend
+- **Không sửa migration đã có (V1–V5…).** CSDL trên VPS sống lâu dài; sửa file cũ ⇒ Flyway báo sai checksum ⇒ backend
   trên VPS không khởi động. Đổi schema/seed luôn bằng `V5__…`, `V6__…`.
 - Push lên `main` là lên VPS sau khoảng 5–8 phút, backend gián đoạn khoảng 30–60 giây. Đang demo thì đừng push.
 - Thao tác trên http://221.121.0.89 làm thay đổi dữ liệu demo trên VPS (khác CSDL dev trên máy).

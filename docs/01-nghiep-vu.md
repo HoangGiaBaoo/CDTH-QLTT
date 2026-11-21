@@ -51,7 +51,7 @@ bản dữ liệu → dữ liệu nhập**.
 | CBR-11 | Mỗi người chấm **một phiếu / một SV / một chặng** | Đ10 | UNIQUE(ho_so_id, chang_id, nguoi_cham_id) |
 | CBR-12 | Phiếu đã nộp **bị khóa**; chỉ ADMIN mở lại, có lý do, ghi nhật ký điểm cũ | Đ14 k4c | UC08 |
 | CBR-13 | Chặng 1 mở **đầu tuần thứ 4**; chặng 2 mở **sau ngày kết thúc và đã nộp báo cáo** | Đ10 k2 | Scheduler + UC03 |
-| CBR-14 | Tổ đánh giá **≥ 3 người, số lẻ, có GVHD của SV, ≥ 1 thành viên ĐVHD** (xem 10.5) | Đ10 k3a | UC09 |
+| CBR-14 | Tổ đánh giá **≥ 3 người, số lẻ, có GVHD của SV, ≥ 1 thành viên ĐVHD** — xét **theo từng SV**: người chấm SV = các GV của tổ + cán bộ của chính SV (xem 10.5) | Đ10 k3a | UC09 |
 | CBR-15 | Chặng 2: điểm mỗi CLO = **trung bình trong từng nhóm người chấm** rồi mới áp tỷ lệ | Đ10 k3c | ScoringService |
 | CBR-16 | Không chốt điểm khi **thiếu minh chứng bắt buộc** | Đ4, Đ15 k3d | UC10 |
 | CBR-17 | Không chốt điểm khi một chặng **thiếu phiếu một bên** | Đ13 k3 | UC10 |
@@ -217,7 +217,7 @@ NT-13 phiếu bị mở lại · NT-14 kết quả công bố · NT-15 gia hạn
 | 10.2 | HP tính từ CLO đầy đủ hay CLO đã làm tròn? (có thể lệch 0,1 so với cộng tay trên TTTN-07) | Từ **CLO đầy đủ** (đúng câu "chỉ làm tròn ở bước cuối" trong báo cáo phân tích) |
 | 10.3 | Nhóm năng lực tính TB cộng hay TB có trọng số α? | **TB cộng** (TTTN-07 ghi "điểm trung bình nhóm") |
 | 10.4 | Điều kiện (c) HP ≥ Mức 1 có nâng lên Mức 2 cho CLC_STEM không? | **Không** — Đ15 k3c chỉ ghi Mức 1; chỉ (b) phân biệt chương trình |
-| 10.5 | Đ10 k3a đòi **2 giảng viên** (GVHD + 1 GV khác) + ≥1 ĐVHD; CBR-14 chỉ ghi "có GVHD" | Kiểm theo **Quy định**: nhóm GVHD ≥ 2 người, có GVHD của **từng** SV trong tổ, nhóm ĐVHD ≥ 1 người đã hướng dẫn SV đó |
+| 10.5 | Đ10 k3a đòi **2 giảng viên** (GVHD + 1 GV khác) + ≥1 ĐVHD; CBR-14 chỉ ghi "có GVHD". Tổ chấm một **nhóm** SV của nhiều đơn vị thì cán bộ đơn vị này có chấm SV đơn vị kia không? | Xét **theo từng SV**, khớp bảng hướng dẫn in ký của NCM CNPM (TTTN-05 *3 bản: GVHD, ủy viên đánh giá, CBHD tại ĐVHD*) và thực tế buổi bảo vệ (2 thầy cô chấm cả nhóm, mỗi SV mang phiếu của cán bộ mình): người chấm SV = **mọi GV không vắng của tổ + cán bộ đã hướng dẫn chính SV đó**. Điều kiện: nhóm GV ≥ 2 có GVHD của từng SV; số người chấm mỗi SV (số GV + 1) lẻ; mỗi SV có cán bộ của mình; cán bộ nào trong tổ cũng hướng dẫn ≥ 1 SV của tổ. Cán bộ chỉ chấm và xem SV mình (Đ10 k1: đánh giá dựa trên dữ liệu thực tế tại đơn vị). Seed sửa ở V5 |
 | 10.6 | Nguồn để "sao chép 7 CLO, 35 mức, 13 câu" khi tạo đợt (bảng `chuan_dau_ra.dot_id` NOT NULL) | Seed một **đợt mẫu** `ma_dot = 'MAU-QD207'`, ẩn khỏi danh sách; tạo đợt mới = nhân bản từ đợt mẫu |
 | 10.7 | Trạng thái hồ sơ `TU_CHOI` dùng khi nào? (UC04 trả về NHAP) | Từ chối ⇒ **NHAP + lý do** theo UC04; giữ enum `TU_CHOI` nhưng chưa dùng |
 | 10.8 | "5 ngày làm việc" có trừ ngày lễ? | Chỉ trừ **thứ 7, chủ nhật** |

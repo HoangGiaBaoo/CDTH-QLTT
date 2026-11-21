@@ -28,7 +28,7 @@ Lớp 1 vai trò (`@PreAuthorize`) + lớp 2 sở hữu (service). Chi tiết `.
 |---|---|
 | ADMIN | tất cả |
 | GIANG_VIEN | hồ sơ có `phan_cong_gvhd.giang_vien_id` = mình; chặng 2 thêm hồ sơ thuộc tổ mình là thành viên không vắng |
-| CAN_BO_DVHD | hồ sơ có `ho_so_thuc_tap.can_bo_dvhd_id` = mình; chặng 2 thêm hồ sơ thuộc tổ mình |
+| CAN_BO_DVHD | hồ sơ có `ho_so_thuc_tap.can_bo_dvhd_id` = mình — kể cả chặng 2 (trong tổ chỉ chấm SV mình hướng dẫn) |
 | SINH_VIEN | hồ sơ có `sinh_vien_id` = mình |
 
 Thứ tự kiểm: **quyền → tồn tại → trạng thái → phiên bản → dữ liệu nhập**.
@@ -68,10 +68,15 @@ NHAP / TU_CHOI; với GV: có bản ghi `phan_cong_gvhd` trong đợt.
 
 ## Tổ đánh giá (UC09) — điều kiện thành lập
 
-Với **từng** SV trong tổ (bảng `to_danh_gia_ho_so`), các thành viên **không vắng mặt** phải thỏa:
-tổng ≥ 3 và lẻ · có GVHD của SV đó · nhóm GVHD ≥ 2 người (Đ10 k3a — mặc định 10.5) · nhóm ĐVHD ≥ 1 người,
-là cán bộ đã hướng dẫn SV đó. Thành viên nhóm GVHD phải có vai trò `GIANG_VIEN`, nhóm DVHD là `CAN_BO_DVHD`.
-Trực tuyến ⇒ bắt buộc `ghi_chu_phe_duyet` (Trưởng Khoa đồng ý).
+**Người chấm chặng 2 của một SV** = mọi giảng viên (nhóm GVHD) không vắng mặt trong tổ **+ cán bộ đã hướng dẫn
+chính SV đó** (`ToDanhGiaService.chamHoSo`). Cán bộ đơn vị khác ngồi chung tổ **không chấm, không xem** SV đó. Khớp
+mẫu TTTN-05 "3 bản mỗi SV: GVHD, ủy viên đánh giá, cán bộ hướng dẫn" và thực tế "2 thầy cô chấm cả nhóm, mỗi SV
+mang phiếu của cán bộ mình" (docs/01 mục 10.5).
+
+Với **từng** SV trong tổ, các thành viên **không vắng mặt** phải thỏa: nhóm GVHD ≥ 2 người và có GVHD của SV đó ·
+có cán bộ đã hướng dẫn SV đó · số người chấm SV = số giảng viên + 1 ≥ 3 và **lẻ** (⇒ số giảng viên chẵn: 2 là
+chuẩn) · cán bộ nào trong tổ cũng phải hướng dẫn ít nhất một SV của tổ. Thành viên nhóm GVHD phải có vai trò
+`GIANG_VIEN`, nhóm DVHD là `CAN_BO_DVHD`. Trực tuyến ⇒ bắt buộc `ghi_chu_phe_duyet` (Trưởng Khoa đồng ý).
 
 ## Mốc thời gian
 

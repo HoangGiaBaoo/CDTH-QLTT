@@ -50,7 +50,7 @@ class ScoringServiceTest {
 | Lớp | Ca nên có |
 |---|---|
 | `NgayLamViecUtils.congNgayLamViec(start, 5)` | bắt đầu thứ 2 → thứ 2 tuần sau · bắt đầu thứ 5 → thứ 5 tuần sau · bắt đầu thứ 7 |
-| Kiểm thành phần Tổ | 3 người đủ · 4 người (chẵn) · 3 người không có ĐVHD · 3 người chỉ 1 GV · có người vắng làm số người thành chẵn |
+| Kiểm thành phần Tổ (`ToDanhGiaThanhPhanTest`) | 2 GV chấm SV của 2 đơn vị, mỗi SV thêm cán bộ mình ⇒ đủ · 3 GV ⇒ mỗi SV 4 người (chẵn) · cán bộ không hướng dẫn SV nào trong tổ · SV thiếu cán bộ của mình · chỉ 1 GV · GV vắng rồi có người thay |
 | Hạn mức cán bộ | xác nhận 5 hồ sơ rồi hồ sơ thứ 6 bị chặn · GVHD từ chối 1 hồ sơ thì hồ sơ thứ 6 gửi được |
 | `FileStorageService` | 20 MB đúng biên · 20 MB + 1 byte · `.exe` đổi tên thành `.pdf` (content-type sai) |
 
