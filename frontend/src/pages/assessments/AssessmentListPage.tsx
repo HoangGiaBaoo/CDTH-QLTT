@@ -113,7 +113,9 @@ function MyGradingList() {
           {changHienTai.ngayDong && <>, đóng {ngay(changHienTai.ngayDong)}</>}.{' '}
           {stage === 1
             ? 'Chấm sinh viên bạn hướng dẫn: GVHD theo phân công, cán bộ ĐVHD theo hồ sơ tiếp nhận.'
-            : 'Chấm sinh viên của Tổ đánh giá bạn tham gia; chỉ chấm được khi báo cáo TTTN-06 đã đủ hai xác nhận.'}
+            : nguoiDung?.vaiTro === 'CAN_BO_DVHD'
+              ? 'Chấm sinh viên bạn hướng dẫn trong Tổ đánh giá; chỉ chấm được khi báo cáo TTTN-06 đã đủ hai xác nhận.'
+              : 'Chấm sinh viên của Tổ đánh giá bạn tham gia; chỉ chấm được khi báo cáo TTTN-06 đã đủ hai xác nhận.'}
           {dong && dong.length > 0 && <> Đã nộp {daNop}/{dong.length} phiếu.</>}
         </p>
       )}

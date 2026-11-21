@@ -203,7 +203,10 @@ export default function PanelDetailPage() {
             </tbody>
           </table>
         </div>
-        <p className="hint">Phiếu của thành viên vắng mặt bị loại khỏi trung bình nhóm khi tính điểm chặng 2.</p>
+        <p className="hint">
+          Giảng viên trong tổ chấm mọi sinh viên của tổ; cán bộ ĐVHD chỉ chấm sinh viên mình hướng dẫn. Phiếu của thành
+          viên vắng mặt bị loại khỏi trung bình nhóm khi tính điểm chặng 2.
+        </p>
       </div>
 
       {/* Sinh viên */}

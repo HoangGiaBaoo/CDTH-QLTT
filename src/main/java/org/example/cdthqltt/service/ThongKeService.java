@@ -225,7 +225,8 @@ public class ThongKeService {
 
     /**
      * RP-03 — phiếu đã nộp trên số phiếu cần có, theo chặng và nhóm người chấm. Chặng giữa kỳ: mỗi hồ sơ đã duyệt
-     * cần một phiếu mỗi nhóm; chặng cuối: mỗi thành viên Tổ không vắng mặt một phiếu (Đ10 k3, Đ13 k3).
+     * cần một phiếu mỗi nhóm; chặng cuối: mỗi giảng viên không vắng mặt của Tổ và cán bộ hướng dẫn SV một phiếu
+     * (Đ10 k3, Đ13 k3, mẫu TTTN-05 3 bản mỗi SV).
      */
     private BaoCaoThongKeResponse tienDoCham(DotThucTap dot) {
         CauHinhTinhDiemService.CauHinhDot cauHinh = cauHinhService.napChoDot(dot.getId());
@@ -265,7 +266,9 @@ public class ThongKeService {
                             continue;
                         }
                         for (ThanhVienToDanhGia tv : thanhVien) {
-                            if (Boolean.TRUE.equals(tv.getVangMat()) || tv.getNhomNguoiCham() != nhom) {
+                            // Cán bộ trong tổ chỉ có phiếu cho SV mình hướng dẫn (TTTN-05: 3 bản mỗi SV).
+                            if (Boolean.TRUE.equals(tv.getVangMat()) || tv.getNhomNguoiCham() != nhom
+                                    || !ToDanhGiaService.chamHoSo(tv, h)) {
                                 continue;
                             }
                             canCo++;
@@ -304,7 +307,7 @@ public class ThongKeService {
         tongHop.put("Số hồ sơ chờ chấm cuối kỳ chưa được xếp Tổ đánh giá", chuaXepTo.size());
         return baoCao("RP-03", "Tiến độ chấm điểm", dot, cot, dong, tongHop, List.of(
                 "Chặng giữa kỳ: mỗi hồ sơ đã được GVHD duyệt cần một phiếu của GVHD và một phiếu của cán bộ hướng dẫn.",
-                "Chặng cuối kỳ: chỉ tính hồ sơ có báo cáo đủ hai xác nhận; mỗi thành viên Tổ không vắng mặt một phiếu (Điều 10 khoản 3).",
+                "Chặng cuối kỳ: chỉ tính hồ sơ có báo cáo đủ hai xác nhận; mỗi giảng viên có mặt của Tổ đánh giá và cán bộ hướng dẫn của sinh viên một phiếu (Điều 10 khoản 3).",
                 "Hồ sơ đang gián đoạn không tính vào số phiếu cần có."));
     }
 

@@ -75,7 +75,7 @@ export default function CloScoreTable({ bang }: { bang: BangTongHop }) {
       </div>
       <ul className="ghi-chu">
         <li>(1), (2): chặng {c1} tổng hợp từ phiếu đánh giá giữa kỳ (TTTN-04) của cán bộ ĐVHD và GVHD.</li>
-        <li>(4), (5): chặng {c2} tổng hợp từ phiếu cuối kỳ (TTTN-05) của thành viên Tổ đánh giá có mặt — lấy trung bình trong từng nhóm người chấm trước.</li>
+        <li>(4), (5): chặng {c2} tổng hợp từ phiếu cuối kỳ (TTTN-05) của các giảng viên trong Tổ đánh giá và cán bộ hướng dẫn của sinh viên (người có mặt) — lấy trung bình trong từng nhóm người chấm trước.</li>
         <li>(3), (6): điểm chặng theo tỷ lệ đồng chấm GVHD/ĐVHD riêng của từng CLO (Điều 13 khoản 3, Điều 14 khoản 3).</li>
         <li>(7): CLOᵢ theo Điều 14 khoản 1; CLO chỉ được đánh giá ở một chặng (CLO7) thì trọng số chặng được chuẩn hóa về 100%. "—": chặng không đánh giá CLO đó hoặc nhóm có tỷ lệ 0.</li>
         <li>(9): tính trên CLOᵢ chưa làm tròn để tổng cột khớp điểm học phần; chỉ làm tròn ở bước cuối.</li>

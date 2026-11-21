@@ -230,8 +230,9 @@ export default function PanelCreatePage() {
           ))}
         </ul>
         <p className="hint">
-          Điều 10 khoản 3 điểm a. Điểm chặng 2 lấy trung bình trong từng nhóm người chấm trước khi áp tỷ lệ đồng
-          chấm, nên số người mỗi nhóm không làm lệch tỷ lệ.
+          Điều 10 khoản 3 điểm a, mẫu TTTN-05 (3 bản mỗi sinh viên: GVHD, ủy viên, cán bộ hướng dẫn). Các giảng viên
+          trong tổ chấm mọi sinh viên của tổ; mỗi cán bộ ĐVHD chỉ chấm sinh viên mình hướng dẫn, nên một tổ 2 giảng
+          viên dùng được cho sinh viên của nhiều đơn vị.
         </p>
       </div>
 

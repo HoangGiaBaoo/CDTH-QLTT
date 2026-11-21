@@ -124,7 +124,7 @@ public class XuatBangTongHopWord {
         ghiChu(doc, "Ghi chú:");
         ghiChu(doc, "- (1), (2): Điểm chặng 1 tổng hợp từ Phiếu đánh giá tổng kết giữa kỳ của ĐVHD và GVHD (Mẫu TTTN-04).");
         ghiChu(doc, "- (3), (6): Điểm trung bình chặng theo Điều 13 khoản 3; trọng số giữa điểm GVHD và ĐVHD của từng CLO theo Điều 14 khoản 3.");
-        ghiChu(doc, "- (4), (5): Điểm chặng 2 tổng hợp từ Phiếu đánh giá tổng kết cuối kỳ của các thành viên Tổ đánh giá (Mẫu TTTN-05), lấy trung bình trong từng nhóm người chấm.");
+        ghiChu(doc, "- (4), (5): Điểm chặng 2 tổng hợp từ Phiếu đánh giá tổng kết cuối kỳ (Mẫu TTTN-05) của các giảng viên trong Tổ đánh giá và cán bộ hướng dẫn của sinh viên, lấy trung bình trong từng nhóm người chấm.");
         ghiChu(doc, "- (7): Điểm chuẩn đầu ra CLOᵢ theo Điều 14 khoản 1; CLO chỉ được đánh giá ở một chặng thì trọng số chặng được chuẩn hóa. \"—\": chặng không đánh giá CLO đó.");
     }
 

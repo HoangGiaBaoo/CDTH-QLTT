@@ -65,13 +65,14 @@ public interface SinhVienRepository extends JpaRepository<SinhVien, Long> {
             """)
     boolean giangVienXemDuoc(@Param("sinhVienId") Long sinhVienId, @Param("nguoiDungId") Long nguoiDungId);
 
+    /**
+     * Cán bộ chỉ xem SV mình hướng dẫn — kể cả khi ngồi chung Tổ đánh giá với SV đơn vị khác, vì trong tổ cán bộ chỉ
+     * chấm SV của mình (ToDanhGiaService.chamHoSo, docs/01 mục 10.5).
+     */
     @Query("""
             select count(s) > 0 from SinhVien s
-            where s.id = :sinhVienId and (
-                exists (select h from HoSoThucTap h where h.sinhVien = s and h.canBoDvhd.nguoiDung.id = :nguoiDungId)
-                or exists (select tv from ThanhVienToDanhGia tv
-                           where tv.nguoiDung.id = :nguoiDungId
-                             and tv.toDanhGia.id in (select x.toDanhGia.id from ToDanhGiaHoSo x where x.hoSo.sinhVien = s)))
+            where s.id = :sinhVienId
+              and exists (select h from HoSoThucTap h where h.sinhVien = s and h.canBoDvhd.nguoiDung.id = :nguoiDungId)
             """)
     boolean canBoXemDuoc(@Param("sinhVienId") Long sinhVienId, @Param("nguoiDungId") Long nguoiDungId);
 }

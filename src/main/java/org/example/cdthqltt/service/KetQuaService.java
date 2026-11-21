@@ -67,6 +67,7 @@ public class KetQuaService {
     private final PhanHoiRepository phanHoiRepo;
     private final NhatKyHeThongRepository nhatKyRepo;
     private final HoSoThucTapService hoSoService;
+    private final ToDanhGiaService toService;
     private final DotThucTapService dotService;
     private final CauHinhTinhDiemService cauHinhService;
     private final MinhChungService minhChungService;
@@ -132,7 +133,10 @@ public class KetQuaService {
     // #82 – #88
     // ------------------------------------------------------------------
 
-    /** #82 — giáo vụ cả đợt; GV và cán bộ: SV mình hướng dẫn + SV trong Tổ mình tham gia. */
+    /**
+     * #82 — giáo vụ cả đợt; GV: SV mình hướng dẫn + SV trong Tổ mình tham gia; cán bộ: chỉ SV mình hướng dẫn (trong
+     * Tổ cán bộ cũng chỉ chấm SV của mình — ToDanhGiaService.chamHoSo).
+     */
     @Transactional(readOnly = true)
     public List<KetQuaTomTatResponse> danhSach(Long dotId) {
         CurrentUser u = SecurityUtils.currentUser();
@@ -140,7 +144,7 @@ public class KetQuaService {
         List<HoSoThucTap> hoSos = switch (u.vaiTro()) {
             case ADMIN -> hoSoRepo.findByDotIdOrderById(dot.getId());
             case GIANG_VIEN -> gop(hoSoRepo.theoGiangVien(u.giangVienId(), dot.getId(), null), hoSoTrongToCua(u, dot));
-            case CAN_BO_DVHD -> gop(hoSoRepo.theoCanBo(u.canBoDvhdId(), dot.getId(), null), hoSoTrongToCua(u, dot));
+            case CAN_BO_DVHD -> hoSoRepo.theoCanBo(u.canBoDvhdId(), dot.getId(), null);
             case SINH_VIEN -> throw BusinessException.khongCoQuyen();
         };
         Map<Long, KetQuaHocPhan> ketQua = ketQuaRepo.theoDot(dot.getId()).stream()
@@ -343,14 +347,14 @@ public class KetQuaService {
     }
 
     /**
-     * Dựng đầu vào cho bộ máy tính điểm. Chặng cuối chỉ lấy phiếu của thành viên hiện còn trong Tổ và không
-     * vắng mặt (Đ10 k3) — phiếu của người đã bị thay ra coi như vắng.
+     * Dựng đầu vào cho bộ máy tính điểm. Chặng cuối chỉ lấy phiếu của người chấm hiện tại của SV — giảng viên trong
+     * Tổ và cán bộ đã hướng dẫn SV — không vắng mặt (Đ10 k3); phiếu của người đã bị thay ra coi như vắng.
      */
     private KetQuaTinhDiem tinh(HoSoThucTap h, CauHinhTinhDiemService.CauHinhDot cauHinh,
                                 List<PhieuDanhGia> tatCa, BigDecimal diemThuong) {
         int changTo = thuTuChangTo(cauHinh);
         List<PhieuDanhGia> daNop = tatCa.stream().filter(PhieuDanhGia::daNop).toList();
-        Set<Long> nguoiChamTo = thanhVienKhongVang(h).stream().map(tv -> tv.getNguoiDung().getId()).collect(Collectors.toSet());
+        Set<Long> nguoiChamTo = toService.nguoiChamKhongVang(h);
         Set<Long> loaiTru = daNop.stream()
                 .filter(p -> p.getChang().getThuTu() == changTo)
                 .map(p -> p.getNguoiCham().getId())
@@ -364,7 +368,8 @@ public class KetQuaService {
 
     /**
      * UC10 bước 2 (CBR-17, Đ13 k3): chặng giữa kỳ cần phiếu đã nộp của cả GVHD và cán bộ hướng dẫn; chặng cuối
-     * cần phiếu đã nộp của mọi thành viên Tổ không vắng mặt. Phiếu đang mở lại chưa được tính.
+     * cần phiếu đã nộp của mọi người chấm không vắng mặt của SV (giảng viên trong Tổ + cán bộ của SV). Phiếu đang
+     * mở lại chưa được tính.
      */
     private void kiemDuPhieu(HoSoThucTap h, CauHinhTinhDiemService.CauHinhDot cauHinh, List<PhieuDanhGia> tatCa) {
         List<String> moLai = tatCa.stream().filter(p -> p.getTrangThai() == TrangThaiPhieu.MO_LAI)
@@ -403,13 +408,12 @@ public class KetQuaService {
     }
 
     private void kiemPhieuTo(HoSoThucTap h, CauHinhChang c, List<PhieuDanhGia> daNop) {
-        List<ThanhVienToDanhGia> thanhVien = thanhVienRepo.theoHoSo(h.getId());
-        if (thanhVien.isEmpty()) {
+        if (thanhVienRepo.theoHoSo(h.getId()).isEmpty()) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
                     "Sinh viên chưa được xếp vào Tổ đánh giá nên chưa có phiếu " + c.ten() + " (Điều 10 khoản 3)");
         }
         Set<Long> daNopIds = daNop.stream().map(p -> p.getNguoiCham().getId()).collect(Collectors.toSet());
-        List<ThanhVienToDanhGia> thieu = thanhVien.stream()
+        List<ThanhVienToDanhGia> thieu = toService.nguoiChamHoSo(h).stream()
                 .filter(tv -> !Boolean.TRUE.equals(tv.getVangMat()) && !daNopIds.contains(tv.getNguoiDung().getId()))
                 .toList();
         if (!thieu.isEmpty()) {
@@ -456,10 +460,6 @@ public class KetQuaService {
         return cauHinh.chang().stream().mapToInt(CauHinhChang::thuTu).max()
                 .orElseThrow(() -> new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
                         "Đợt thực tập chưa cấu hình chặng đánh giá (Điều 11 khoản 4)"));
-    }
-
-    private List<ThanhVienToDanhGia> thanhVienKhongVang(HoSoThucTap h) {
-        return thanhVienRepo.theoHoSo(h.getId()).stream().filter(tv -> !Boolean.TRUE.equals(tv.getVangMat())).toList();
     }
 
     /** docs/01 mục 10.9: "{maDot}@{yyyyMMddHHmm}" của lần sửa trọng số cuối; chưa sửa lần nào thì "@goc". */

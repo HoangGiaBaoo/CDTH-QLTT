@@ -23,7 +23,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ToDanhGiaService {
 
-    /** Đ10 k3a: tổ tối thiểu 3 thành viên. */
+    /** Đ10 k3a: mỗi sinh viên được tối thiểu 3 người đánh giá. */
     private static final int SO_THANH_VIEN_TOI_THIEU = 3;
     /** Đ10 k3a: nhóm giảng viên gồm GVHD và ít nhất một giảng viên khác (docs/01 mục 10.5). */
     private static final int SO_GIANG_VIEN_TOI_THIEU = 2;
@@ -41,19 +41,38 @@ public class ToDanhGiaService {
     private final ThongBaoService thongBaoService;
     private final NhatKyHeThongService nhatKyService;
 
-    /** Hợp đồng cho UC08: thành viên không vắng mặt của tổ chứa hồ sơ (người chấm chặng 2). */
+    /**
+     * Người chấm chặng cuối của một sinh viên: mọi giảng viên trong tổ, còn nhóm ĐVHD chỉ là cán bộ đã hướng dẫn
+     * chính sinh viên đó. Mẫu TTTN-05 lập 3 bản cho mỗi sinh viên (GVHD, ủy viên đánh giá, cán bộ hướng dẫn); cán bộ
+     * của đơn vị khác không có căn cứ đánh giá sinh viên mình không hướng dẫn (Đ10 k1, docs/01 mục 10.5).
+     */
+    public static boolean chamHoSo(ThanhVienToDanhGia tv, HoSoThucTap h) {
+        return tv.getNhomNguoiCham() == NhomNguoiCham.GVHD || laCanBoCua(tv, h);
+    }
+
+    /** Hợp đồng cho UC08: thành viên không vắng mặt được chấm chặng cuối của hồ sơ (xem {@link #chamHoSo}). */
     @Transactional(readOnly = true)
-    public Optional<ThanhVienToDanhGia> thanhVienCham(Long hoSoId, Long nguoiDungId) {
-        return thanhVienRepo.theoHoSo(hoSoId).stream()
-                .filter(tv -> tv.getNguoiDung().getId().equals(nguoiDungId) && !Boolean.TRUE.equals(tv.getVangMat()))
+    public Optional<ThanhVienToDanhGia> thanhVienCham(HoSoThucTap h, Long nguoiDungId) {
+        return thanhVienRepo.theoHoSo(h.getId()).stream()
+                .filter(tv -> tv.getNguoiDung().getId().equals(nguoiDungId) && !Boolean.TRUE.equals(tv.getVangMat())
+                        && chamHoSo(tv, h))
                 .findFirst();
     }
 
-    /** Hợp đồng cho UC10: id người dùng vắng mặt ở tổ chứa hồ sơ — phiếu của họ bị loại khỏi trung bình. */
+    /** Hợp đồng cho UC10: thành viên chấm chặng cuối của hồ sơ, kể cả người vắng mặt (để báo thiếu phiếu đúng người). */
     @Transactional(readOnly = true)
-    public Set<Long> nguoiVangMat(Long hoSoId) {
+    public List<ThanhVienToDanhGia> nguoiChamHoSo(HoSoThucTap h) {
+        return thanhVienRepo.theoHoSo(h.getId()).stream().filter(tv -> chamHoSo(tv, h)).toList();
+    }
+
+    /**
+     * Hợp đồng cho UC10: id người chấm chặng cuối không vắng mặt — phiếu chặng cuối của người khác (vắng mặt, đã bị
+     * thay ra, hoặc cán bộ không hướng dẫn SV này) bị loại khỏi trung bình (Đ10 k3c).
+     */
+    @Transactional(readOnly = true)
+    public Set<Long> nguoiChamKhongVang(HoSoThucTap h) {
         Set<Long> ids = new HashSet<>();
-        thanhVienRepo.theoHoSo(hoSoId).stream().filter(tv -> Boolean.TRUE.equals(tv.getVangMat()))
+        nguoiChamHoSo(h).stream().filter(tv -> !Boolean.TRUE.equals(tv.getVangMat()))
                 .forEach(tv -> ids.add(tv.getNguoiDung().getId()));
         return ids;
     }
@@ -63,13 +82,14 @@ public class ToDanhGiaService {
     public List<ToDanhGiaResponse> danhSach(Long dotId) {
         CurrentUser u = SecurityUtils.currentUser();
         List<ToDanhGia> ds = u.laAdmin() ? toRepo.theoDot(dotId) : toRepo.theoThanhVien(u.nguoiDungId(), dotId);
-        return ds.stream().map(this::sangResponse).toList();
+        return ds.stream().map(to -> sangResponse(to, u)).toList();
     }
 
     /** #78 — SV chỉ xem tổ có hồ sơ của mình. */
     @Transactional(readOnly = true)
     public ToDanhGiaResponse chiTiet(Long toId) {
-        return sangResponse(layVaKiemQuyen(toId));
+        CurrentUser u = SecurityUtils.currentUser();
+        return sangResponse(layVaKiemQuyen(toId, u), u);
     }
 
     /** #79 — kiểm CBR-14 trước khi lưu; thông báo thành viên và SV (NT-11). */
@@ -186,23 +206,28 @@ public class ToDanhGiaService {
     // ------------------------------------------------------------------
 
     /**
-     * CBR-14 / Đ10 k3a trên các thành viên không vắng mặt: ≥ 3 người, số lẻ, nhóm GV ≥ 2 người có GVHD của từng SV,
-     * nhóm ĐVHD có cán bộ đã hướng dẫn từng SV. Trả mọi lỗi để giáo vụ sửa một lần.
+     * CBR-14 / Đ10 k3a trên các thành viên không vắng mặt, xét cho từng sinh viên vì người chấm của mỗi SV là mọi
+     * giảng viên trong tổ cộng cán bộ đã hướng dẫn SV đó ({@link #chamHoSo}). Nên: nhóm giảng viên ≥ 2 người có GVHD
+     * của từng SV; số người chấm mỗi SV (số giảng viên + 1) ≥ 3 và lẻ — tổ 2 giảng viên là đủ cho cả nhóm SV, mỗi SV
+     * thêm cán bộ của mình; cán bộ nào trong tổ cũng phải hướng dẫn ít nhất một SV của tổ. Trả mọi lỗi một lần.
      */
     List<String> kiemThanhPhan(List<ThanhVienToDanhGia> thanhViens, List<HoSoThucTap> hoSos) {
         List<ThanhVienToDanhGia> coMat = thanhViens.stream().filter(tv -> !Boolean.TRUE.equals(tv.getVangMat())).toList();
-        List<String> loi = new ArrayList<>();
-        if (coMat.size() < SO_THANH_VIEN_TOI_THIEU || coMat.size() % 2 == 0) {
-            loi.add("Tổ đánh giá phải có tối thiểu 3 thành viên và tổng số là số lẻ, hiện có " + coMat.size()
-                    + " (Điều 10 khoản 3 điểm a)");
-        }
+        List<ThanhVienToDanhGia> canBo = coMat.stream().filter(tv -> tv.getNhomNguoiCham() == NhomNguoiCham.DVHD).toList();
         Set<Long> nhomGv = new HashSet<>();
-        Set<Long> nhomDvhd = new HashSet<>();
-        coMat.forEach(tv -> (tv.getNhomNguoiCham() == NhomNguoiCham.GVHD ? nhomGv : nhomDvhd).add(tv.getNguoiDung().getId()));
+        coMat.stream().filter(tv -> tv.getNhomNguoiCham() == NhomNguoiCham.GVHD).forEach(tv -> nhomGv.add(tv.getNguoiDung().getId()));
+        List<String> loi = new ArrayList<>();
         if (nhomGv.size() < SO_GIANG_VIEN_TOI_THIEU) {
             loi.add("Nhóm giảng viên phải gồm GVHD và ít nhất một giảng viên khác (Điều 10 khoản 3 điểm a)");
+        } else {
+            int soNguoiCham = nhomGv.size() + 1;
+            if (soNguoiCham < SO_THANH_VIEN_TOI_THIEU || soNguoiCham % 2 == 0) {
+                loi.add("Mỗi sinh viên được " + nhomGv.size() + " giảng viên của tổ và cán bộ đã hướng dẫn mình đánh giá, tức "
+                        + soNguoiCham + " người; số người đánh giá phải tối thiểu 3 và là số lẻ, cần thêm hoặc bớt một giảng viên"
+                        + " (Điều 10 khoản 3 điểm a)");
+            }
         }
-        if (nhomDvhd.isEmpty()) {
+        if (canBo.isEmpty()) {
             loi.add("Tổ phải có ít nhất một thành viên thuộc ĐVHD (Điều 10 khoản 3 điểm a)");
         }
         for (HoSoThucTap h : hoSos) {
@@ -211,11 +236,22 @@ public class ToDanhGiaService {
             if (gvhdNguoiDung == null || !nhomGv.contains(gvhdNguoiDung)) {
                 loi.add("Tổ chưa có GVHD của sinh viên " + ten + " (Điều 10 khoản 3 điểm a)");
             }
-            if (!nhomDvhd.isEmpty() && (h.getCanBoDvhd() == null || !nhomDvhd.contains(h.getCanBoDvhd().getNguoiDung().getId()))) {
+            if (!canBo.isEmpty() && canBo.stream().noneMatch(tv -> laCanBoCua(tv, h))) {
                 loi.add("Tổ chưa có cán bộ ĐVHD đã hướng dẫn sinh viên " + ten + " (Điều 10 khoản 3 điểm a)");
             }
         }
+        for (ThanhVienToDanhGia tv : canBo) {
+            if (hoSos.stream().noneMatch(h -> laCanBoCua(tv, h))) {
+                loi.add("Cán bộ " + tv.getNguoiDung().getHoTen() + " không hướng dẫn sinh viên nào trong tổ; cán bộ ĐVHD chỉ"
+                        + " đánh giá sinh viên mình hướng dẫn (Điều 10 khoản 3 điểm a)");
+            }
+        }
         return loi;
+    }
+
+    private static boolean laCanBoCua(ThanhVienToDanhGia tv, HoSoThucTap h) {
+        return tv.getNhomNguoiCham() == NhomNguoiCham.DVHD && h.getCanBoDvhd() != null
+                && h.getCanBoDvhd().getNguoiDung().getId().equals(tv.getNguoiDung().getId());
     }
 
     private ThanhVienToDanhGia taoThanhVien(ToDanhGia to, Long nguoiDungId, NhomNguoiCham nhom, boolean chuTich) {
@@ -245,8 +281,7 @@ public class ToDanhGiaService {
         }
     }
 
-    private ToDanhGia layVaKiemQuyen(Long toId) {
-        CurrentUser u = SecurityUtils.currentUser();
+    private ToDanhGia layVaKiemQuyen(Long toId, CurrentUser u) {
         ToDanhGia to = toRepo.findById(toId).orElse(null);
         if (to == null) {
             throw u.laAdmin() ? BusinessException.khongTimThay("Tổ đánh giá") : BusinessException.khongCoQuyen();
@@ -266,18 +301,29 @@ public class ToDanhGiaService {
         return to.getHoSos().stream().map(ToDanhGiaHoSo::getHoSo).toList();
     }
 
+    /** Sau thao tác ghi của giáo vụ — thấy toàn bộ tổ. */
     private ToDanhGiaResponse sangResponse(ToDanhGia to) {
+        return sangResponse(to, null);
+    }
+
+    /**
+     * Cán bộ ĐVHD chỉ thấy sinh viên mình hướng dẫn trong tổ và không nhận bảng kiểm thành phần (nêu tên SV khác) —
+     * cán bộ chỉ được biết SV của mình (phân quyền hai lớp, lớp sở hữu dữ liệu).
+     */
+    private ToDanhGiaResponse sangResponse(ToDanhGia to, CurrentUser u) {
+        boolean laCanBo = u != null && u.laCanBoDvhd();
         List<ToDanhGiaResponse.ThanhVien> tvs = to.getThanhViens().stream()
                 .map(tv -> new ToDanhGiaResponse.ThanhVien(tv.getId(), tv.getNguoiDung().getId(), tv.getNguoiDung().getHoTen(),
                         tv.getNguoiDung().getVaiTro(), tv.getNhomNguoiCham(), Boolean.TRUE.equals(tv.getLaChuTich()),
                         Boolean.TRUE.equals(tv.getVangMat())))
                 .toList();
         List<ToDanhGiaResponse.HoSo> hs = hoSoCuaTo(to).stream()
+                .filter(h -> !laCanBo || (h.getCanBoDvhd() != null && h.getCanBoDvhd().getId().equals(u.canBoDvhdId())))
                 .map(h -> new ToDanhGiaResponse.HoSo(h.getId(), h.getSinhVien().getMaSv(), h.getSinhVien().getNguoiDung().getHoTen(),
                         h.getSinhVien().getLop(), h.getTrangThai()))
                 .toList();
         return new ToDanhGiaResponse(to.getId(), to.getDot().getId(), to.getDot().getMaDot(), to.getNgayThanhLap(),
                 to.getThoiGianBaoCao(), to.getDiaDiem(), to.getHinhThuc(), to.getGhiChuPheDuyet(), to.getDuongDanGhiHinh(),
-                tvs, hs, kiemThanhPhan(to.getThanhViens(), hoSoCuaTo(to)));
+                tvs, hs, laCanBo ? List.of() : kiemThanhPhan(to.getThanhViens(), hoSoCuaTo(to)));
     }
 }

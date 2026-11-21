@@ -234,7 +234,11 @@ public class PhieuDanhGiaService {
 
         List<CanhBaoLechResponse> kq = new ArrayList<>();
         theoHoSo.forEach((h, dsPhieu) -> {
-            List<PhieuDiem> phieu = cauHinhService.doiPhieu(dsPhieu, toService.nguoiVangMat(h.getId()), changTo).stream()
+            // Cùng cách lọc với UC10: phiếu chặng cuối chỉ tính của người chấm hiện là người chấm của SV và có mặt.
+            Set<Long> nguoiCham = toService.nguoiChamKhongVang(h);
+            Set<Long> loaiTru = dsPhieu.stream().filter(p -> p.getChang().getThuTu() == changTo)
+                    .map(p -> p.getNguoiCham().getId()).filter(id -> !nguoiCham.contains(id)).collect(Collectors.toSet());
+            List<PhieuDiem> phieu = cauHinhService.doiPhieu(dsPhieu, loaiTru, changTo).stream()
                     .filter(pd -> !pd.vangMat()).toList();
             for (CauHinhChang chang : cauHinh.chang()) {
                 List<PhieuDiem> phieuChang = phieu.stream().filter(pd -> pd.chang() == chang.thuTu()).toList();
@@ -258,7 +262,10 @@ public class PhieuDanhGiaService {
 
     // ------------------------------------------------------------------
 
-    /** UC08 3a: chặng giữa kỳ chỉ GVHD được phân công hoặc cán bộ hướng dẫn; chặng cuối chỉ thành viên Tổ không vắng mặt. */
+    /**
+     * UC08 3a: chặng giữa kỳ chỉ GVHD được phân công hoặc cán bộ hướng dẫn; chặng cuối chỉ giảng viên không vắng mặt
+     * của Tổ và cán bộ đã hướng dẫn SV (thành viên Tổ) — cán bộ không chấm SV của đơn vị khác dù cùng tổ.
+     */
     private NhomNguoiCham xacDinhNhom(HoSoThucTap h, ChangDanhGia c, CurrentUser u) {
         return timNhom(h, c, u).orElseThrow(() -> new BusinessException(ErrorCode.ACCESS_DENIED,
                 "Bạn không phải người chấm của sinh viên này ở " + c.getTen()));
@@ -266,7 +273,7 @@ public class PhieuDanhGiaService {
 
     private Optional<NhomNguoiCham> timNhom(HoSoThucTap h, ChangDanhGia c, CurrentUser u) {
         if (laChangTo(c)) {
-            return toService.thanhVienCham(h.getId(), u.nguoiDungId()).map(ThanhVienToDanhGia::getNhomNguoiCham);
+            return toService.thanhVienCham(h, u.nguoiDungId()).map(ThanhVienToDanhGia::getNhomNguoiCham);
         }
         if (u.laGiangVien() && phanCongRepo.existsByHoSoIdAndGiangVienId(h.getId(), u.giangVienId())) {
             return Optional.of(NhomNguoiCham.GVHD);
