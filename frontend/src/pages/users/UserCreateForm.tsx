@@ -157,7 +157,7 @@ export default function UserCreateForm({ onLuu, onHuy }: Props) {
             {o('chucVu', 'Chức vụ', 'canBoDvhd.chucVu')}
             {o('soNamKinhNghiem', 'Số năm kinh nghiệm *', 'canBoDvhd.soNamKinhNghiem', { type: 'number', min: 0, inputMode: 'numeric' })}
             {o('soSvToiDaCb', 'Hạn mức sinh viên', 'canBoDvhd.soSvToiDa', {
-              type: 'number', min: 1, inputMode: 'numeric', placeholder: 'Mặc định theo Quy định',
+              type: 'number', min: 1, max: 5, inputMode: 'numeric', placeholder: 'Mặc định theo Quy định',
             })}
           </div>
           <p className="hint">

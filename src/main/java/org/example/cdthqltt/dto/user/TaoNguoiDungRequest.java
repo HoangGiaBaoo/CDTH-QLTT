@@ -46,6 +46,8 @@ public record TaoNguoiDungRequest(
             @NotNull(message = "Vui lòng chọn đơn vị hướng dẫn") Long donViId,
             @Size(max = 100) String chucVu,
             @NotNull(message = "Vui lòng nhập số năm kinh nghiệm") @Min(0) Integer soNamKinhNghiem,
-            @Min(1) Integer soSvToiDa) {
+            // CBR-03: bỏ trống thì dùng mặc định của bảng can_bo_dvhd.
+            @Min(value = 1, message = "Hạn mức tối thiểu 1 sinh viên")
+            @Max(value = 5, message = "Mỗi cán bộ hướng dẫn không quá 5 sinh viên (Điều 7 khoản 2 điểm c)") Integer soSvToiDa) {
     }
 }
