@@ -84,7 +84,10 @@ thưởng 0,2 ⇒ 7,9). Mọi RP-01…RP-06 khớp dữ liệu; vai trò khác A
   kiểm Σα = 100 sau khi áp tất cả (CBR-07).
 - **10.14** Thiếu minh chứng **không chặn** tính điểm ⇒ kết quả `KHONG_DAT` lý do (d). Khi xác nhận (#86) nếu minh
   chứng hoặc 08a/08b thay đổi sau lần tính gần nhất ⇒ chặn, yêu cầu Tính lại (Điều 15 khoản 3).
-- Hạn mức cán bộ (CBR-03) chỉ đếm sau khi cán bộ xác nhận tiếp nhận, theo từng đợt.
+- Hạn mức cán bộ (CBR-03) chỉ đếm sau khi cán bộ xác nhận tiếp nhận, theo từng đợt; giáo vụ đặt hạn mức 1–5.
+- Thời lượng đợt (Đ5 k1): tạo đợt phải đúng 8 tuần; sửa đợt chỉ chặn ngắn hơn 8 tuần, dài hơn coi là gia hạn
+  (Đ15 k4). Ngày bắt đầu được phép ở quá khứ (nhập đợt cũ, dựng dữ liệu demo).
+- Nhật ký vẫn ghi được sau ngày kết thúc đợt khi hồ sơ còn `DANG_THUC_TAP` (kịch bản demo bước 7 dựa vào điều này).
 - Không mở lại phiếu khi kết quả đã công bố; mở lại phiếu ⇒ kết quả về `CHUA_TINH`, nộp lại ⇒ tự tính lại.
 - Thành viên vắng mặt: phiếu của họ không vào phép tính; chặng cuối cần đủ phiếu của mọi thành viên không vắng.
 - Nhật ký chỉ ghi/sửa trong 7 ngày gần nhất; nhắc khi quá 5 ngày không ghi.
