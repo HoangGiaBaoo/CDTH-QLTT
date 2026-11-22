@@ -117,11 +117,11 @@ public class DonViHuongDanService {
             case TU_CHOI -> EnumSet.of(TrangThaiPheDuyet.CHO_DUYET);
             case DA_LOAI -> EnumSet.of(TrangThaiPheDuyet.DA_DUYET);
             case CHO_DUYET -> throw new BusinessException(ErrorCode.VALIDATION_ERROR,
-                    "Quyết định chỉ được là DA_DUYET, TU_CHOI hoặc DA_LOAI");
+                    "Quyết định chỉ được là Đã duyệt, Từ chối hoặc Đã loại");
         };
         if (!hopLe.contains(cu)) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                    "Không thể chuyển đơn vị từ " + cu + " sang " + moi);
+                    "Không thể chuyển đơn vị từ \"" + cu.getTenHienThi() + "\" sang \"" + moi.getTenHienThi() + "\"");
         }
         String lyDo = rong(req.lyDo());
         if (moi != TrangThaiPheDuyet.DA_DUYET && lyDo == null) {

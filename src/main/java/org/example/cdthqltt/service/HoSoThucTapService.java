@@ -80,7 +80,7 @@ public class HoSoThucTapService {
         }
         if (!CHUYEN_HOP_LE.getOrDefault(cu, Set.of()).contains(moi)) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                    "Không thể chuyển hồ sơ từ " + cu + " sang " + moi);
+                    "Không thể chuyển hồ sơ từ \"" + cu.getTenHienThi() + "\" sang \"" + moi.getTenHienThi() + "\"");
         }
         h.setTrangThai(moi);
         Map<String, Object> sau = new LinkedHashMap<>();
