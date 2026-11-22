@@ -437,7 +437,7 @@ tao_dot("k1", "TTTN-2025-HK2", "Thực tập tốt nghiệp học kỳ 2 năm h�
 NX_GV = "Sinh viên chủ động, nắm được yêu cầu nghiệp vụ; cần trình bày báo cáo mạch lạc hơn."
 NX_CB = "Sinh viên chấp hành tốt nội quy, hoàn thành nhiệm vụ được giao đúng tiến độ."
 CA = [
-    # S1: ví dụ tính tay chuẩn (skill tinh-diem-clo, ScoringServiceTest #1): HP 7,7 Đạt
+    # S1: ví dụ tính tay chuẩn (ScoringServiceTest #1): HP 7,7 Đạt
     dict(key="s1", sv="sv.nam", gv="gv.tung", cb="cb.son", dv="saomai", ht="DOANH_NGHIEP", to=1, thuong="0",
          c1_dv=vec(7.0, 6.5, 6.0, 8.0, 7.5, 7.0, n=6), c1_gv=vec(8.0, 7.0, 7.0, 9.0, 8.0, 6.0, n=6),
          c2={"gv.tung": vec(8, 7, 8, 9, 8, 7, 8), "gv.minh": vec(9, 8, 7, 9, 7, 8, 7), "cb.son": vec(8, 7, 7, 9, 8, 8, n=6)},

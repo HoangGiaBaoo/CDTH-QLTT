@@ -1,4 +1,4 @@
-/** Định dạng hiển thị kiểu Việt Nam (skill giao-dien-react › Định dạng hiển thị). Không dùng để tính toán. */
+/** Định dạng hiển thị kiểu Việt Nam (dấu phẩy thập phân). Không dùng để tính toán. */
 
 const SO_1 = new Intl.NumberFormat('vi-VN', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
