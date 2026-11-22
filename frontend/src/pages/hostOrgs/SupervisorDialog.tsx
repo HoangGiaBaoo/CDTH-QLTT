@@ -109,7 +109,7 @@ export default function SupervisorDialog({ mo, donViId, canBo, onHuy, onDaLuu }:
         {o('chucVu', 'Chức vụ', { autoFocus: !!canBo })}
         {o('soNamKinhNghiem', 'Số năm kinh nghiệm *', { type: 'number', min: 0, inputMode: 'numeric' })}
         {o('soSvToiDa', canBo ? 'Hạn mức sinh viên *' : 'Hạn mức sinh viên', {
-          type: 'number', min: 1, inputMode: 'numeric', placeholder: canBo ? undefined : 'Mặc định theo Quy định',
+          type: 'number', min: 1, max: 5, inputMode: 'numeric', placeholder: canBo ? undefined : 'Mặc định theo Quy định',
         })}
       </div>
       <p className="hint">

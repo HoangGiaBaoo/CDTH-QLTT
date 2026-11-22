@@ -12,5 +12,7 @@ public record ThemCanBoRequest(
         @Pattern(regexp = "^$|^[0-9+ .-]{8,20}$", message = "Số điện thoại không hợp lệ") String dienThoai,
         @Size(max = 100) String chucVu,
         @NotNull(message = "Vui lòng nhập số năm kinh nghiệm") @Min(value = 0, message = "Số năm kinh nghiệm không âm") Integer soNamKinhNghiem,
-        @Min(value = 1, message = "Hạn mức tối thiểu 1 sinh viên") Integer soSvToiDa) {
+        // CBR-03: bỏ trống thì dùng mặc định của bảng can_bo_dvhd.
+        @Min(value = 1, message = "Hạn mức tối thiểu 1 sinh viên")
+        @Max(value = 5, message = "Mỗi cán bộ hướng dẫn không quá 5 sinh viên (Điều 7 khoản 2 điểm c)") Integer soSvToiDa) {
 }
