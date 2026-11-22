@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Function;
@@ -29,6 +30,9 @@ import java.util.stream.Collectors;
 public class DotThucTapService {
 
     private static final BigDecimal TRAM = new BigDecimal("100");
+    /** Đ5 k1: học phần TTTN thực hiện trong 8 tuần. */
+    static final int SO_TUAN_THUC_TAP = 8;
+    private static final DateTimeFormatter NGAY = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final List<TrangThaiDot> THU_TU_TRANG_THAI = List.of(TrangThaiDot.KHOI_TAO,
             TrangThaiDot.DANG_NHAN_DANG_KY, TrangThaiDot.DANG_THUC_HIEN, TrangThaiDot.DA_KET_THUC);
 
@@ -105,6 +109,7 @@ public class DotThucTapService {
     @Transactional
     public DotResponse taoDot(TaoDotRequest req) {
         kiemNgay(req.ngayBatDau(), req.ngayKetThuc(), req.hanNopBaoCao());
+        kiemThoiLuong(req.ngayBatDau(), req.ngayKetThuc(), false);
         String maDot = req.maDot().trim();
         if (dotRepo.existsByMaDot(maDot)) {
             throw new BusinessException(ErrorCode.DUPLICATE_RESOURCE, "Mã đợt " + maDot + " đã tồn tại");
@@ -139,6 +144,7 @@ public class DotThucTapService {
             throw new BusinessException(ErrorCode.RESOURCE_LOCKED, "Đợt đã kết thúc, không sửa được");
         }
         kiemNgay(req.ngayBatDau(), req.ngayKetThuc(), req.hanNopBaoCao());
+        kiemThoiLuong(req.ngayBatDau(), req.ngayKetThuc(), true);
         LocalDate ketThucCu = dot.getNgayKetThuc();
         LocalDate batDauCu = dot.getNgayBatDau();
 
@@ -164,7 +170,8 @@ public class DotThucTapService {
                     Map.of("ngayBatDau", req.ngayBatDau().toString(), "ngayKetThuc", req.ngayKetThuc().toString()));
             // Đ15 k4 / luồng thay thế UC03: gia hạn ⇒ thông báo toàn bộ người liên quan (NT-15).
             thongBaoService.gui("NT-15", nguoiLienQuan(dotId),
-                    "Đợt " + dot.getMaDot() + " đổi thời gian: " + req.ngayBatDau() + " → " + req.ngayKetThuc()
+                    "Đợt " + dot.getMaDot() + " đổi thời gian: " + req.ngayBatDau().format(NGAY) + " → "
+                            + req.ngayKetThuc().format(NGAY)
                             + "; mốc chặng đánh giá đã được tính lại", "/terms/" + dotId);
         }
         return DotResponse.from(dot);
@@ -178,7 +185,8 @@ public class DotThucTapService {
         int den = THU_TU_TRANG_THAI.indexOf(moi);
         if (den != tu + 1) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                    "Không thể chuyển đợt từ " + dot.getTrangThai() + " sang " + moi + "; trạng thái đợt chỉ đi tiến từng bước");
+                    "Không thể chuyển đợt từ \"" + dot.getTrangThai().getTenHienThi() + "\" sang \"" + moi.getTenHienThi()
+                            + "\"; trạng thái đợt chỉ đi tiến từng bước: Khởi tạo → Đang nhận đăng ký → Đang thực hiện → Đã kết thúc");
         }
         List<String> canhBao = List.of();
         if (moi == TrangThaiDot.DANG_NHAN_DANG_KY) {
@@ -214,7 +222,7 @@ public class DotThucTapService {
                 c.setNgayDong(LocalDate.now());
                 nhatKyService.ghiVet("DONG_CHANG", "chang_danh_gia", c.getId(), TrangThaiChang.DANG_MO, TrangThaiChang.DA_DONG);
             }
-            default -> throw new BusinessException(ErrorCode.VALIDATION_ERROR, "Chỉ được chọn DANG_MO hoặc DA_DONG");
+            default -> throw new BusinessException(ErrorCode.VALIDATION_ERROR, "Chặng chỉ chuyển được sang Đang mở hoặc Đã đóng");
         }
         return ChangResponse.from(c);
     }
@@ -256,11 +264,11 @@ public class DotThucTapService {
         if (c.getTrangThai() == TrangThaiChang.CHUA_MO) {
             if (c.getThuTu() == 1 && homNay.isBefore(dot.getNgayBatDau().plusWeeks(3))) {
                 throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                        "Chặng 1 chỉ mở từ đầu tuần thứ 4 (" + dot.getNgayBatDau().plusWeeks(3) + ") (Điều 10 khoản 2)");
+                        "Chặng 1 chỉ mở từ đầu tuần thứ 4 (" + dot.getNgayBatDau().plusWeeks(3).format(NGAY) + ") (Điều 10 khoản 2)");
             }
             if (c.getThuTu() == 2 && !homNay.isAfter(dot.getNgayKetThuc())) {
                 throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
-                        "Chặng 2 chỉ mở sau ngày kết thúc thực tập (" + dot.getNgayKetThuc() + ") (Điều 10 khoản 2)");
+                        "Chặng 2 chỉ mở sau ngày kết thúc thực tập (" + dot.getNgayKetThuc().format(NGAY) + ") (Điều 10 khoản 2)");
             }
         }
         TrangThaiChang cu = c.getTrangThai();
@@ -466,6 +474,28 @@ public class DotThucTapService {
     private static int tinhSoTuan(LocalDate batDau, LocalDate ketThuc) {
         long soNgay = ChronoUnit.DAYS.between(batDau, ketThuc) + 1;
         return (int) ((soNgay + 6) / 7);
+    }
+
+    /**
+     * Đ5 k1: học phần kéo dài 8 tuần ⇒ tạo đợt phải đúng 8 tuần. Khi sửa đợt được phép dài hơn vì đó là gia hạn
+     * (Đ15 k4), nhưng không ngắn hơn: chặng 1 ở tuần 4 và số dòng kế hoạch, tiến độ tuần đều dựa vào thời lượng này.
+     * Gọi sau {@link #kiemNgay} (đã chắc ngày kết thúc sau ngày bắt đầu).
+     */
+    static void kiemThoiLuong(LocalDate batDau, LocalDate ketThuc, boolean choPhepGiaHan) {
+        int soTuan = tinhSoTuan(batDau, ketThuc);
+        if (soTuan == SO_TUAN_THUC_TAP || (choPhepGiaHan && soTuan > SO_TUAN_THUC_TAP)) {
+            return;
+        }
+        // tinhSoTuan làm tròn lên ⇒ đủ 8 tuần khi đợt dài 50–56 ngày tính cả hai đầu.
+        LocalDate ketThucSomNhat = batDau.plusWeeks(SO_TUAN_THUC_TAP - 1);
+        LocalDate ketThucMuonNhat = batDau.plusWeeks(SO_TUAN_THUC_TAP).minusDays(1);
+        String loi = choPhepGiaHan
+                ? "Đợt thực tập không được ngắn hơn " + SO_TUAN_THUC_TAP + " tuần (Điều 5 khoản 1); khoảng đang chọn là "
+                        + soTuan + " tuần, ngày kết thúc phải từ " + ketThucSomNhat.format(NGAY) + " trở đi"
+                : "Đợt thực tập kéo dài đúng " + SO_TUAN_THUC_TAP + " tuần (Điều 5 khoản 1); khoảng đang chọn là "
+                        + soTuan + " tuần, ngày kết thúc phải từ " + ketThucSomNhat.format(NGAY) + " đến "
+                        + ketThucMuonNhat.format(NGAY);
+        throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION, loi);
     }
 
     private static void kiemNgay(LocalDate batDau, LocalDate ketThuc, LocalDate hanNop) {

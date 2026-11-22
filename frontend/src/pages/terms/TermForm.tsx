@@ -12,6 +12,8 @@ interface Props {
 }
 
 const HOC_KY = [['HK1', 'Học kỳ 1'], ['HK2', 'Học kỳ 2'], ['HE', 'Học kỳ hè']];
+/** Điều 5 khoản 1 — backend kiểm lại (DotThucTapService.kiemThoiLuong); ở đây chỉ để điền sẵn và báo sớm. */
+const SO_TUAN = 8;
 
 function namHocMacDinh(): string {
   const d = new Date();
@@ -41,6 +43,11 @@ function xemTruocMoc(batDau: string, ketThuc: string) {
   };
 }
 
+/** Ngày kết thúc để đợt dài đúng 8 tuần: bắt đầu thứ Hai ⇒ kết thúc Chủ nhật tuần thứ 8. */
+function ketThucDuTuan(batDau: string): string {
+  return congNgay(batDau, SO_TUAN * 7 - 1);
+}
+
 export default function TermForm({ dot, onLuu, onHuy }: Props) {
   const [f, setF] = useState<TaoDotRequest>({
     maDot: dot?.maDot ?? '',
@@ -54,11 +61,27 @@ export default function TermForm({ dot, onLuu, onHuy }: Props) {
   });
   const [loi, setLoi] = useState<unknown>(null);
   const [dangGui, setDangGui] = useState(false);
+  // Form tạo: chọn ngày bắt đầu thì tự điền ngày kết thúc đủ 8 tuần, cho tới khi giáo vụ tự sửa ngày kết thúc.
+  // Form sửa không tự đổi, vì đổi ngày kết thúc ở đó là gia hạn (Điều 15 khoản 4).
+  const [tuDienKetThuc, setTuDienKetThuc] = useState(!dot);
 
   const dat = <K extends keyof TaoDotRequest>(k: K, v: TaoDotRequest[K]) => setF((x) => ({ ...x, [k]: v }));
+  const doiBatDau = (v: string) =>
+    setF((x) => ({ ...x, ngayBatDau: v, ngayKetThuc: tuDienKetThuc && v ? ketThucDuTuan(v) : x.ngayKetThuc }));
+  const doiKetThuc = (v: string) => {
+    setTuDienKetThuc(false);
+    dat('ngayKetThuc', v);
+  };
+  const datDuTuan = () => {
+    setTuDienKetThuc(!dot);
+    dat('ngayKetThuc', ketThucDuTuan(f.ngayBatDau));
+  };
   const loiTruong = (t: string) => (loi instanceof ApiError ? loi.loiTruong(t) : undefined);
   const moc = xemTruocMoc(f.ngayBatDau, f.ngayKetThuc);
   const doiMoc = dot && (dot.ngayBatDau !== f.ngayBatDau || dot.ngayKetThuc !== f.ngayKetThuc);
+  // Tạo đợt: đúng 8 tuần. Sửa đợt: dài hơn là gia hạn, chỉ chặn ngắn hơn.
+  const saiThoiLuong = moc && (dot ? moc.soTuan < SO_TUAN : moc.soTuan !== SO_TUAN);
+  const giaHan = moc && dot && moc.soTuan > SO_TUAN;
 
   const gui = async (e: FormEvent) => {
     e.preventDefault();
@@ -74,10 +97,11 @@ export default function TermForm({ dot, onLuu, onHuy }: Props) {
     }
   };
 
-  const o = (k: keyof TaoDotRequest, nhan: string, props: Record<string, unknown> = {}) => (
+  const o = (k: keyof TaoDotRequest, nhan: string, props: Record<string, unknown> = {},
+             doi: (v: string) => void = (v) => dat(k, v)) => (
     <label className="field">
       <span>{nhan}</span>
-      <input value={f[k] ?? ''} onChange={(e) => dat(k, e.target.value)} {...props} />
+      <input value={f[k] ?? ''} onChange={(e) => doi(e.target.value)} {...props} />
       {loiTruong(k) && <small className="field-error">{loiTruong(k)}</small>}
     </label>
   );
@@ -102,14 +126,23 @@ export default function TermForm({ dot, onLuu, onHuy }: Props) {
         </label>
         {o('namHoc', 'Năm học *', { placeholder: '2027-2028' })}
         {o('khoaVien', 'Khoa / Viện')}
-        {o('ngayBatDau', 'Ngày bắt đầu *', { type: 'date' })}
-        {o('ngayKetThuc', 'Ngày kết thúc *', { type: 'date' })}
-        {o('hanNopBaoCao', 'Hạn nộp báo cáo', { type: 'date' })}
+        {o('ngayBatDau', 'Ngày bắt đầu *', { type: 'date' }, doiBatDau)}
+        {o('ngayKetThuc', 'Ngày kết thúc *', { type: 'date', min: f.ngayBatDau ? congNgay(f.ngayBatDau, 1) : undefined },
+          doiKetThuc)}
+        {o('hanNopBaoCao', 'Hạn nộp báo cáo', { type: 'date', min: f.ngayBatDau || undefined })}
       </div>
 
-      {moc ? (
+      {saiThoiLuong && moc ? (
+        <div className="hint hint-loi">
+          Đợt thực tập {dot ? 'không được ngắn hơn' : 'kéo dài đúng'} {SO_TUAN} tuần (Điều 5 khoản 1); khoảng đang chọn
+          là <b>{moc.soTuan} tuần</b>.{' '}
+          <button type="button" className="btn btn-phu btn-nho" onClick={datDuTuan}>
+            Đặt ngày kết thúc {ngay(ketThucDuTuan(f.ngayBatDau))} ({SO_TUAN} tuần)
+          </button>
+        </div>
+      ) : moc ? (
         <div className="hint">
-          Thời lượng <b>{moc.soTuan} tuần</b>{moc.soTuan !== 8 && ' (mặc định 8 tuần — Điều 5 khoản 1)'} · Chặng 1 mở{' '}
+          Thời lượng <b>{moc.soTuan} tuần</b>{giaHan && ' (gia hạn — Điều 15 khoản 4)'} · Chặng 1 mở{' '}
           <b>{ngay(moc.moChang1)}</b> (đầu tuần 4) · Chặng 2 mở <b>{ngay(moc.moChang2)}</b> (sau ngày kết thúc)
           {doiMoc && <> · Đổi thời gian sẽ tính lại mốc các chặng chưa mở và gửi thông báo tới người liên quan.</>}
         </div>
