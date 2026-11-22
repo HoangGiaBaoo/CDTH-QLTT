@@ -118,7 +118,8 @@ export default function PanelDetailPage() {
         <div className="alert alert-vang mb">
           <b>Thành phần tổ (tính trên thành viên có mặt) chưa đạt điều kiện:</b>
           <ul className="alert-list">{to.canhBao.map((c) => <li key={c}>{c}</li>)}</ul>
-          Nếu nhóm ĐVHD không còn ai có mặt, hệ thống dừng tính điểm với mã THIEU_PHIEU_DVHD — cần bổ sung người thay thế.
+          Nếu nhóm ĐVHD không còn ai có mặt, hệ thống dừng tính điểm vì thiếu phiếu của cán bộ ĐVHD — cần bổ sung người
+          thay thế.
         </div>
       )}
       <ErrorAlert error={loi} />

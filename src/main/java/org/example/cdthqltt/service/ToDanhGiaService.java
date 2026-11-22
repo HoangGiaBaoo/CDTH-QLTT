@@ -16,12 +16,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /** UC09 — Tổ đánh giá cuối kỳ (Đ10 k3). */
 @Service
 @RequiredArgsConstructor
 public class ToDanhGiaService {
+
+    private static final DateTimeFormatter NGAY = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter NGAY_GIO = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 
     /** Đ10 k3a: mỗi sinh viên được tối thiểu 3 người đánh giá. */
     private static final int SO_THANH_VIEN_TOI_THIEU = 3;
@@ -97,6 +102,7 @@ public class ToDanhGiaService {
     public ToDanhGiaResponse thanhLap(TaoToRequest req) {
         DotThucTap dot = dotService.layDot(req.dotId());
         kiemHinhThuc(req.hinhThuc(), req.ghiChuPheDuyet());
+        kiemThoiGianBaoCao(req.thoiGianBaoCao(), dot);
 
         List<Long> idsHoSo = req.hoSoIds().stream().distinct().toList();
         List<HoSoThucTap> hoSos = hoSoRepo.findAllById(idsHoSo);
@@ -146,7 +152,7 @@ public class ToDanhGiaService {
         to.getThanhViens().forEach(tv -> nguoiNhan.add(tv.getNguoiDung().getId()));
         hoSos.forEach(h -> nguoiNhan.add(h.getSinhVien().getNguoiDung().getId()));
         thongBaoService.gui("NT-11", nguoiNhan, "Đã thành lập Tổ đánh giá cuối kỳ"
-                + (to.getThoiGianBaoCao() == null ? "" : ", báo cáo lúc " + to.getThoiGianBaoCao())
+                + (to.getThoiGianBaoCao() == null ? "" : ", báo cáo lúc " + to.getThoiGianBaoCao().format(NGAY_GIO))
                 + (to.getDiaDiem() == null ? "" : " tại " + to.getDiaDiem()), "/panels/" + to.getId());
         return sangResponse(to);
     }
@@ -158,6 +164,7 @@ public class ToDanhGiaService {
         HinhThucLamViec hinhThuc = req.hinhThuc() != null ? req.hinhThuc() : to.getHinhThuc();
         String ghiChu = req.ghiChuPheDuyet() != null ? req.ghiChuPheDuyet() : to.getGhiChuPheDuyet();
         kiemHinhThuc(hinhThuc, ghiChu);
+        kiemThoiGianBaoCao(req.thoiGianBaoCao(), to.getDot());
         if (req.thoiGianBaoCao() != null) to.setThoiGianBaoCao(req.thoiGianBaoCao());
         if (req.diaDiem() != null) to.setDiaDiem(req.diaDiem());
         if (req.duongDanGhiHinh() != null) to.setDuongDanGhiHinh(req.duongDanGhiHinh());
@@ -278,6 +285,15 @@ public class ToDanhGiaService {
         if (hinhThuc == HinhThucLamViec.TRUC_TUYEN && (ghiChu == null || ghiChu.isBlank())) {
             throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
                     "Đánh giá trực tuyến cần ghi chú đã có phê duyệt của Trưởng Khoa (Điều 10 khoản 3 điểm b)");
+        }
+    }
+
+    /** Đ10 k2b: chặng 2 đánh giá sau khi SV hoàn thành toàn bộ thời gian thực tập ⇒ Tổ báo cáo sau ngày kết thúc đợt. */
+    private static void kiemThoiGianBaoCao(LocalDateTime thoiGian, DotThucTap dot) {
+        if (thoiGian != null && !thoiGian.toLocalDate().isAfter(dot.getNgayKetThuc())) {
+            throw new BusinessException(ErrorCode.BUSINESS_RULE_VIOLATION,
+                    "Thời gian báo cáo phải sau ngày kết thúc thực tập " + dot.getNgayKetThuc().format(NGAY)
+                            + ": chặng 2 chỉ đánh giá khi sinh viên đã hoàn thành thời gian thực tập (Điều 10 khoản 2 điểm b)");
         }
     }
 
