@@ -1,7 +1,7 @@
 # Thiết kế cơ sở dữ liệu — 28 bảng (MySQL 8, utf8mb4)
 
 > Sinh tự động từ `docs/tai-lieu-goc/QLTT-ThietKe-API-CSDL.xlsx` (sheet *Cơ sở dữ liệu*). Sửa thiết kế thì sửa file Excel rồi sinh lại, **không sửa tay file này**.
-> Tên bảng/cột giữ nguyên tiếng Việt không dấu như thiết kế; entity Java ánh xạ qua `@Table`/`@Column` (xem `.claude/rules/quy-tac-code.md`).
+> Tên bảng/cột giữ nguyên tiếng Việt không dấu như thiết kế; entity Java ánh xạ qua `@Table`/`@Column`.
 
 
 ## NHÓM 1 — NGƯỜI DÙNG VÀ DANH MỤC

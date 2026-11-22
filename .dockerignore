@@ -2,7 +2,6 @@
 .git
 .github
 .idea
-.claude
 .vscode
 target
 frontend

@@ -9,7 +9,7 @@
 |---|---|---|
 | Thời gian còn lại | **6 tuần: 09/11 → 20/12/2026** (lịch Sprint trong Proposal đã hết hạn 30/10) | Co/giãn tuần 5–6; tuần 1–4 giữ nguyên thứ tự |
 | Backend | Spring Boot **4.1.1**, Java **21** (đúng `pom.xml` hiện tại), MySQL 8, Flyway | Proposal ghi Java 17 — Boot 4 chạy được trên 17, nhưng thống nhất một bản JDK cho cả hai máy |
-| Frontend | React 18 + TypeScript + Vite, **cùng repo** trong thư mục `frontend/` | Tách repo thì bỏ mục FE khỏi `.claude/hooks` |
+| Frontend | React 18 + TypeScript + Vite, **cùng repo** trong thư mục `frontend/` | Chung một pipeline CI/CD với backend |
 | Phạm vi | 13 UC, 102 endpoint, 28 bảng — đúng `docs/02-api.md`, `docs/03-csdl.md` | Cắt theo mục 6, không cắt UC08/09/10 |
 
 ## 1. Nguyên tắc chia việc
@@ -150,7 +150,7 @@ công → GV duyệt → hồ sơ `DANG_THUC_TAP` có sẵn khung kế hoạch v
 
 **A**
 - [ ] `service/scoring/`: `ScoringService` **Java thuần** (input = các phiếu đã nộp + cấu hình đợt, output = điểm từng chặng, 7 CLO, HP, mức, 4 điều kiện, nhóm năng lực, cảnh báo) — làm **đầu tuần**, trước UC08
-- [ ] `ScoringServiceTest`: tối thiểu 12 ca trong `.claude/rules/kiem-thu.md`, ca chuẩn là ví dụ tính tay trong skill `tinh-diem-clo` (HP = 7,7)
+- [ ] `ScoringServiceTest`: tối thiểu 12 ca (Proposal 11.6), ca chuẩn là ví dụ tính tay CLO1 = 8,2 … HP = 7,7
 - [ ] UC08: `/api/assessments` (69–76) — biểu mẫu chấm theo nhóm (ĐVHD không có CLO7), lưu nháp, nộp (đủ câu, CBR-10, nhận xét chung), khóa; **ẩn điểm bên kia đến khi cả hai nộp (ở service)**; mở lại + nhật ký điểm cũ; cờ lệch > 2,0
 - [ ] `ChangScheduler` (`@Scheduled` hằng ngày) mở chặng 1 đúng mốc + thông báo NT-10; endpoint mở/đóng thủ công (32)
 - [ ] FE: SCR-18 (chọn mức → hiện mô tả hành vi + gợi ý điểm giữa khoảng → chỉnh điểm trong khoảng)
@@ -197,7 +197,7 @@ hệ thống tự tính → GVHD rà → ADMIN xác nhận, công bố → hồ 
 - [ ] Rà lại toàn bộ thông báo NT-01…NT-15 đã sinh đúng chỗ
 - [ ] Đánh bóng FE các màn của mình (trạng thái rỗng, lỗi, loading, thông báo lỗi tiếng Việt từ `message`)
 
-**Cả hai**: review chéo toàn bộ code của người kia bằng `/soat-code` và `/soat-nghiep-vu`.
+**Cả hai**: review chéo toàn bộ code của người kia (quy tắc code + đối chiếu đặc tả UC).
 
 ### Tuần 6 (14/12 – 20/12) · Kiểm thử và hoàn thiện — mốc `t6-ban-demo`
 
@@ -206,7 +206,7 @@ hệ thống tự tính → GVHD rà → ADMIN xác nhận, công bố → hồ 
 | Unit test bao phủ mọi nhánh `ScoringService`; sửa lỗi lõi | Chạy Postman toàn bộ, lập bảng kết quả kiểm thử ma trận phân quyền |
 | Kịch bản demo 1 vòng đời (Proposal mục 11.7), tập 3 lần | Kiểm thử tích hợp đầu–cuối trên dữ liệu demo sạch |
 | Slide phần kiến trúc + thuật toán tính điểm | Slide phần quy trình + giao diện |
-| Cập nhật tài liệu (nhờ Claude dùng agent `cap-nhat-tai-lieu`) | Hướng dẫn cài đặt chạy demo trong `README.md` |
+| Cập nhật tài liệu cho khớp code | Hướng dẫn cài đặt chạy demo trong `README.md` |
 
 **Thứ 6 18/12**: đóng băng code, tag `t6-ban-demo`. Từ đó chỉ sửa lỗi chặn demo.
 
@@ -225,8 +225,8 @@ Cắt **từ trên xuống**, không bao giờ chạm UC08, UC09, UC10, UC01, UC
 ## 7. Cách làm việc chung
 
 - **Nhánh**: `main` luôn chạy được. Mỗi việc một nhánh `feat/<uc>-<mo-ta-ngan>` (ví dụ `feat/uc08-nop-phieu`).
-  Xem `.claude/rules/git.md`.
-- **PR nhỏ, review trong 24 giờ**. Người kia review bằng `/soat-code` trước khi bấm merge. Không tự merge PR của mình.
+  Commit theo Conventional Commits tiếng Anh: `feat(scope): subject (UCxx)`.
+- **PR nhỏ, review trong 24 giờ**. Người kia review trước khi bấm merge. Không tự merge PR của mình.
 - **Đồng bộ 15 phút mỗi tối** (hoặc nhắn): hôm nay xong gì, mai làm gì, đang chờ hàm nào của người kia.
   Cập nhật `docs/TIEN-DO.md` sau mỗi lần merge.
 - **Migration Flyway không bao giờ sửa file đã merge** — cần đổi schema thì thêm `V5__...sql` mới.
@@ -239,8 +239,8 @@ Cắt **từ trên xuống**, không bao giờ chạm UC08, UC09, UC10, UC01, UC
 
 | Rủi ro | Cách đỡ |
 |---|---|
-| Spring Boot 4 mới: một số thư viện / ví dụ trên mạng còn viết cho Boot 3 (Jackson 2, tên starter cũ) | Dùng agent `sua-loi-build`; đọc skill `spring-boot-api` mục "Boot 4"; không chép cấu hình Boot 3 mù quáng |
-| Thuật toán tính điểm sai ở các ca biên (CLO7, vắng mặt, trần 10) | Viết `ScoringService` thuần + test **trước** khi nối vào UC10; `/soat-tinh-diem` sau mỗi lần sửa |
+| Spring Boot 4 mới: một số thư viện / ví dụ trên mạng còn viết cho Boot 3 (Jackson 2, tên starter cũ) | Đối chiếu tài liệu chính thức Spring Boot 4; không chép cấu hình Boot 3 mù quáng |
+| Thuật toán tính điểm sai ở các ca biên (CLO7, vắng mặt, trần 10) | Viết `ScoringService` thuần + test **trước** khi nối vào UC10; chạy lại `ScoringServiceTest` sau mỗi lần sửa |
 | Hai người cùng sửa một file → xung đột | Chủ sở hữu file theo mục 2; stub hợp đồng ngày 2 |
 | B bị nghẽn vì chờ hàm của A (hoặc ngược lại) | Stub trả dữ liệu giả ngay tuần 1; hàm thật xong muộn nhất cuối tuần 2 |
 | Tuần 4 không đạt mốc vòng đời | Cắt theo mục 6 ngay đầu tuần 5, không cố làm tiếp phần nâng cao |

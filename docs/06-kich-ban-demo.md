@@ -99,7 +99,7 @@ mới 1 người → thêm giảng viên **Lê Quang Minh** ⇒ mọi dòng ✓.
 
 ### 11. Kết quả TTTN-07 khớp tờ tính tay → xác nhận, công bố
 `giaovu` → **Kết quả học phần** → *Nguyễn Văn An*: CLO 8,2 · 7,2 · 7,2 · 8,8 · 7,7 · 7,4 · 7,5 → **HP 7,7**, Đạt.
-- Đặt tờ tính tay bên cạnh (skill `tinh-diem-clo`): đi một CLO (CLO1) từ phiếu → trung bình nhóm → tỷ lệ đồng chấm →
+- Đặt tờ tính tay bên cạnh (ca 1 của `ScoringServiceTest`): đi một CLO (CLO1) từ phiếu → trung bình nhóm → tỷ lệ đồng chấm →
   trọng số chặng; rồi CLO7 để nói **chuẩn hóa trọng số** (thiếu chuẩn hóa ⇒ 7,4, sai).
 - `gv.tung` (GVHD): **Đề xuất điểm thưởng** (tùy chọn, ≤ 0,5) → `giaovu`: **Xác nhận** → **Công bố**.
 - **Xuất TTTN-07 (.docx)** để cho thấy biểu mẫu.

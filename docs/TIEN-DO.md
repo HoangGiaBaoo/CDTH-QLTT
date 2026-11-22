@@ -7,8 +7,8 @@
 **Tổ đánh giá chấm theo từng SV** (docs/01 mục 10.5): người chấm chặng 2 của SV = các GV của tổ + cán bộ của chính
 SV (TTTN-05 "3 bản mỗi SV"); cán bộ đơn vị khác không chấm/không xem; V5 sửa seed tổ 3 đợt HK2. **Đủ mọi màn FE** (không còn trang giữ chỗ): A — SCR-03, 06, 09/10, 18/20, 19, 21, 24, 25, chuông
 thông báo · B — SCR-07/08, 11…17, 22, 23. **Luồng demo 12 bước đi được trọn trên giao diện** — kịch bản từng cú bấm:
-`docs/06-kich-ban-demo.md`. Giao diện theo tông cổng sinh viên HUCE, không có mã nội bộ trong chữ hiển thị (skill
-`giao-dien-react`). **CI/CD + VPS** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển khai lên
+`docs/06-kich-ban-demo.md`. Giao diện theo tông cổng sinh viên HUCE, không có mã nội bộ trong chữ hiển thị.
+**CI/CD + VPS** (`docs/05-trien-khai.md`): mỗi push `main` tự test rồi triển khai lên
 http://221.121.0.89. Còn lại: tập kịch bản demo trên CSDL sạch, docs mục 10, Postman, tag mốc.
 
 ## Bảng 6 tuần
@@ -28,8 +28,8 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 1. **Trước demo** — bật Docker Desktop, `docker compose down -v` rồi `up -d` để CSDL dev sạch (Flyway nạp lại V1–V5),
    đi trọn một lượt `docs/06-kich-ban-demo.md` liền mạch, rồi `down -v` lần nữa trước giờ demo (bước 1 tạo đợt
-   `TTTN-2027-HK1` nên tập xong là CSDL bẩn). Đổi CSS/chữ dùng chung thì chạy lại bộ hồi quy (`chay-hoi-quy.sh`, xem
-   memory Claude).
+   `TTTN-2027-HK1` nên tập xong là CSDL bẩn). Đổi CSS/chữ dùng chung thì chạy lại bộ hồi quy (`chay-hoi-quy.sh`,
+   để ngoài git trên máy này).
 2. **Docs** — bổ sung `docs/01-nghiep-vu.md` mục 10 các quyết định 10.12–10.14 và các quyết định khác (danh sách
    ở *Bàn giao › Quyết định cần ghi*); sửa mô tả NT-07, NT-12, NT-13, NT-14.
 3. **B** — Postman collection 4 vai trò; `README.md` hướng dẫn chạy demo.
@@ -37,9 +37,9 @@ Chưa tag mốc nào (`t1`…`t5`) — tag trên `main` khi chốt.
 
 ## Lưu ý quan trọng
 
-- Commit **thẳng lên `main`**, không qua nhánh/PR (người dùng yêu cầu để kịp tiến độ) — lệch `.claude/rules/git.md`.
-- Commit **luân phiên đúng tài khoản chủ phần việc** (A = HoangGiaBaoo, B = SAKER205); **không** thêm Co-Authored-By,
-  không có chữ "claude" trong commit. Một số subject đã > 72 ký tự — từ nay giữ ≤ 72.
+- Commit **thẳng lên `main`**, không qua nhánh/PR (người dùng yêu cầu để kịp tiến độ) — lệch quy tắc nhánh/PR ở `docs/04-ke-hoach.md` mục 7.
+- Commit **luân phiên đúng tài khoản chủ phần việc** (A = HoangGiaBaoo, B = SAKER205); **không** thêm Co-Authored-By.
+  Một số subject đã > 72 ký tự — từ nay giữ ≤ 72.
 - Tài khoản ADMIN demo là `giaovu` / `Qltt@2026` (không phải `admin`). Mọi tài khoản seed dùng `Qltt@2026`.
 - **Không thử API trên CSDL dev** (làm bẩn kịch bản demo) — thử màn FE trên CSDL tạm riêng, cổng 3307 (*Bàn giao*).
 - Mỗi màn xong: build + thử trình duyệt ⇒ báo người dùng ⇒ **hỏi trước khi commit/push**; người dùng thường trả lời
@@ -446,8 +446,7 @@ Ghi chú demo: hôm nay đã qua hạn nộp báo cáo HK1 (06/11/2026) nên m�
 ### Giao diện theo cổng sinh viên HUCE (18/11/2026)
 
 Tông màu, bố cục tham khảo sinhvien.huce.edu.vn: thanh trên trắng + tên trường xanh đậm, nền xám xanh, thẻ trắng bóng nhẹ,
-chữ xám đen, icon xanh da trời, ô số liệu nền pastel, chân trang khoa. Biến màu + quy tắc ở skill `giao-dien-react` (mục
-*Giao diện — tông màu cổng sinh viên HUCE*). Font Roboto (Google Fonts, có tiếng Việt); icon `lucide-react@0.468.0` —
+chữ xám đen, icon xanh da trời, ô số liệu nền pastel, chân trang khoa. Biến màu ở `frontend/src/styles.css`. Font Roboto (Google Fonts, có tiếng Việt); icon `lucide-react@0.468.0` —
 mỗi mục `menu.ts` một icon, trang Tổng quan là lưới ô icon (bỏ dòng mô tả có mã UC/#). Logo trường **chưa** đưa vào
 (đang dùng biểu tượng mũ tốt nghiệp) — muốn dùng logo thật thì cần tệp logo được phép dùng.
 Bỏ mã nội bộ (UC, #endpoint, CBR, BR, NT, RP, SCR, `#id`) khỏi mọi chữ hiển thị và `message` backend; giữ trích điều khoản
@@ -547,8 +546,8 @@ Cách vận hành, bí mật, quay về bản cũ: `docs/05-trien-khai.md`. Đã
 3. `npx tsc --noEmit -p frontend` + `npm --prefix frontend run build`.
 4. Thử trên **CSDL tạm** (MySQL container `qltt-mysql-uitest` cổng 3307, DB `qltt_uitest`, Flyway tự nạp V1–V5) + backend
    cổng 8081 trỏ CSDL đó + Vite 5173 với `VITE_API_URL=http://localhost:8081/api`; trình duyệt Edge headless qua CDP.
-   Bộ thử (driver `cdp.mjs`, `test-<màn>.mjs`, `moi-truong.sh`) để ngoài git, trên máy này — vị trí ghi trong memory của
-   Claude. Mỗi lần chạy kịch bản cần CSDL vừa tạo lại (kịch bản tự sinh dữ liệu). Xong thì tắt hết, xóa container tạm.
+   Bộ thử (driver `cdp.mjs`, `test-<màn>.mjs`, `moi-truong.sh`) để ngoài git, trên máy này — vị trí ghi trong ghi chú
+   riêng. Mỗi lần chạy kịch bản cần CSDL vừa tạo lại (kịch bản tự sinh dữ liệu). Xong thì tắt hết, xóa container tạm.
 5. Xem ảnh chụp (bảng tràn, chữ xuống dòng, trạng thái), sửa, chạy lại; ghi mục `### SCR-xx` ở trên (làm gì, đã thử gì).
 
 ## File dùng chung đã sửa — cần báo Văn

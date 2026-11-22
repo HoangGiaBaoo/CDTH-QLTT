@@ -259,7 +259,7 @@ class ScoringServiceTest {
 
     // ------------------------------------------------------------------ dữ liệu
 
-    /** Ví dụ chuẩn của skill tinh-diem-clo / docs/01 — tổ chặng 2: GV A (GVHD), GV B, cán bộ C. */
+    /** Ví dụ chuẩn tính tay (docs/01 mục 7) — tổ chặng 2: GV A (GVHD), GV B, cán bộ C. */
     private static List<PhieuDiem> phieuViDu() {
         return List.of(
                 new PhieuDiem(1, DVHD, 10L, false, diemTheoClo("7.0", "6.5", "6.0", "8.0", "7.5", "7.0")),

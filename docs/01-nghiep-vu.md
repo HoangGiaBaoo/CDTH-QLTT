@@ -137,11 +137,11 @@ Chặng 2 (TTTN-05): 7 dòng CLO1…CLO7. Tổng **13 câu hỏi**.
 | 4 | [8,5; 10] | 8,50 / 10,00 | 9,25 |
 
 Quy ước so khớp: `diem_min ≤ điểm < diem_max`, riêng mức 4 là `≤ 10`. (Quy ước này phải dùng **cùng
-một hàm** cho cả kiểm CBR-10 lẫn quy đổi mức — xem skill `tinh-diem-clo`.)
+một hàm** cho cả kiểm CBR-10 lẫn quy đổi mức.)
 
 ## 7. Thuật toán tính điểm (UC10) — tóm tắt
 
-Chi tiết + ví dụ tính tay: skill `.claude/skills/tinh-diem-clo/SKILL.md`.
+Ví dụ tính tay đầy đủ (CLO1 = 8,2 … HP = 7,7): ca `tinhDiemKhopViDuTinhTay` trong `ScoringServiceTest`.
 
 1. **Hợp nhất trong nhóm**: với mỗi chặng k, CLO i: `D̄ik` = TB điểm các phiếu `DA_NOP` nhóm ĐVHD
    (bỏ thành viên vắng mặt), `Ḡik` tương tự nhóm GVHD.
